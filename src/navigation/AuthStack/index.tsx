@@ -1,11 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import IntroScreen from '../../screens/Auth/Intro';
-import OnBoadrdingScreen from '../../screens/Auth/OnBoarding';
 import LoginScreen from '../../screens/Auth/Login';
-import RegisterScreen from '../../screens/Auth/Register';
-import ForogotPasswordScreen from '../../screens/Auth/ForgetPassword';
-import ResetPasswordScreen from '../../screens/Auth/ResetPassword';
+// import RegisterScreen from '../../screens/Auth/Register';
 import {Trans} from '../../i18n';
 import COLORS from '../../common/colors';
 import FONTS from '../../common/fonts';
