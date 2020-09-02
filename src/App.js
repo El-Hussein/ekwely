@@ -12,7 +12,7 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 // import SplashScreen from 'react-native-splash-screen';
 import AppNavigation from './navigation';
-import {NetStatus} from './components/molecules/NetStatus';
+// import {NetStatus} from './components/molecules/NetStatus';
 import COLORS from './common/colors';
 
 const App = () => {

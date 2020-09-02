@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from '../../screens/Auth/Login';
 // import RegisterScreen from '../../screens/Auth/Register';
-import {Trans} from '../../i18n';
+// import {Trans} from '../../i18n';
 import COLORS from '../../common/colors';
 import FONTS from '../../common/fonts';
 
@@ -26,20 +26,20 @@ const AuthNavigator = () => (
   <AuthStack.Navigator initialRouteName="signIn">
     <AuthStack.Screen
       options={{
-        title: Trans('signIn'),
+        title: 'تسجيل الدخول',
         ...headerCustonStyle,
       }}
       name="Login"
       component={LoginScreen}
     />
-    <AuthStack.Screen
+    {/* <AuthStack.Screen
       options={{
-        title: Trans('signUp'),
+        title: 'التسجيل',
         ...headerCustonStyle,
       }}
       name="Register"
       component={RegisterScreen}
-    />
+    /> */}
   </AuthStack.Navigator>
 );
 
