@@ -26,16 +26,14 @@ const AuthNavigator = () => (
   <AuthStack.Navigator initialRouteName="signIn">
     <AuthStack.Screen
       options={{
-        title: 'تسجيل الدخول',
-        ...headerCustonStyle,
+        headerShown: false,
       }}
       name="Login"
       component={LoginScreen}
     />
     {/* <AuthStack.Screen
       options={{
-        title: 'التسجيل',
-        ...headerCustonStyle,
+        headerShown: false,
       }}
       name="Register"
       component={RegisterScreen}

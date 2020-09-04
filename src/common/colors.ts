@@ -1,15 +1,9 @@
 const COLORS = {
-  main: '#0264D1',
-  secondary: '#013269',
-  gradintColor: ['#0264D1', '#013269'],
-  lightBlue: '#0264D1',
-  darkBlue: '#013269',
   white: '#fff',
-  grayBackgroud: '#E6E6E6',
-  border: '#E6E6E6',
-  modalBorder: '#BCBCBC',
-  black: '#000',
-  error: 'red',
+  main: '#12a89d',
+  mainText: '#000000',
+  border: '#5bcbcf',
+  error: '#ff0000',
 };
 
 export default COLORS;
