@@ -57,7 +57,20 @@ const Login = () => {
           }}
           placeholder={'رمز المرور'}
         />
-        <Button title={'دخول'} onPress={() => console.log('pressed')} />
+        <View style={styles.loginButton}>
+          <Button
+            title={'دخول'}
+            onPress={() => console.log('pressed')}
+            titleStyle={styles.loginTitle}
+            style={styles.button}
+          />
+        </View>
+
+        <Button
+          title={'انشاء حساب جديد'}
+          onPress={() => console.log('pressed')}
+          
+        />
       </View>
     </View>
   );

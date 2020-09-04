@@ -1,6 +1,6 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import AppText from '../AppText';
+import {TouchableOpacity ,Text} from 'react-native';
+// import AppText from '../AppText';
 import {styles} from './styles';
 const Button = ({title, onPress, style, titleStyle}) => {
   return (
@@ -8,7 +8,7 @@ const Button = ({title, onPress, style, titleStyle}) => {
       style={[styles.button, {...style}]}
       activeOpacity={0.7}
       onPress={onPress}>
-      <AppText style={[styles.title, {...titleStyle}]}>{title}</AppText>
+      <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
     </TouchableOpacity>
   );
 };

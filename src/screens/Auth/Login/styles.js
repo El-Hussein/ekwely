@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import COLORS from '../../../common/colors';
-import {calcHeight} from '../../../common/styles';
+import {calcHeight ,calcWidth ,calcFont} from '../../../common/styles';
 
 export default StyleSheet.create({
   container: {
@@ -13,4 +13,21 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginVertical: calcHeight(30),
   },
+  loginButton:{
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: calcHeight(30),
+  },
+  button:{
+    width: calcWidth(293),
+    height: calcHeight(52),
+    borderRadius: calcFont(30),
+    backgroundColor: COLORS.yallow,
+  },
+  loginTitle: {
+    color:COLORS.mainText,
+    
+  },
+  
 });
