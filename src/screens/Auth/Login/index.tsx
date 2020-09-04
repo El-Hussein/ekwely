@@ -1,23 +1,11 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {S}
 
 const Login = () => {
   return (
     <View>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
-      <Text>hello login</Text>
+      
     </View>
   );
 };

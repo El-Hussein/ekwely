@@ -1,13 +1,22 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native'; 
+
 import COLORS from '../../../common/colors';
 import FONTS from '../../../common/fonts';
 import {calcFont, calcHeight} from '../../../common/styles';
 
 export default StyleSheet.create({
+  
   container: {
     flex: 1,
+    justifyContent: 'center', 
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: COLORS.black
+  },
+  loginBG: {
+    position: 'absolute',
+    height: calcHeight(50),
+    width: calcHeight(50),
+    resizeMode: 'cover',
   },
   loginTitleStyle: {
     color: COLORS.main,
