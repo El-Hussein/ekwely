@@ -4,10 +4,12 @@ import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: COLORS.main,
     justifyContent: 'center',
     paddingVertical: calcHeight(30),
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: COLORS.main,
   },
   userImage: {
     width: calcWidth(100),
@@ -36,7 +38,7 @@ export default StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: calcHeight(30),
+    marginTop: calcHeight(30),
   },
   registerTitle: {
     color: COLORS.white,
@@ -49,7 +51,7 @@ export default StyleSheet.create({
     fontSize: calcFont(24),
   },
   buttons: {
-    // width: calcWidth(293),
+    width: calcWidth(293),
     height: calcHeight(60),
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -57,10 +59,16 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
 
+
   map: {
+    width: calcWidth(209),
     height: calcHeight(60),
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor:COLORS.yallow,
+    flexDirection: 'row-reverse',
+    borderRadius: calcFont(30),
+    paddingHorizontal:calcWidth(10),
   },
   mapImage: {
     width: calcWidth(27),
@@ -68,14 +76,23 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
 
+  mapText: {
+    fontSize: calcFont(20),
+    fontWeight: 'bold'
+  },
+
   done: {
+    width: calcHeight(60),
     height: calcHeight(60),
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:COLORS.yallow,
+    borderRadius: calcHeight(Platform.OS === 'ios' ? 60 : 30),
+    borderColor: COLORS.border,
   },
-  // doneImage: {
-  //   width: calcWidth(100),
-  //   height: calcHeight(64),
-  //   resizeMode: 'contain',
-  // },
+  doneImage: {
+    width: calcWidth(30),
+    height: calcHeight(29),
+    resizeMode: 'contain',
+  },
 });

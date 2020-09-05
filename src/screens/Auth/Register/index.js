@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
 import Button from '../../../components/atoms/Button';
@@ -7,7 +8,7 @@ import AppText from '../../../components/atoms/AppText';
 import IMAGES from '../../../common/images';
 import {color} from 'react-native-reanimated';
 import {Line} from '../../../components/atoms/Line';
-import {calcWidth} from '../../../common/styles';
+import {calcWidth, calcFont} from '../../../common/styles';
 import COLORS from '../../../common/colors';
 const Register = () => {
   const [registerData, setRegisterData] = useState({
@@ -26,7 +27,7 @@ const Register = () => {
   });
   // let passwordRef = useRef('');
   return (
-    <ScrollView>
+    <ScrollView style={styles.scroll} showsVerticalScrollIndicator= {false}>
       <View style={styles.container}>
         <View style={styles.userOut}>
           <Image source={IMAGES.userImage} style={styles.userImage} />
@@ -120,6 +121,7 @@ const Register = () => {
             error={errors.confirmPassword}
             value={registerData.confirmPassword}
             password
+            secureTextEntry={true}
             onChangeText={(confirmPassword) => {
               setRegisterData({...registerData, confirmPassword});
             }}
@@ -131,6 +133,11 @@ const Register = () => {
                   ...errors,
                   confirmPassword: 'يجب الا يقل رمز المرور عن 6 احرف',
                 });
+              } else if (registerData.confirmPassword !== registerData.password) {
+                setErrors({
+                  ...errors,
+                  confirmPassword: 'رمز المرور غير متطابق',
+                });
               } else {
                 setErrors({...errors, confirmPassword: ''});
               }
@@ -140,14 +147,14 @@ const Register = () => {
         </View>
 
         <View style={styles.buttons}>
+          <TouchableOpacity style={styles.done} activeOpacity={0.7}>
+            <Icon name ='arrow-back' size={calcFont(30)}/>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.map} activeOpacity={0.7}>
-            <AppText>ادخل العنوان</AppText>
-            <Image source={IMAGES.mapImage} style={styles.mapImage} />
+            <AppText style={ styles.mapText}>ادخل العنوان</AppText>
+            <Image source={IMAGES.map} style={styles.mapImage} />
           </TouchableOpacity>
 
-          {/* <TouchableOpacity style={styles.done} activeOpacity={0.7}>
-            <Image source={IMAGES.map} style={styles.mapImage} />
-          </TouchableOpacity> */}
         </View>
       </View>
     </ScrollView>
