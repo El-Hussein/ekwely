@@ -5,6 +5,7 @@ const COLORS = {
   border: '#5bcbcf',
   error: '#ff0000',
   yallow: '#fed700',
+  line: 'e3e3e3',
 };
 
 export default COLORS;

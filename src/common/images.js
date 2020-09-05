@@ -1,9 +1,7 @@
 const IMAGES = {
-  Onboarding1: require('../assets/Images/Onboarding1.png'),
-  Onboarding2: require('../assets/Images/Onboarding2.png'),
-  Onboarding3: require('../assets/Images/Onboarding3.png'),
-  introBg: require('../assets/Images/introBg.png'),
+  userImage: require('../assets/Images/userImage.png'),
   loginBg: require('../assets/Images/loginBg.png'),
+  map: require('../assets/Images/map.png'),
 };
 
 export default IMAGES;
