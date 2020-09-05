@@ -8,9 +8,8 @@ const AppInput = ({
   value,
   onChangeText,
   onEndEditing,
-  keyboardType,
-  returnKeyType,
   error,
+  ...props
 }) => {
   return (
     <View style={styles.container}>
@@ -21,8 +20,7 @@ const AppInput = ({
         value={value}
         onChangeText={onChangeText}
         onEndEditing={onEndEditing}
-        keyboardType={keyboardType}
-        returnKeyType={returnKeyType}
+        {...props}
       />
       {!!error && <AppText style={styles.error}>{error}</AppText>}
     </View>

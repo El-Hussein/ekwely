@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   error: {
     fontSize: calcFont(16),
     color: COLORS.error,
-    marginVertical: calcHeight(10),
+    marginTop: calcHeight(10),
   },
 });
 
