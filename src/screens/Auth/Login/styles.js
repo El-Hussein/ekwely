@@ -6,6 +6,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.main,
+    justifyContent: 'center',
   },
   loginForm: {
     width: '100%',
@@ -28,6 +29,24 @@ export default StyleSheet.create({
   loginTitle: {
     color:COLORS.mainText,
     
+  },
+  loginBg:{
+    width: calcWidth(156),
+    height: calcHeight(218),
+    resizeMode: 'contain',
+    marginBottom: calcHeight(20)
+  },
+
+
+
+  rTitle:{
+    color:COLORS.white,
+    fontWeight:'bold',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: calcHeight(30),
+    textAlign:'center',
+    fontSize:calcFont(24),
   },
   
 });
