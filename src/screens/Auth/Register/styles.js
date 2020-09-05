@@ -15,7 +15,6 @@ export default StyleSheet.create({
     width: calcWidth(100),
     height: calcHeight(64),
     resizeMode: 'contain',
-    // marginBottom: calcHeight(20),
   },
   userOut: {
     width: calcWidth(134),

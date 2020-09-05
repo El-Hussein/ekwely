@@ -85,7 +85,7 @@ const Register = () => {
               } else if (registerData.phone.length < 11) {
                 setErrors({
                   ...errors,
-                  phone: 'يجب الا يقل رمز المرور عن 11 احرف',
+                  phone: 'رقم الهاتف غير صحيح',
                 });
               } else {
                 setErrors({...errors, phone: ''});
