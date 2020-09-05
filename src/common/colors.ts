@@ -6,6 +6,7 @@ const COLORS = {
   error: '#ff0000',
   yallow: '#fed700',
   line: 'e3e3e3',
+  gray: 'e3e3e3',
 };
 
 export default COLORS;
