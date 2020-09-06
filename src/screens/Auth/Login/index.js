@@ -67,7 +67,7 @@ const Login = () => {
         <View style={styles.loginButton}>
           <Button
             title={'دخول'}
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('Drawer')}
             titleStyle={styles.loginTitle}
             style={styles.button}
           />
