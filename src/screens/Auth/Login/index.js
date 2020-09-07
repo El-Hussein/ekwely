@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import {View, Image} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
 import Button from '../../../components/atoms/Button';
 import AppText from '../../../components/atoms/AppText';
 import IMAGES from '../../../common/images';
 import {color} from 'react-native-reanimated';
+import {makePostRequest} from '../../../utils/api.helpers';
 
 const Login = () => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
@@ -18,6 +20,29 @@ const Login = () => {
     email: '',
     password: '',
   });
+
+  const login = () => {
+    setLoading(true);
+    try {
+      console.log('what?');
+      makePostRequest({
+        url: 'Users/login',
+        data: {
+          UserName: loginData.email,
+          Password: loginData.password,
+        },
+      }).then((response) => {
+        console.log('response');
+        console.log(response);
+        console.log('response');
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log('error');
+      console.log(error);
+      console.log('error');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -67,9 +92,11 @@ const Login = () => {
         <View style={styles.loginButton}>
           <Button
             title={'دخول'}
-            onPress={() => navigation.navigate('Drawer')}
+            onPress={login}
             titleStyle={styles.loginTitle}
             style={styles.button}
+            loading={loading}
+            disabled={loading}
           />
         </View>
 
@@ -77,7 +104,6 @@ const Login = () => {
           title={'انشاء حساب جديد'}
           onPress={() => navigation.navigate('Register')}
         />
-
       </View>
     </View>
   );
