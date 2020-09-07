@@ -53,15 +53,16 @@ export default StyleSheet.create({
   },
   checkBoxContainer: {
     justifyContent: 'flex-end',
-    // alignContent:'flex-end',
     flexDirection: 'row',
     width: '100%',
-    paddingVertical: calcHeight(5),
+    paddingVertical: calcHeight(15),
+    paddingHorizontal: calcWidth(10),
   },
   checkbox1: {
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: calcWidth(5),
     // alignSelf: 'flex-end',
   },
 
