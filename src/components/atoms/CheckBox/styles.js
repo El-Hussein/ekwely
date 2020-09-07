@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
     borderRadius: calcWidth(Platform.OS === 'ios' ? 20 : 10),
     borderWidth: calcWidth(2),
     borderColor: COLORS.lightGray,
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  selectedBorder: {
+    borderColor: COLORS.main,
   },
   selected: {
     backgroundColor: COLORS.main,

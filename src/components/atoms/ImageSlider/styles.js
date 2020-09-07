@@ -4,7 +4,6 @@ import COLORS from '../../../common/colors';
 
 const styles = StyleSheet.create({
   container: {
-    // alignSelf: 'center',
   },
   swiperSlideStyle: {
     borderRadius: calcWidth(11),
