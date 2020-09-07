@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react';
 import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
@@ -11,6 +12,7 @@ import {Line} from '../../../components/atoms/Line';
 import {calcWidth, calcFont} from '../../../common/styles';
 import COLORS from '../../../common/colors';
 const Register = () => {
+  const navigation = useNavigation();
   const [registerData, setRegisterData] = useState({
     name: '',
     email: '',
@@ -27,7 +29,7 @@ const Register = () => {
   });
   // let passwordRef = useRef('');
   return (
-    <ScrollView style={styles.scroll} showsVerticalScrollIndicator= {false}>
+    <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.userOut}>
           <Image source={IMAGES.userImage} style={styles.userImage} />
@@ -133,7 +135,9 @@ const Register = () => {
                   ...errors,
                   confirmPassword: 'يجب الا يقل رمز المرور عن 6 احرف',
                 });
-              } else if (registerData.confirmPassword !== registerData.password) {
+              } else if (
+                registerData.confirmPassword !== registerData.password
+              ) {
                 setErrors({
                   ...errors,
                   confirmPassword: 'رمز المرور غير متطابق',
@@ -147,14 +151,16 @@ const Register = () => {
         </View>
 
         <View style={styles.buttons}>
-          <TouchableOpacity style={styles.done} activeOpacity={0.7}>
-            <Icon name ='arrow-back' size={calcFont(30)}/>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Drawer')}
+            style={styles.done}
+            activeOpacity={0.7}>
+            <Icon name="arrow-back" size={calcFont(30)} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.map} activeOpacity={0.7}>
-            <AppText style={ styles.mapText}>ادخل العنوان</AppText>
+            <AppText style={styles.mapText}>ادخل العنوان</AppText>
             <Image source={IMAGES.map} style={styles.mapImage} />
           </TouchableOpacity>
-
         </View>
       </View>
     </ScrollView>

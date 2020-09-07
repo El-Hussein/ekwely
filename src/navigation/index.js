@@ -10,7 +10,7 @@ const AppNavigation = () => (
   <NavigationContainer>
     <RootStack.Navigator headerMode="none">
       <RootStack.Screen name="Auth" component={AuthStack} />
-      {/* <RootStack.Screen name="Drawer" component={DrawerNavigation} /> */}
+      <RootStack.Screen name="Drawer" component={DrawerNavigation} />
     </RootStack.Navigator>
   </NavigationContainer>
 );
