@@ -7,7 +7,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    height:calcHeight(400),
   },
 
   newOrder: {
@@ -15,10 +16,9 @@ export default StyleSheet.create({
     height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
     justifyContent: 'space-between',
-    // alignItems:'center',
     flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(5),
     alignItems: 'center',
+    paddingHorizontal: calcWidth(10),
   },
   newOrderText: {
     color: COLORS.mainText,
@@ -26,106 +26,106 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.gray,
   },
-
+  /////////////////////////////////////////////
+  tabViewStyle: {
+    flex: 1,
+  },
+  tabBarStyle: {
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    elevation: 0,
+    borderWidth: 0,
+    borderColor: COLORS.dark,
+  },
+  labelStyle: {
+    fontSize: calcFont(16),
+    textTransform: 'capitalize',
+    fontWeight: 'bold',
+    flex: 1,
+    width: calcWidth(178),
+    height: calcHeight(20),
+    textAlign: 'center',
+  },
+  indicatorStyle: {
+    backgroundColor: COLORS.textGray,
+    height: calcHeight('2.3'),
+  },
+  tabStyle: {
+    width: '50%',
+    alignSelf: 'center',
+  },
+  activityIndicator: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // flex: 1,
+  },
+  ////////////////////////////////////////
   orderTime: {
-    width: '100%',
+    width: calcWidth(150),
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    paddingHorizontal: calcWidth(5),
-    paddingVertical: calcHeight(10),
+    paddingVertical: calcHeight(15),
+    paddingHorizontal: calcWidth(10),
   },
   orderTimeText: {
     color: COLORS.textGray,
     fontSize: calcFont(18),
     fontWeight: 'bold',
   },
-  datePicker: {
-    width: calcWidth(355),
-    height: calcHeight(46),
+
+  /////////////////////////////////
+  addToCart: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: calcHeight(30),
+    marginHorizontal: calcWidth(10),
+    flexDirection: 'row',
+    width: calcWidth(344),
+  },
+  addToCartText: {
+    width: '100%',
+    color: COLORS.mainText,
+    fontSize: calcFont(15),
+  },
+  addToCartButton: {
+    width: calcWidth(124),
+    height: calcHeight(42),
     borderRadius: calcFont(5),
-    borderColor: COLORS.lightGray,
-    borderWidth: calcWidth(2),
+    backgroundColor: COLORS.yallow,
+  },
+  counter: {
     justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(10),
     alignItems: 'center',
-    elevation: 1,
-  },
-  checkBoxContainer: {
-    justifyContent: 'flex-end',
+    alignContent:'center',
     flexDirection: 'row',
-    width: '100%',
-    paddingVertical: calcHeight(15),
-    paddingHorizontal: calcWidth(10),
-  },
-  checkbox1: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: calcWidth(5),
-    // alignSelf: 'flex-end',
-  },
-
-  checkbox: {
-    // alignContent: 'flex-start',
-  },
-  //////////////////////////////////////////
-  changeAddress: {
-    width: '100%',
-    flexDirection: 'row-reverse',
-    alignContent: 'flex-start',
-    // paddingHorizontal: calcWidth(5),
-    // paddingVertical: calcHeight(10),
-  },
-  changeAddressText: {
-    color: COLORS.lightTextGray,
-    fontSize: calcFont(16),
-    fontWeight: 'bold',
-    paddingHorizontal: calcWidth(5),
-  },
-
-  pressText: {
-    color: COLORS.main,
-    fontSize: calcFont(16),
-  },
-  press: {
-    backgroundColor: COLORS.white,
-  },
-
-  address: {
-    alignSelf: 'flex-end',
-    fontSize: calcFont(16),
-    fontWeight: 'bold',
-    color: COLORS.textGray,
-    paddingHorizontal: calcWidth(5),
-  },
-  ///////////////////////////////
-  desc: {
-    width: calcWidth(390),
-    height: calcHeight(82),
-    alignItems: 'center',
-    paddingHorizontal: calcWidth(20),
-  },
-  descText: {
-    fontSize: calcFont(16),
-    color: COLORS.lightTextGray,
-  },
-  promoCode: {
-    width: calcWidth(355),
+    width: calcWidth(155),
     height: calcHeight(46),
     borderRadius: calcFont(3),
-    backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(10),
+    borderColor: COLORS.lightGray,
+    borderWidth: calcWidth(2),
+    paddingHorizontal: calcWidth(3),
+  },
+  counterButton: {
+    justifyContent: 'center',
     alignItems: 'center',
-    elevation: 1,
+    alignContent:'center',
+    width: calcWidth(38),
+    height: calcWidth(38),
+    borderRadius: calcFont(3),
+    backgroundColor: COLORS.lightGray,
   },
-  promoCodeInput: {
-    width: calcWidth(300),
+  counterButtonText: {
+    color: COLORS.main,
+    fontSize: calcFont(10),
   },
-  /////////////////////////////////
-  orderButton: {
+  counterText: {
+    fontSize: calcFont(20),
+    color: COLORS.textGray,
+  },
+  /////////////////////////////////////////
+  confirmOrderButton: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -137,7 +137,7 @@ export default StyleSheet.create({
     borderRadius: calcFont(5),
     backgroundColor: COLORS.main,
   },
-  completeOrder: {
+  confirmOrder: {
     color: COLORS.white,
     fontSize: calcFont(20),
   },

@@ -92,7 +92,8 @@ const Login = () => {
         <View style={styles.loginButton}>
           <Button
             title={'دخول'}
-            onPress={login}
+            // onPress={login}
+            onPress={() => navigation.navigate('Drawer')}
             titleStyle={styles.loginTitle}
             style={styles.button}
             loading={loading}

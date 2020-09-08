@@ -6,13 +6,16 @@ import {
   TextInput,
   ScrollView,
   Platform,
+  Dimensions,
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
+import DropDown from '../../components/atoms/DropDown';
 import Button from '../../components/atoms/Button';
 import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
@@ -20,196 +23,142 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
 
+const initialLayout = {width: Dimensions.get('window').width};
+const FirstRoute = () => (
+  <View
+    style={{
+      backgroundColor: '#ff4081',
+      flex: 1,
+      height: calcHeight(250),
+      width: calcWidth(375),
+    }}
+  />
+);
+
+const SecondRoute = () => (
+  <View
+    style={{
+      backgroundColor: '#ff4081',
+      flex: 1,
+      height: calcHeight(250),
+      width: calcWidth(375),
+    }}
+  />
+);
 const Order = () => {
-  const data = [
-    {id: '1', title: 'Note Title', image_path: IMAGES.slider},
-    {id: '2', title: 'Note Title', image_path: IMAGES.slider1},
-    {id: '3', title: 'Note Title', image_path: IMAGES.slider2},
-    {id: '4', title: 'Note Title', image_path: IMAGES.slider3},
-  ];
-  const [value, onChangeText] = useState('');
+  // const [favorite, setFavorite] = useState(true);
+  // const [pieces, setPieces] = useState(false);
 
-  const [morning, setMorning] = useState(true);
-  const [evening, setEvening] = useState(false);
-  const [morningDelivery, setMorningDelivery] = useState(true);
-  const [eveningDelivery, setEveningDelivery] = useState(false);
-  const Morning = () => {
-    if (morning == false) {
-      setMorning(!morning);
-      setEvening(!evening);
-    }
-  };
-  const Evening = () => {
-    if (evening == false) {
-      setMorning(!morning);
-      setEvening(!evening);
-    }
-  };
-  const MorningDelivery = () => {
-    if (morningDelivery == false) {
-      setMorningDelivery(!morningDelivery);
-      setEveningDelivery(!eveningDelivery);
-    }
-  };
-  const EveningDelivery = () => {
-    if (eveningDelivery == false) {
-      setMorningDelivery(!morningDelivery);
-      setEveningDelivery(!eveningDelivery);
-    }
-  };
+  // const Favorite = () => {
+  //   if (favorite == false) {
+  //     setFavorite(!favorite);
+  //     setPieces(!pieces);
+  //   }
+  // };
+  // const Pieces = () => {
+  //   if (pieces == false) {
+  //     setFavorite(!favorite);
+  //     setPieces(!pieces);
+  //   }
+  // };
 
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    {key: 'first', title: 'First'},
+    {key: 'second', title: 'Second'},
+  ]);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
+  const _renderTabBar = (props) => {
+    return (
+      <TabBar
+        {...props}
+        labelStyle={styles.labelStyle}
+        tabStyle={styles.tabStyle}
+        style={styles.tabBarStyle}
+        indicatorStyle={styles.indicatorStyle}
+        activeColor={COLORS.dark}
+        inactiveColor={COLORS.brownishGreyTwo}
+        scrollEnabled={true}
+        bounces={true}
+      />
+    );
   };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.newOrder}>
+        {/* <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>طلب جديد</AppText>
+        </View> */}
+
+        
+
+        <TabView
+          style={styles.tabViewStyle}
+          renderTabBar={(props) => _renderTabBar(props)}
+          swipeEnabled={false}
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+        />
+        {/* 
+        <View style={styles.orderTime}>
+          <TouchableOpacity onPress={Favorite}>
+            <CheckBox selected={favorite} />
+          </TouchableOpacity>
+          <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
         </View>
+        <DropDown placeholder="اختر من المفضلة" />
+        <View style={styles.orderTime}>
+          <TouchableOpacity onPress={Pieces}>
+            <CheckBox selected={pieces} />
+          </TouchableOpacity>
+          <AppText style={styles.orderTimeText}>اختر القطعة</AppText>
+        </View>
+        <DropDown placeholder="اختر القطعة" />
 
         <View style={styles.orderTime}>
-          <IconIonicons
-            name="md-arrow-redo-circle-outline"
-            size={calcFont(30)}
-            color={COLORS.main}
-          />
-          <AppText style={styles.orderTimeText}>وقت استلام الطلب</AppText>
+          <AppText style={styles.orderTimeText}>اختر الخدمة</AppText>
         </View>
+        <DropDown placeholder="اختر الخدمة" />
 
-        <TouchableOpacity onPress={showDatepicker} style={styles.datePicker}>
-          <AppText
-            style={{
-              color: COLORS.lightTextGray,
-              fontSize: calcFont(16),
-              fontWeight: 'bold',
-            }}>
-            اختر التاريخ
-          </AppText>
-          <IconFeather
-            name="calendar"
-            size={calcFont(30)}
-            color={COLORS.lightTextGray}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.checkBoxContainer}>
-          <TouchableOpacity onPress={Morning} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>9ص : 3م</AppText>
-            <CheckBox selected={morning} />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={Evening} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>3م : 9م</AppText>
-            <CheckBox selected={evening} />
-          </TouchableOpacity>
-        </View>
-
-        <AppText style={styles.address}>العنوان</AppText>
-        <View style={styles.changeAddress}>
-          <AppText style={styles.changeAddressText}>
-            54 شارع الجمهورية 11511, القاهرة, مصر
-          </AppText>
+        <View style={styles.addToCart}>
           <Button
-            title={'تعديل'}
+            title={'اضف الى السلة'}
             onPress={() => console.log('pressed')}
-            titleStyle={styles.pressText}
-            style={styles.press}
+            titleStyle={styles.addToCartText}
+            style={styles.addToCartButton}
           />
+
+          <View style={styles.counter}>
+            <Button
+              title={'+'}
+              onPress={() => console.log('pressed')}
+              titleStyle={styles.counterButtonText}
+              style={styles.counterButton}
+            />
+            <AppText style={styles.counterText}>1</AppText>
+            <Button
+              title={'-'}
+              onPress={() => console.log('pressed')}
+              titleStyle={styles.counterButtonText}
+              style={styles.counterButton}
+            />
+          </View>
         </View>
-
-        <Line width={calcWidth(345)} color={COLORS.lightGray} />
-
-        <View style={styles.orderTime}>
-          <IconIonicons
-            name="md-arrow-undo-circle-outline"
-            size={calcFont(30)}
-            color={COLORS.main}
-          />
-          <AppText style={styles.orderTimeText}>وقت تسليم الطلب</AppText>
-        </View>
-
-        <View style={styles.desc}>
-          <AppText style={styles.descText}>
-            سيتم تسليم الطلب خلال يومين عمل من تاريخ استلام الطلب والتوصيل مجانا
-            ويمكنك الاستلام خلال 24 ساعه بتكلفه توصيل اضافيه
-          </AppText>
-        </View>
-
-        <View style={styles.checkBoxContainer}>
-          <TouchableOpacity onPress={MorningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>9ص - 3م</AppText>
-            <CheckBox selected={morningDelivery} />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={EveningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>3م - 9م</AppText>
-            <CheckBox selected={eveningDelivery} />
-          </TouchableOpacity>
-        </View>
-
-        <AppText style={styles.address}>العنوان</AppText>
-        <View style={styles.changeAddress}>
-          <AppText style={styles.changeAddressText}>
-            54 شارع الجمهورية 11511, القاهرة, مصر
-          </AppText>
+ */}
+        {/* <View style={styles.confirmOrderButton}>
           <Button
-            title={'تعديل'}
+            title={'تأكيد الطلب'}
             onPress={() => console.log('pressed')}
-            titleStyle={styles.pressText}
-            style={styles.press}
-          />
-        </View>
-
-        <View style={styles.promoCode}>
-          <TextInput
-            style={styles.promoCodeInput}
-            onChangeText={(text) => onChangeText(text)}
-            placeholder="ادخل كود الخصم"
-            placeholderTextColor={COLORS.lightTextGray}
-            value={value}
-          />
-          <IconIonicons
-            name="barcode-outline"
-            size={calcFont(30)}
-            color={COLORS.textGray}
-          />
-        </View>
-
-        <View style={styles.orderButton}>
-          <Button
-            title={'استكمال الطلب'}
-            onPress={() => console.log('pressed')}
-            titleStyle={styles.completeOrder}
+            titleStyle={styles.confirmOrder}
             style={styles.button}
           />
-        </View>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
+        </View> */}
       </View>
     </ScrollView>
   );
