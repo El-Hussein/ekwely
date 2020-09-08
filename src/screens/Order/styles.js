@@ -4,13 +4,6 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {color} from 'react-native-reanimated';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.white,
-    alignItems: 'flex-end',
-    height:calcHeight(400),
-  },
-
   newOrder: {
     width: '100%',
     height: calcHeight(54),
@@ -33,24 +26,26 @@ export default StyleSheet.create({
   tabBarStyle: {
     overflow: 'hidden',
     backgroundColor: '#fff',
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
     elevation: 0,
-    borderWidth: 0,
-    borderColor: COLORS.dark,
+    borderWidth: calcWidth(1),
+    borderColor: COLORS.main,
+    width: '80%',
+    borderRadius: calcWidth(5),
+    alignSelf: 'center',
+    height: calcHeight(60)
   },
   labelStyle: {
     fontSize: calcFont(16),
     textTransform: 'capitalize',
     fontWeight: 'bold',
-    flex: 1,
-    width: calcWidth(178),
-    height: calcHeight(20),
+    width: calcWidth((315 - 0.2 * 375) / 2),
     textAlign: 'center',
+    height: calcHeight(25),
   },
   indicatorStyle: {
-    backgroundColor: COLORS.textGray,
-    height: calcHeight('2.3'),
+    borderRadius: calcWidth(5),
+    backgroundColor: COLORS.main,
+    height: calcHeight(58),
   },
   tabStyle: {
     width: '50%',
@@ -98,7 +93,7 @@ export default StyleSheet.create({
   counter: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    alignContent:'center',
+    alignContent: 'center',
     flexDirection: 'row',
     width: calcWidth(155),
     height: calcHeight(46),
@@ -110,7 +105,7 @@ export default StyleSheet.create({
   counterButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent:'center',
+    alignContent: 'center',
     width: calcWidth(38),
     height: calcWidth(38),
     borderRadius: calcFont(3),

@@ -80,8 +80,8 @@ const Order = () => {
         tabStyle={styles.tabStyle}
         style={styles.tabBarStyle}
         indicatorStyle={styles.indicatorStyle}
-        activeColor={COLORS.dark}
-        inactiveColor={COLORS.brownishGreyTwo}
+        activeColor={COLORS.white}
+        inactiveColor={COLORS.main}
         scrollEnabled={true}
         bounces={true}
       />
@@ -93,8 +93,6 @@ const Order = () => {
         {/* <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>طلب جديد</AppText>
         </View> */}
-
-        
 
         <TabView
           style={styles.tabViewStyle}
