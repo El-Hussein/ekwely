@@ -9,10 +9,10 @@ import COLORS from '../../common/colors';
 
 const Home = () => {
   const data = [
-    {id: '1', title: 'Note Title', image_path: IMAGES.slider},
-    {id: '2', title: 'Note Title', image_path: IMAGES.slider1},
-    {id: '3', title: 'Note Title', image_path: IMAGES.slider2},
-    {id: '4', title: 'Note Title', image_path: IMAGES.slider3},
+    {id: '1', image_path: IMAGES.slider},
+    {id: '2', image_path: IMAGES.slider1},
+    {id: '3', image_path: IMAGES.slider2},
+    {id: '4', image_path: IMAGES.slider3},
   ];
   return (
     <View style={styles.container}>
@@ -24,6 +24,7 @@ const Home = () => {
           style={styles.button}
         />
       </View>
+      <ImagesSlider slides={data}/>
       <View >
         <Image source={IMAGES.promo} style={styles.promoImage} />
         <View style={styles.promoCode}>

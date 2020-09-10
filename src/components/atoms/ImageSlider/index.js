@@ -25,7 +25,7 @@ const ImagesSlider = ({slides}) => {
         onSnapToItem={(index) => setCurrentIndex(index)}
         keyExtractor={(item) => `${Date.now()}-${item.id}`}
       />
-      <View style={styles.swiperPaginationStyle}>
+      {/* <View style={styles.swiperPaginationStyle}>
         {slides.map((item, index) => {
           const check = index === currentIndex;
           return (
@@ -38,7 +38,7 @@ const ImagesSlider = ({slides}) => {
             />
           );
         })}
-      </View>
+      </View> */}
     </View>
   );
 };

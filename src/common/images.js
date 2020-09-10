@@ -6,7 +6,6 @@ const IMAGES = {
   slider1: require('../assets/Images/slider1.png'),
   slider2: require('../assets/Images/slider2.png'),
   slider3: require('../assets/Images/slider3.png'),
-  textslider: require('../assets/Images/textslider.png'),
   promo: require('../assets/Images/promo.png'),
 };
 
