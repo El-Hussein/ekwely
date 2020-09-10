@@ -27,7 +27,6 @@ const Register = () => {
     confirmPassword: '',
     password: '',
   });
-  // let passwordRef = useRef('');
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -35,7 +34,6 @@ const Register = () => {
           <Image source={IMAGES.userImage} style={styles.userImage} />
         </View>
         <AppText style={styles.registerTitle}>انشاء حساب جديد</AppText>
-        <Line width={calcWidth(130)} color={COLORS.white} />
         <View style={styles.registerForm}>
           <AppInput
             error={errors.name}
@@ -91,13 +89,11 @@ const Register = () => {
                 });
               } else {
                 setErrors({...errors, phone: ''});
-                // passwordRef.current.focus();
               }
             }}
             placeholder={'رقم الهاتف'}
           />
           <AppInput
-            // ref={(ref) => (passwordRef = ref)}
             error={errors.password}
             value={registerData.password}
             password
@@ -150,17 +146,21 @@ const Register = () => {
           />
         </View>
 
-        <View style={styles.buttons}>
-          <TouchableOpacity
+        <View style={styles.addressVeiw}>
+          <Image source={IMAGES.map} style={styles.mapImage} />
+          <AppText style={styles.mapText}>لادخال العنوان</AppText>
+          <TouchableOpacity>
+            <AppText style={styles.pressTitle}>اضغط هنا</AppText>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.loginButton}>
+          <Button
+            title={'تسجيل'}
             onPress={() => navigation.navigate('Drawer')}
-            style={styles.done}
-            activeOpacity={0.7}>
-            <Icon name="arrow-back" size={calcFont(30)} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.map} activeOpacity={0.7}>
-            <AppText style={styles.mapText}>ادخل العنوان</AppText>
-            <Image source={IMAGES.map} style={styles.mapImage} />
-          </TouchableOpacity>
+            titleStyle={styles.loginTitle}
+            style={styles.button}
+          />
         </View>
       </View>
     </ScrollView>

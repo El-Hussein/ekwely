@@ -22,21 +22,21 @@ import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
-import Wash from './Wash';
-import Product from './Product';
+import PreviousRequests from './PreviousRequests';
+import CurrentRequests from './CurrentRequests';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
-const Order = () => {
+const MyOrder = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    {key: 'first', title: 'المنتجات'},
-    {key: 'second', title: 'غسيل ومكوى'},
+    {key: 'first', title: 'الطلبات السابقة'},
+    {key: 'second', title: 'الطلبات الحالية'},
   ]);
 
   const renderScene = SceneMap({
-    first: Product,
-    second: Wash,
+    first: PreviousRequests,
+    second: CurrentRequests,
   });
   const _renderTabBar = (props) => {
     return (
@@ -55,8 +55,8 @@ const Order = () => {
   };
   return (
     <ScrollView style={{backgroundColor:COLORS.white}}>
-      <View style={styles.newOrder}>
-        <AppText style={styles.newOrderText}>طلب جديد</AppText>
+      <View style={styles.myOrder}>
+        <AppText style={styles.myOrderText}>قائمة الطلبات</AppText>
       </View>
       <TabView
         style={styles.tabViewStyle}
@@ -71,4 +71,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default MyOrder;

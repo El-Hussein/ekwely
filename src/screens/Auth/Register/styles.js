@@ -12,8 +12,8 @@ export default StyleSheet.create({
     backgroundColor: COLORS.main,
   },
   userImage: {
-    width: calcWidth(100),
-    height: calcHeight(64),
+    width: calcWidth(75),
+    height: calcHeight(75),
     resizeMode: 'contain',
   },
   userOut: {
@@ -28,24 +28,18 @@ export default StyleSheet.create({
     borderWidth: calcHeight(6),
   },
 
-  line: {
-    width: calcWidth(140),
-    height: calcHeight(52),
-    backgroundColor: COLORS.mainText,
-  },
   registerForm: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: calcHeight(30),
+    marginTop: calcHeight(5),
   },
   registerTitle: {
     color: COLORS.white,
     fontWeight: 'bold',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: calcHeight(30),
-    marginBottom: calcHeight(10),
+    marginVertical: calcHeight(15),
     textAlign: 'center',
     fontSize: calcFont(24),
   },
@@ -58,40 +52,48 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
 
-
-  map: {
-    width: calcWidth(209),
-    height: calcHeight(60),
-    justifyContent: 'space-between',
+  addressVeiw: {
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:COLORS.yallow,
     flexDirection: 'row-reverse',
-    borderRadius: calcFont(30),
-    paddingHorizontal:calcWidth(10),
+    width: calcWidth(283),
+    alignSelf: 'flex-end',
   },
   mapImage: {
-    width: calcWidth(27),
-    height: calcHeight(40),
+    width: calcWidth(23),
+    height: calcHeight(34),
     resizeMode: 'contain',
+    tintColor: COLORS.white,
   },
 
   mapText: {
-    fontSize: calcFont(20),
-    fontWeight: 'bold'
+    fontSize: calcFont(18),
+    color: COLORS.white,
+    fontWeight: 'bold',
+    marginHorizontal:calcWidth(5)
   },
 
-  done: {
-    width: calcHeight(60),
-    height: calcHeight(60),
+  pressTitle: {
+    fontSize: calcFont(18),
+    color: COLORS.white,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
+  loginButton: {
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:COLORS.yallow,
-    borderRadius: calcHeight(Platform.OS === 'ios' ? 60 : 30),
-    borderColor: COLORS.border,
+    marginVertical: calcHeight(15),
   },
-  doneImage: {
-    width: calcWidth(30),
-    height: calcHeight(29),
-    resizeMode: 'contain',
+  button: {
+    width: calcWidth(293),
+    height: calcHeight(60),
+    borderRadius: calcFont(30),
+    backgroundColor: COLORS.yallow,
+  },
+  loginTitle: {
+    color: COLORS.mainText,
+    fontSize: calcWidth(25),
+    fontWeight: 'bold',
   },
 });
