@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, Image} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import ItemSlide from './SlideItem';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 import styles from './styles';
 
@@ -20,10 +19,11 @@ const ImagesSlider = ({slides}) => {
             resizeMode="contain"
           />
         )}
-        sliderWidth={calcWidth(245)}
+        sliderWidth={calcWidth(250)}
         itemWidth={calcWidth(245)}
         onSnapToItem={(index) => setCurrentIndex(index)}
-        keyExtractor={(item) => `${Date.now()}-${item.id}`}
+        keyExtractor={(item, index) => `${index}`}
+        loop
       />
       <View style={styles.swiperPaginationStyle}>
         {slides.map((item, index) => {

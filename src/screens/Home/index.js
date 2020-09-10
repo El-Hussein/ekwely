@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, ScrollView,} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
@@ -9,36 +9,37 @@ import COLORS from '../../common/colors';
 
 const Home = () => {
   const data = [
-    {id: '1', title: 'Note Title', image_path: IMAGES.slider},
-    {id: '2', title: 'Note Title', image_path: IMAGES.slider1},
-    {id: '3', title: 'Note Title', image_path: IMAGES.slider2},
-    {id: '4', title: 'Note Title', image_path: IMAGES.slider3},
+    {id: '1', image_path: IMAGES.slider},
+    {id: '2', image_path: IMAGES.slider1},
+    {id: '3', image_path: IMAGES.slider2},
+    {id: '4', image_path: IMAGES.slider3},
   ];
   return (
-    <View style={styles.container}>
-      <View style={styles.orderButton}>
-        <Button
-          title={'اطلب الان'}
-          onPress={() => console.log('pressed')}
-          titleStyle={styles.orderTitle}
-          style={styles.button}
-        />
-      </View>
-      <View >
-        <Image source={IMAGES.promo} style={styles.promoImage} />
-        <View style={styles.promoCode}>
-          <AppText style={styles.promoCodeText}>كود الخصم</AppText>
-          <AppText style={styles.promoCodeNum}>P78832</AppText>
+    <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+      <View style={styles.container}>
+        <View style={styles.orderButton}>
+          <Button
+            title={'اطلب الان'}
+            onPress={() => console.log('pressed')}
+            titleStyle={styles.orderTitle}
+            style={styles.button}
+          />
         </View>
-        
-        <View style={styles.promoDiscount}>
-          <AppText style={styles.promoDiscountText}>خصم</AppText>
-          <AppText style={styles.promoDiscountNum}>20%</AppText>
-        </View>
-      </View>
+        <ImagesSlider slides={data} />
+        <View >
+          <Image source={IMAGES.promo} style={styles.promoImage} />
+          <View style={styles.promoCode}>
+            <AppText style={styles.promoCodeText}>كود الخصم</AppText>
+            <AppText style={styles.promoCodeNum}>P78832</AppText>
+          </View>
 
-      {/* <ImagesSlider slides={data} /> */}
-    </View>
+          <View style={styles.promoDiscount}>
+            <AppText style={styles.promoDiscountText}>خصم</AppText>
+            <AppText style={styles.promoDiscountNum}>20%</AppText>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 

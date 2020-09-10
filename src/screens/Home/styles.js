@@ -4,9 +4,13 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: COLORS.white,
     alignItems: 'center',
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+
   },
   orderButton: {
     width: '100%',
@@ -44,8 +48,8 @@ export default StyleSheet.create({
     marginRight: calcWidth(10),
   },
   promoCodeNum: {
-    fontSize:calcFont(28),
-    letterSpacing: calcWidth(5),
+    fontSize:calcFont(35),
+    letterSpacing: calcWidth(7),
 
   },
   
