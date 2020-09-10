@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     // marginBottom: calcHeight(20),
   },
   dropDown: {
-    width: calcWidth(344),
+    width: calcWidth(320),
     height: calcHeight(46),
     borderRadius: calcFont(5),
     borderColor: COLORS.lightGray,
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
     paddingHorizontal: calcWidth(10),
-    marginHorizontal: calcWidth(10),
+    marginHorizontal: calcWidth(30),
     alignItems: 'center',
     elevation: 1,
   },

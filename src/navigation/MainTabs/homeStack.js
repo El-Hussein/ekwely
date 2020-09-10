@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../screens/Home';
 import OrderScreen from '../../screens/Order';
 import PlaseOrderScreen from '../../screens/PlaseOrder';
+// import MyOrderScreen from '../../screens/MyOrder';
 
 const Home = createStackNavigator();
 

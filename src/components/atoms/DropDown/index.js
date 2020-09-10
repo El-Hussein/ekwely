@@ -19,7 +19,7 @@ const DropDown = ({placeholder, data ,}) => {
         </AppText>
         <IconIonicons
           name="chevron-down"
-          size={calcFont(30)}
+          size={calcFont(25)}
           color={COLORS.lightTextGray}
           />
       </TouchableOpacity>

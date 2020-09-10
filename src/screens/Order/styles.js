@@ -4,6 +4,12 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {color} from 'react-native-reanimated';
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    alignItems: 'flex-end',
+    paddingTop: calcHeight(10),
+  },
   newOrder: {
     width: '100%',
     height: calcHeight(54),
@@ -22,6 +28,7 @@ export default StyleSheet.create({
   /////////////////////////////////////////////
   tabViewStyle: {
     flex: 1,
+    paddingTop: calcHeight(15),
   },
   tabBarStyle: {
     overflow: 'hidden',
@@ -29,23 +36,27 @@ export default StyleSheet.create({
     elevation: 0,
     borderWidth: calcWidth(1),
     borderColor: COLORS.main,
-    width: '80%',
+    width: calcWidth(360),
     borderRadius: calcWidth(5),
     alignSelf: 'center',
-    height: calcHeight(60)
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: calcHeight(50),
+    padding: 0,
   },
   labelStyle: {
-    fontSize: calcFont(16),
-    textTransform: 'capitalize',
+    fontSize: calcFont(18),
     fontWeight: 'bold',
-    width: calcWidth((315 - 0.2 * 375) / 2),
+    width: calcWidth(160),
     textAlign: 'center',
-    height: calcHeight(25),
+    margin: 0,
   },
   indicatorStyle: {
     borderRadius: calcWidth(5),
     backgroundColor: COLORS.main,
-    height: calcHeight(58),
+    height: calcHeight(49),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tabStyle: {
     width: '50%',
@@ -54,23 +65,45 @@ export default StyleSheet.create({
   activityIndicator: {
     justifyContent: 'center',
     alignItems: 'center',
-    // flex: 1,
   },
-  ////////////////////////////////////////
+
+  /////////////////////////////////
   orderTime: {
-    width: calcWidth(150),
+    width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    paddingVertical: calcHeight(15),
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(5),
+    paddingVertical: calcHeight(10),
   },
   orderTimeText: {
     color: COLORS.textGray,
     fontSize: calcFont(18),
     fontWeight: 'bold',
   },
-
-  /////////////////////////////////
+  chooseService: {
+    width: '100%',
+    flexDirection: 'row-reverse',
+    alignContent: 'flex-start',
+    paddingHorizontal: calcWidth(25),
+    paddingVertical: calcHeight(10),
+  },
+  chooseServiceText: {
+    color: COLORS.textGray,
+    fontSize: calcFont(18),
+    fontWeight: 'bold',
+  },
+  option: {
+    width: calcWidth(320),
+    borderRadius: calcFont(5),
+    borderColor: COLORS.lightGray,
+    borderWidth: calcWidth(2),
+    paddingHorizontal: calcWidth(10),
+    marginHorizontal: calcWidth(30),
+    alignItems: 'flex-end',
+    elevation: 1,
+    position: 'absolute',
+    backgroundColor: COLORS.white,
+  },
   addToCart: {
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -90,30 +123,29 @@ export default StyleSheet.create({
     borderRadius: calcFont(5),
     backgroundColor: COLORS.yallow,
   },
+
   counter: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    alignContent: 'center',
     flexDirection: 'row',
     width: calcWidth(155),
-    height: calcHeight(46),
+    paddingVertical: calcHeight(5),
+    elevation: 1.3,
     borderRadius: calcFont(3),
     borderColor: COLORS.lightGray,
     borderWidth: calcWidth(2),
     paddingHorizontal: calcWidth(3),
   },
   counterButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
     width: calcWidth(38),
     height: calcWidth(38),
     borderRadius: calcFont(3),
     backgroundColor: COLORS.lightGray,
   },
   counterButtonText: {
-    color: COLORS.main,
-    fontSize: calcFont(10),
+    color: COLORS.textGray,
+    width: calcWidth(38),
+    fontSize: calcFont(18),
   },
   counterText: {
     fontSize: calcFont(20),
