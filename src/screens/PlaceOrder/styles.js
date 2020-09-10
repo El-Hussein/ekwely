@@ -15,7 +15,6 @@ export default StyleSheet.create({
     height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
     justifyContent: 'space-between',
-    // alignItems:'center',
     flexDirection: 'row-reverse',
     paddingHorizontal: calcWidth(5),
     alignItems: 'center',
@@ -63,19 +62,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: calcWidth(5),
-    // alignSelf: 'flex-end',
   },
 
-  checkbox: {
-    // alignContent: 'flex-start',
-  },
+  checkbox: {},
   //////////////////////////////////////////
   changeAddress: {
     width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    // paddingHorizontal: calcWidth(5),
-    // paddingVertical: calcHeight(10),
   },
   changeAddressText: {
     color: COLORS.lightTextGray,

@@ -20,7 +20,7 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
 
-const PlaseOrder = () => {
+const PlaceOrder = () => {
   const data = [
     {id: '1', title: 'Note Title', image_path: IMAGES.slider},
     {id: '2', title: 'Note Title', image_path: IMAGES.slider1},
@@ -215,4 +215,4 @@ const PlaseOrder = () => {
   );
 };
 
-export default PlaseOrder;
+export default PlaceOrder;
