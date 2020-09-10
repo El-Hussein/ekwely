@@ -9,7 +9,7 @@ const Home = createStackNavigator();
 
 const HomeStack = () => (
   <Home.Navigator initialRouteName="signIn">
-    <Home.Screen name="Home" component={MyOrderScreen} />
+    <Home.Screen name="Home" component={OrderScreen} />
   </Home.Navigator>
 );
 
