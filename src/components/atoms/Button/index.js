@@ -8,6 +8,7 @@ const Button = ({title, onPress, style, titleStyle, loading, disabled}) => {
     <TouchableOpacity
       style={[styles.button, {...style}]}
       activeOpacity={0.7}
+      disabled={disabled}
       onPress={onPress}>
       {loading ? (
         <ActivityIndicator color={COLORS.main} />

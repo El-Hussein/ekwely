@@ -8,6 +8,7 @@ const COLORS = {
   line: 'e3e3e3',
   gray: '#121c2c',
   lightGray:'#f3f3f3',
+  midGray:'#ccccccaa',
   textGray:'#666666',
   lightTextGray:'#999999',
   
