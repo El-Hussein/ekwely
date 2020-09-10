@@ -56,7 +56,7 @@ const Wash = () => {
         </TouchableOpacity>
         <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
       </View>
-      <DropDown placeholder="اختر من المفضلة" />
+      <DropDown placeholder="اختر من المفضلة" />     
       <View style={styles.orderTime}>
         <TouchableOpacity onPress={togglePieces}>
           <CheckBox selected={pieces} />
