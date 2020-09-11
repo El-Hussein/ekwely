@@ -21,14 +21,7 @@ import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
 
 const PlaceOrder = () => {
-  const data = [
-    {id: '1', title: 'Note Title', image_path: IMAGES.slider},
-    {id: '2', title: 'Note Title', image_path: IMAGES.slider1},
-    {id: '3', title: 'Note Title', image_path: IMAGES.slider2},
-    {id: '4', title: 'Note Title', image_path: IMAGES.slider3},
-  ];
   const [value, onChangeText] = useState('');
-
   const [morning, setMorning] = useState(true);
   const [evening, setEvening] = useState(false);
   const [morningDelivery, setMorningDelivery] = useState(true);
@@ -105,7 +98,7 @@ const PlaceOrder = () => {
           <IconFeather
             name="calendar"
             size={calcFont(30)}
-            color={COLORS.lightTextGray}
+            color={COLORS.midGray}
           />
         </TouchableOpacity>
 
@@ -121,13 +114,13 @@ const PlaceOrder = () => {
           </TouchableOpacity>
         </View>
 
-        <AppText style={styles.address}>العنوان</AppText>
         <View style={styles.changeAddress}>
+          <Image source={IMAGES.map} style={styles.mapImage} />
           <AppText style={styles.changeAddressText}>
-            54 شارع الجمهورية 11511, القاهرة, مصر
+            شارع محمد فوزى  متفرع من عباس العقاد مدينة نصر
           </AppText>
           <Button
-            title={'تعديل'}
+            title={'تغيير'}
             onPress={() => console.log('pressed')}
             titleStyle={styles.pressText}
             style={styles.press}
@@ -164,13 +157,13 @@ const PlaceOrder = () => {
           </TouchableOpacity>
         </View>
 
-        <AppText style={styles.address}>العنوان</AppText>
         <View style={styles.changeAddress}>
+          <Image source={IMAGES.map} style={styles.mapImage} />
           <AppText style={styles.changeAddressText}>
-            54 شارع الجمهورية 11511, القاهرة, مصر
+            شارع محمد فوزى  متفرع من عباس العقاد مدينة نصر
           </AppText>
           <Button
-            title={'تعديل'}
+            title={'تغيير'}
             onPress={() => console.log('pressed')}
             titleStyle={styles.pressText}
             style={styles.press}
@@ -188,7 +181,7 @@ const PlaceOrder = () => {
           <IconIonicons
             name="barcode-outline"
             size={calcFont(30)}
-            color={COLORS.textGray}
+            color={COLORS.lightTextGray}
           />
         </View>
 

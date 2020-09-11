@@ -32,6 +32,7 @@ export default StyleSheet.create({
     alignContent: 'flex-start',
     paddingHorizontal: calcWidth(5),
     paddingVertical: calcHeight(10),
+    marginTop:calcHeight(10),
   },
   orderTimeText: {
     color: COLORS.textGray,
@@ -51,11 +52,12 @@ export default StyleSheet.create({
     elevation: 1,
   },
   checkBoxContainer: {
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     flexDirection: 'row',
-    width: '100%',
+    width: calcWidth(200),
     paddingVertical: calcHeight(15),
     paddingHorizontal: calcWidth(10),
+    alignSelf:'flex-end'
   },
   checkbox1: {
     justifyContent: 'space-between',
@@ -70,28 +72,32 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
+    justifyContent:'center',
+    alignItems:'center',
+    paddingBottom:calcHeight(10)
+    
   },
   changeAddressText: {
     color: COLORS.lightTextGray,
-    fontSize: calcFont(16),
-    fontWeight: 'bold',
+    fontSize: calcFont(15),
     paddingHorizontal: calcWidth(5),
+    width: calcWidth(263),
   },
 
   pressText: {
-    color: COLORS.main,
-    fontSize: calcFont(16),
+    color: COLORS.darkMain,
+    fontSize: calcFont(18),
   },
   press: {
     backgroundColor: COLORS.white,
   },
 
-  address: {
-    alignSelf: 'flex-end',
-    fontSize: calcFont(16),
-    fontWeight: 'bold',
-    color: COLORS.textGray,
-    paddingHorizontal: calcWidth(5),
+  
+  mapImage: {
+    width: calcWidth(23),
+    height: calcHeight(34),
+    resizeMode: 'contain',
+    tintColor: COLORS.lightTextGray,
   },
   ///////////////////////////////
   desc: {
@@ -103,6 +109,7 @@ export default StyleSheet.create({
   descText: {
     fontSize: calcFont(16),
     color: COLORS.lightTextGray,
+    fontWeight:'bold'
   },
   promoCode: {
     width: calcWidth(355),

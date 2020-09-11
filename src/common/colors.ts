@@ -1,6 +1,7 @@
 const COLORS = {
   white: '#fff',
   main: '#12a89d',
+  darkMain:'#007ba4',
   mainText: '#000000',
   border: '#5bcbcf',
   error: '#ff0000',
