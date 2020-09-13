@@ -124,6 +124,8 @@ export default StyleSheet.create({
   },
   promoCodeInput: {
     width: calcWidth(300),
+    fontWeight:'bold',
+    fontSize:calcFont(18)
   },
   /////////////////////////////////
   orderButton: {
