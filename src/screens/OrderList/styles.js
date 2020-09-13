@@ -25,10 +25,68 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.gray,
   },
-
+  item: {
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row-reverse',
+    paddingVertical: calcHeight(10),
+    paddingHorizontal: calcWidth(15),
+    alignItems: 'center',
+  },
+  name: {
+    width: calcWidth(130),
+  },
+  product: {
+    color: COLORS.mainText,
+    fontSize: calcFont(18),
+    fontWeight: 'bold',
+  },
+  type: {
+    color: COLORS.lightTextGray,
+    fontSize: calcFont(16),
+    fontWeight: 'bold',
+  },
+  counter: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    width: calcWidth(119),
+    paddingVertical: calcHeight(5),
+    elevation: 1.3,
+    borderRadius: calcFont(3),
+    borderColor: COLORS.lightGray,
+    borderWidth: calcWidth(2),
+    paddingHorizontal: calcWidth(3),
+  },
+  counterButton: {
+    width: calcWidth(38),
+    height: calcWidth(38),
+    borderRadius: calcFont(3),
+    backgroundColor: COLORS.lightGray,
+  },
+  counterButtonText: {
+    color: COLORS.textGray,
+    width: calcWidth(38),
+    fontSize: calcFont(18),
+  },
+  counterText: {
+    fontSize: calcFont(20),
+    color: COLORS.textGray,
+  },
+  price: {
+    color: COLORS.mainText,
+    fontSize: calcFont(22),
+    fontWeight: 'bold',
+  },
+  close: {
+    width: calcWidth(20),
+    height: calcHeight(30),
+    resizeMode: 'contain',
+    tintColor: COLORS.mainText,
+  },
   checkBoxContainer: {
     width: '100%',
-    paddingVertical: calcHeight(15),
+    paddingVertical: calcHeight(7),
     paddingHorizontal: calcWidth(15),
     alignSelf: 'flex-start',
     flexDirection: 'row',
@@ -42,7 +100,6 @@ export default StyleSheet.create({
     fontSize: calcFont(16),
     paddingHorizontal: calcWidth(10),
     fontWeight: 'bold',
-
   },
   //////////////////////////////////////////
 
@@ -55,6 +112,7 @@ export default StyleSheet.create({
   PromoCode: {
     color: COLORS.error,
     fontSize: calcFont(24),
+    fontWeight: 'bold',
   },
   totalPriceText: {
     color: COLORS.mainText,
@@ -65,12 +123,13 @@ export default StyleSheet.create({
   priceText: {
     color: COLORS.mainText,
     fontSize: calcFont(24),
+    fontWeight: 'bold',
   },
   total: {
     width: '100%',
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    paddingVertical: calcHeight(5),
+    paddingVertical: calcHeight(2),
     paddingHorizontal: calcWidth(10),
     justifyContent: 'flex-start',
   },
@@ -79,7 +138,7 @@ export default StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: calcHeight(30),
+    marginVertical: calcHeight(5),
   },
   button: {
     width: calcWidth(204),

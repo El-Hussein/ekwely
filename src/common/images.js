@@ -7,6 +7,7 @@ const IMAGES = {
   slider2: require('../assets/Images/slider2.png'),
   slider3: require('../assets/Images/slider3.png'),
   promo: require('../assets/Images/promo.png'),
+  close: require('../assets/Images/close.png'),
 };
 
 export default IMAGES;
