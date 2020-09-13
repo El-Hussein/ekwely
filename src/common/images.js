@@ -8,6 +8,11 @@ const IMAGES = {
   slider3: require('../assets/Images/slider3.png'),
   promo: require('../assets/Images/promo.png'),
   close: require('../assets/Images/close.png'),
+  favorite: require('../assets/Images/favorite.png'),
+  cart: require('../assets/Images/cart.png'),
+  search: require('../assets/Images/search.png'),
+  p1: require('../assets/Images/p1.png'),
+  p2: require('../assets/Images/p2.png'),
 };
 
 export default IMAGES;
