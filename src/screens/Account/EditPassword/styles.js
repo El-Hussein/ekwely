@@ -20,7 +20,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
     color: COLORS.gray,
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     height: calcHeight(42),
     borderRadius: calcFont(5),
     backgroundColor: '#00000088',
-    position:'absolute'
+    position: 'absolute',
   },
   titleText: {
     color: COLORS.textGray,
@@ -82,7 +82,7 @@ export default StyleSheet.create({
   },
   promoCodeInput: {
     width: calcWidth(330),
-    textAlign:'right'
+    textAlign: 'right',
   },
   //////////////////////////////////////////
   data: {

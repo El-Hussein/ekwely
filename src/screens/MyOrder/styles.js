@@ -22,7 +22,7 @@ export default StyleSheet.create({
   myOrderText: {
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
+    color:'#121c2c',
   },
   /////////////////////////////////////////////
   tabViewStyle: {
