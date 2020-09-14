@@ -16,6 +16,7 @@ const IMAGES = {
   drop: require('../assets/Images/drop.png'),
   instagram: require('../assets/Images/instagram.png'),
   facebook: require('../assets/Images/facebook.png'),
+  back: require('../assets/Images/back.png'),
 };
 
 export default IMAGES;
