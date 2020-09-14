@@ -27,36 +27,15 @@ export default StyleSheet.create({
     color: COLORS.gray,
   },
   /////////////////////////////////////////////
-  dropDown: {
-    width: calcWidth(360),
-    height: calcHeight(55),
-    borderRadius: calcFont(5),
-    backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(10),
-    alignItems: 'center',
-    // alignSelf: 'center',
-    marginVertical: calcHeight(5),
-  },
-  dropImage: {
-    width: calcWidth(15),
-    height: calcWidth(9),
-    resizeMode: 'contain',
-    tintColor: COLORS.drop,
-  },
-  title: {
-    color: COLORS.textGray,
-    fontSize: calcFont(18),
-    fontWeight: 'bold',
-    paddingHorizontal: calcWidth(10),
-  },
   text: {
+    width: calcWidth(330),
+    alignSelf:'center',
     color: COLORS.lightTextGray,
     fontSize: calcFont(16),
     fontWeight: 'bold',
-    lineHeight: calcHeight(24),
-    paddingHorizontal: calcWidth(25),
+    paddingRight: calcWidth(15),
     textAlign: 'right',
+    paddingVertical: calcHeight(15),
+    lineHeight:calcHeight(24)
   },
 });

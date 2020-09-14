@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -7,11 +7,12 @@ import {
   Platform,
 } from 'react-native';
 import IconF from 'react-native-vector-icons/FontAwesome5';
-import styles from './styles';
+import COLORS from '../../../common/colors';
+import { calcFont } from '../../../common/styles';
 import AppText from '../AppText';
+import styles from './styles';
 
-
-const AnimatedList = ({ listTitle, children }) => {
+const AnimatedList = ({listTitle, children}) => {
   useEffect(() => {
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -27,19 +28,13 @@ const AnimatedList = ({ listTitle, children }) => {
     }
   };
   return (
-    <View style={[styles.animatedContainer]}>
+    <View style={styles.animatedContainer}>
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={openCloseSection}
-        style={styles.animatedHeader}
-      >
-        <AppText
-          weight={Platform.OS === 'ios' ? 'Regular' : 'Bold'}
-          style={styles.animatedTitle}
-        >
-          {listTitle}
-        </AppText>
-        <IconF name={isOpen ? 'chevron-up' : 'chevron-down'} />
+        style={styles.animatedHeader}>
+        <AppText style={styles.animatedTitle}>{listTitle}</AppText>
+        <IconF name={isOpen ? 'chevron-up' : 'chevron-down'}  color={COLORS.drop} size={calcFont(18)}/>
       </TouchableOpacity>
       {isOpen && children}
     </View>

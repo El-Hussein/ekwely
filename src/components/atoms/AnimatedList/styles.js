@@ -1,25 +1,29 @@
 import {StyleSheet} from 'react-native';
 import COLORS from '../../../common/colors';
-import {calcWidth, calcHeight, calcFont} from '../../../common/styles';
+import {calcFont, calcHeight, calcWidth} from '../../../common/styles';
 const styles = StyleSheet.create({
   animatedContainer: {
-    minHeight: calcHeight(40),
-    marginVertical: calcHeight(16),
-    paddingRight: calcWidth(16),
-    marginLeft: calcWidth(16),
-    borderBottomColor: COLORS.lightGray,
-    borderBottomWidth: calcHeight(1),
+    minHeight: calcHeight(20),
   },
   animatedHeader: {
-    width: '100%',
-    flexDirection: 'row',
+    paddingHorizontal: calcWidth(16),
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',
+    alignSelf: 'center',
+    width: calcWidth(350),
+    height: calcHeight(55),
+    borderRadius: calcFont(5),
+    backgroundColor: COLORS.lightGray,
+    marginVertical: calcHeight(3),
   },
+
   animatedTitle: {
-    fontSize: calcFont(16),
-    color: COLORS.mainText,
+    color: COLORS.textGray,
+    fontSize: calcFont(18),
+    fontWeight: 'bold',
+    paddingHorizontal: calcWidth(10),
   },
 });
 
-export {styles};
+export default styles;
