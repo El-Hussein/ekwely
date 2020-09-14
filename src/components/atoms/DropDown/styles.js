@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 1,
   },
+  dropImage: {
+    width: calcWidth(15),
+    height: calcWidth(9),
+    resizeMode: 'contain',
+    tintColor: COLORS.drop,
+  },
 });
 
 export {styles};
