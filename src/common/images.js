@@ -13,6 +13,7 @@ const IMAGES = {
   search: require('../assets/Images/search.png'),
   p1: require('../assets/Images/p1.png'),
   p2: require('../assets/Images/p2.png'),
+  drop: require('../assets/Images/drop.png'),
 };
 
 export default IMAGES;

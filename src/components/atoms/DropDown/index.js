@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, TextInput, Text, TouchableOpacity} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity ,Image} from 'react-native';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from './styles';
 import AppText from '../AppText';
 import COLORS from '../../../common/colors';
+import IMAGES from '../../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 const DropDown = ({placeholder, data ,}) => {
   return (
@@ -17,11 +18,8 @@ const DropDown = ({placeholder, data ,}) => {
           }}>
           {placeholder}
         </AppText>
-        <IconIonicons
-          name="chevron-down"
-          size={calcFont(25)}
-          color={COLORS.lightTextGray}
-          />
+        <Image source={IMAGES.drop} style={styles.dropImage} />
+
       </TouchableOpacity>
     </View>
   );
