@@ -19,36 +19,52 @@ export default StyleSheet.create({
     paddingHorizontal: calcWidth(10),
   },
   newOrderText: {
-    color:'#121c2c',
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
   },
   /////////////////////////////////////////////
 
-  col1: {
-    color: COLORS.mainText,
-    fontSize: calcFont(18),
+  title: {
+    color: COLORS.textGray,
     fontWeight: 'bold',
-    paddingRight: calcWidth(15),
+    fontSize: calcFont(20),
+    textAlign: 'right',
+    paddingVertical: calcHeight(3),
+    lineHeight: calcHeight(27),
   },
-  col2: {
-    color: COLORS.main,
-    fontSize: calcFont(22),
-    fontWeight: 'bold',
-    width: '20%',
-    textAlign: 'center',
+  text: {
+    color: COLORS.lightTextGray,
+    fontSize: calcFont(16),
+    textAlign: 'right',
+    paddingVertical: calcHeight(3),
+    lineHeight: calcHeight(23),
   },
-  col3: {
+  branch: {
     color: COLORS.main,
-    fontSize: calcFont(22),
+    fontSize: calcFont(20),
     fontWeight: 'bold',
-    width: '30%',
-    textAlign: 'center',
+    textAlign: 'right',
+    paddingVertical: calcHeight(15),
+    lineHeight: calcHeight(27),
   },
   mediaImage: {
-    width: calcWidth(22),
-    height: calcWidth(22),
+    width: calcWidth(33),
+    height: calcWidth(33),
     resizeMode: 'contain',
-    tintColor: COLORS.textGray,
+  },
+  media: {
+    width: calcWidth(75),
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    alignSelf: 'flex-end',
+    marginHorizontal: calcWidth(10),
+  },
+  row: {
+    width: calcWidth(345),
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    paddingVertical: calcHeight(5),
   },
 });

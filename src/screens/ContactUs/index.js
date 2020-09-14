@@ -11,9 +11,12 @@ import {
 
 import styles from './styles';
 import COLORS from '../../common/colors';
+import IMAGES from '../../common/images';
 import AppText from '../../components/atoms/AppText';
 import {Line} from '../../components/atoms/Line';
-const Raw = (title, text) => {
+import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+
+const Raw = ({title, text}) => {
   return (
     <View style={styles.row}>
       <AppText style={styles.title}>{title}</AppText>
@@ -32,7 +35,7 @@ const ContactUs = () => {
         <Line width={calcWidth(345)} color={COLORS.midGray} />
         <Raw
           title="العنوان"
-          text="عمارات مصر للتعمير - زهراء المعادي - القاهرة"
+          text="9 عمارات مصر للتعمير - زهراء المعادي - القاهرة"
         />
         <Raw title="الهاتف" text="01112563214" />
         <Raw title="البريد الالكترونى" text="info@ekwely.com" />
@@ -43,14 +46,18 @@ const ContactUs = () => {
         <Line width={calcWidth(345)} color={COLORS.midGray} />
         <Raw
           title="العنوان"
-          text="عمارات مصر للتعمير - زهراء المعادي - القاهرة"
+          text="مجمع علي الدين بعد ميدان ڤوداڤون"
         />
         <Raw title="الهاتف" text="01112563214" />
         <Line width={calcWidth(345)} color={COLORS.midGray} />
-      </View>
       <Raw title="تابعونا على" />
-      <Image source={IMAGES.favorite} style={styles.mediaImage} />
-      <Image source={IMAGES.favorite} style={styles.mediaImage} />
+      </View>
+
+
+      <View style={styles.media}>
+        <Image source={IMAGES.facebook} style={styles.mediaImage} />
+        <Image source={IMAGES.instagram} style={styles.mediaImage} />
+      </View>
     </View>
   );
 };
