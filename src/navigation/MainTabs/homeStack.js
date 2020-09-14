@@ -11,11 +11,14 @@ import OrderListScreen from '../../screens/OrderList';
 import PricingScreen from '../../screens/Pricing';
 import FaqScreen from '../../screens/Faq';
 
+import ContactUsScreen from '../../screens/ContactUs';
+
 const Home = createStackNavigator();
 
 const HomeStack = () => (
   <Home.Navigator initialRouteName="signIn">
-    <Home.Screen name="Home" component={FaqScreen} />
+
+    <Home.Screen name="Home" component={ContactUsScreen} />
   </Home.Navigator>
 );
 

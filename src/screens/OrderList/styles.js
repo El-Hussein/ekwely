@@ -20,10 +20,9 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color:'#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
   },
   item: {
     width: '100%',
