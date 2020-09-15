@@ -7,7 +7,10 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import HomeStack from './homeStack';
 import COLORS from '../../common/colors';
 import {calcFont, calcHeight, calcWidth} from '../../common/styles';
-import AppText from '../../components/atoms/AppText';
+import FavoriteStack from './favoriteStack';
+import ProfileStack from './profileStack';
+import CartStack from './cartStack';
+import PricingStack from './pricingStack';
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -35,7 +38,7 @@ const AppTabs = () => (
         ),
       }}
       name="Pricing"
-      component={HomeStack}
+      component={PricingStack}
     />
     <Tabs.Screen
       options={{
@@ -43,8 +46,8 @@ const AppTabs = () => (
           <Ionic name="heart-outline" size={calcFont(24)} color={color} />
         ),
       }}
-      name="Favourite"
-      component={HomeStack}
+      name="Favorite"
+      component={FavoriteStack}
     />
     <Tabs.Screen
       options={{
@@ -53,7 +56,7 @@ const AppTabs = () => (
         ),
       }}
       name="Profile"
-      component={HomeStack}
+      component={ProfileStack}
     />
     <Tabs.Screen
       options={{
@@ -62,7 +65,7 @@ const AppTabs = () => (
         ),
       }}
       name="Cart"
-      component={HomeStack}
+      component={CartStack}
     />
     <Tabs.Screen
       name="Home"

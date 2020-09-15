@@ -1,13 +1,13 @@
-import {StyleSheet, CheckBox} from 'react-native';
+import {StyleSheet} from 'react-native';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {color} from 'react-native-reanimated';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     paddingVertical: calcHeight(8),
+    backgroundColor: COLORS.gray,
   },
   userImage: {
     width: calcWidth(75),
@@ -35,13 +35,12 @@ export default StyleSheet.create({
   },
   menu: {
     paddingTop: calcHeight(20),
-
   },
   text: {
     color: COLORS.white,
     fontSize: calcFont(18),
     paddingVertical: calcHeight(8),
-    alignSelf:'flex-end',
+    alignSelf: 'flex-end',
   },
   titleText: {
     color: COLORS.white,
@@ -53,6 +52,5 @@ export default StyleSheet.create({
   row: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-
   },
 });
