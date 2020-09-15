@@ -1,12 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
@@ -22,7 +13,7 @@ const App = () => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: COLORS.secondary}}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar backgroundColor={COLORS.main} barStyle="dark-content" />
         <AppNavigation />
         {/* <NetStatus /> */}
       </SafeAreaView>

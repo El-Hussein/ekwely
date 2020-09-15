@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Image, ScrollView,} from 'react-native';
+import {View, Image, ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
@@ -8,6 +9,7 @@ import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 
 const Home = () => {
+  const navigation = useNavigation();
   const data = [
     {id: '1', image_path: IMAGES.slider},
     {id: '2', image_path: IMAGES.slider1},
@@ -20,13 +22,13 @@ const Home = () => {
         <View style={styles.orderButton}>
           <Button
             title={'اطلب الان'}
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('PlaceOrder')}
             titleStyle={styles.orderTitle}
             style={styles.button}
           />
         </View>
         <ImagesSlider slides={data} />
-        <View >
+        <View>
           <Image source={IMAGES.promo} style={styles.promoImage} />
           <View style={styles.promoCode}>
             <AppText style={styles.promoCodeText}>كود الخصم</AppText>
