@@ -9,18 +9,17 @@ export default StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: 'center',
   },
-
   newOrder: {
     width: '100%',
     height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(5),
     alignItems: 'center',
+    paddingHorizontal: calcWidth(15),
   },
   newOrderText: {
-    color:'#121c2c',
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
   },
@@ -29,17 +28,19 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    paddingHorizontal: calcWidth(5),
+    paddingHorizontal: calcWidth(15),
     paddingVertical: calcHeight(10),
-    marginTop:calcHeight(10),
+    marginTop: calcHeight(10),
   },
   orderTimeText: {
     color: COLORS.textGray,
     fontSize: calcFont(18),
     fontWeight: 'bold',
+    paddingHorizontal: calcWidth(5),
+
   },
   datePicker: {
-    width: calcWidth(355),
+    width: calcWidth(345),
     height: calcHeight(46),
     borderRadius: calcFont(5),
     borderColor: COLORS.lightGray,
@@ -55,8 +56,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     width: calcWidth(200),
     paddingVertical: calcHeight(15),
-    paddingHorizontal: calcWidth(10),
-    alignSelf:'flex-end'
+    paddingHorizontal: calcWidth(15),
+    alignSelf: 'flex-end',
   },
   checkbox1: {
     justifyContent: 'space-between',
@@ -70,17 +71,15 @@ export default StyleSheet.create({
   changeAddress: {
     width: '100%',
     flexDirection: 'row-reverse',
-    alignContent: 'flex-start',
-    justifyContent:'center',
-    alignItems:'center',
-    paddingBottom:calcHeight(10)
-    
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: calcHeight(5),
   },
   changeAddressText: {
     color: COLORS.lightTextGray,
     fontSize: calcFont(15),
     paddingHorizontal: calcWidth(5),
-    width: calcWidth(263),
+    width: calcWidth(255),
   },
 
   pressText: {
@@ -91,12 +90,23 @@ export default StyleSheet.create({
     backgroundColor: COLORS.white,
   },
 
-  
+  promoImage: {
+    width: calcWidth(13),
+    height: calcHeight(22),
+    resizeMode: 'contain',
+    tintColor: COLORS.drop,
+  },
   mapImage: {
     width: calcWidth(23),
     height: calcHeight(34),
     resizeMode: 'contain',
     tintColor: COLORS.lightTextGray,
+  },
+  inOutImage: {
+    width: calcWidth(24),
+    height: calcHeight(23),
+    resizeMode: 'contain',
+    tintColor: COLORS.main,
   },
   ///////////////////////////////
   desc: {
@@ -108,23 +118,27 @@ export default StyleSheet.create({
   descText: {
     fontSize: calcFont(16),
     color: COLORS.lightTextGray,
-    fontWeight:'bold'
+    fontWeight: 'bold',
+    lineHeight: calcHeight(23),
   },
   promoCode: {
     width: calcWidth(355),
     height: calcHeight(46),
     borderRadius: calcFont(3),
+    borderWidth: calcWidth(1),
+    borderColor: COLORS.midLightGray,
     backgroundColor: COLORS.lightGray,
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
     paddingHorizontal: calcWidth(10),
     alignItems: 'center',
     elevation: 1,
+    marginTop: calcHeight(10),
   },
   promoCodeInput: {
     width: calcWidth(300),
-    fontWeight:'bold',
-    fontSize:calcFont(18)
+    fontWeight: 'bold',
+    fontSize: calcFont(18),
   },
   /////////////////////////////////
   orderButton: {

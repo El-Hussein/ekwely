@@ -104,6 +104,7 @@ const Login = () => {
         <Button
           title={'انشاء حساب جديد'}
           onPress={() => navigation.navigate('Register')}
+        style={styles.rTitle}
         />
       </View>
     </View>

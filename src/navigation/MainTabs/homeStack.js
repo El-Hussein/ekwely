@@ -17,7 +17,7 @@ const Home = createStackNavigator();
 
 const HomeStack = () => (
   <Home.Navigator initialRouteName="signIn">
-    <Home.Screen name="Homkkke" component={SupportScreen} />
+    <Home.Screen name="Homkkke" component={PlaceOrderScreen} />
   </Home.Navigator>
 );
 

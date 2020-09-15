@@ -17,6 +17,9 @@ const IMAGES = {
   instagram: require('../assets/Images/instagram.png'),
   facebook: require('../assets/Images/facebook.png'),
   back: require('../assets/Images/back.png'),
+  in: require('../assets/Images/in.png'),
+  out: require('../assets/Images/out.png'),
+  promoIcon: require('../assets/Images/promoIcon.png'),
 };
 
 export default IMAGES;

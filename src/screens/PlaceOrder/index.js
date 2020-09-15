@@ -78,11 +78,8 @@ const PlaceOrder = () => {
         </View>
 
         <View style={styles.orderTime}>
-          <IconIonicons
-            name="md-arrow-redo-circle-outline"
-            size={calcFont(30)}
-            color={COLORS.main}
-          />
+          <Image source={IMAGES.out} style={styles.inOutImage} />
+
           <AppText style={styles.orderTimeText}>وقت استلام الطلب</AppText>
         </View>
 
@@ -104,12 +101,12 @@ const PlaceOrder = () => {
 
         <View style={styles.checkBoxContainer}>
           <TouchableOpacity onPress={Morning} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>9ص : 3م</AppText>
+            <AppText style={{color: COLORS.textGray}}> 9ص : 3م </AppText>
             <CheckBox selected={morning} />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={Evening} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>3م : 9م</AppText>
+            <AppText style={{color: COLORS.textGray}}> 3م : 9م </AppText>
             <CheckBox selected={evening} />
           </TouchableOpacity>
         </View>
@@ -117,7 +114,7 @@ const PlaceOrder = () => {
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
           <AppText style={styles.changeAddressText}>
-            شارع محمد فوزى  متفرع من عباس العقاد مدينة نصر
+            شارع محمد فوزى متفرع من عباس العقاد
           </AppText>
           <Button
             title={'تغيير'}
@@ -130,11 +127,8 @@ const PlaceOrder = () => {
         <Line width={calcWidth(345)} color={COLORS.lightGray} />
 
         <View style={styles.orderTime}>
-          <IconIonicons
-            name="md-arrow-undo-circle-outline"
-            size={calcFont(30)}
-            color={COLORS.main}
-          />
+          <Image source={IMAGES.in} style={styles.inOutImage} />
+
           <AppText style={styles.orderTimeText}>وقت تسليم الطلب</AppText>
         </View>
 
@@ -147,12 +141,12 @@ const PlaceOrder = () => {
 
         <View style={styles.checkBoxContainer}>
           <TouchableOpacity onPress={MorningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>9ص - 3م</AppText>
+            <AppText style={{color: COLORS.textGray}}> 9ص - 3م </AppText>
             <CheckBox selected={morningDelivery} />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={EveningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}>3م - 9م</AppText>
+            <AppText style={{color: COLORS.textGray}}> 3م - 9م </AppText>
             <CheckBox selected={eveningDelivery} />
           </TouchableOpacity>
         </View>
@@ -160,7 +154,7 @@ const PlaceOrder = () => {
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
           <AppText style={styles.changeAddressText}>
-            شارع محمد فوزى  متفرع من عباس العقاد مدينة نصر
+            شارع محمد فوزى متفرع من عباس العقاد
           </AppText>
           <Button
             title={'تغيير'}
@@ -178,11 +172,7 @@ const PlaceOrder = () => {
             placeholderTextColor={COLORS.lightTextGray}
             value={value}
           />
-          <IconIonicons
-            name="barcode-outline"
-            size={calcFont(30)}
-            color={COLORS.lightTextGray}
-          />
+          <Image source={IMAGES.promoIcon} style={styles.promoImage} />
         </View>
 
         <View style={styles.orderButton}>
