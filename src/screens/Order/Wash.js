@@ -22,8 +22,10 @@ import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
+import {useNavigation} from '@react-navigation/native';
 
 const Wash = () => {
+  const navigation = useNavigation();
   const [favorite, setFavorite] = useState(true);
   const [pieces, setPieces] = useState(false);
   const [counter, setCounter] = useState(1);
@@ -56,7 +58,7 @@ const Wash = () => {
         </TouchableOpacity>
         <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
       </View>
-      <DropDown placeholder="اختر من المفضلة" />     
+      <DropDown placeholder="اختر من المفضلة" />
       <View style={styles.orderTime}>
         <TouchableOpacity onPress={togglePieces}>
           <CheckBox selected={pieces} />
@@ -99,7 +101,10 @@ const Wash = () => {
       <View style={styles.confirmOrderButton}>
         <Button
           title={'تأكيد الطلب'}
-          onPress={() => console.log('pressed')}
+          onPress={() => {
+            navigation.popToTop();
+            navigation.navigate('Cart');
+          }}
           titleStyle={styles.confirmOrder}
           style={styles.button}
         />

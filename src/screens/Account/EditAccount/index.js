@@ -22,8 +22,11 @@ import IMAGES from '../../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 import {Line} from '../../../components/atoms/Line';
 import CheckBox from '../../../components/atoms/CheckBox';
+import {useNavigation} from '@react-navigation/native';
 
 const EditAccount = () => {
+  const navigation = useNavigation();
+
   const [value, onChangeText] = useState('');
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
@@ -32,7 +35,10 @@ const EditAccount = () => {
           <AppText style={styles.newOrderText}>حسابي</AppText>
           <Button
             title={'حفظ'}
-            onPress={() => console.log('pressed')}
+            onPress={() => {
+              navigation.popToTop();
+              navigation.navigate('Home');
+            }}
             titleStyle={styles.saveText}
             style={styles.saveButton}
           />
@@ -41,11 +47,11 @@ const EditAccount = () => {
         <View style={styles.userOut}>
           <Image source={IMAGES.userImage} style={styles.userImage} />
           <Button
-          title={'حمل الصوره'}
-          onPress={() => console.log('pressed')}
-          titleStyle={styles.addToCartText}
-          style={styles.addToCartButton}
-        />
+            title={'حمل الصوره'}
+            onPress={() => console.log('pressed')}
+            titleStyle={styles.addToCartText}
+            style={styles.addToCartButton}
+          />
         </View>
 
         <View style={styles.data}>

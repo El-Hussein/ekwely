@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../screens/Home';
 import PlaceOrder from '../../screens/PlaceOrder';
+import Order from '../../screens/Order';
 import {headerOptions} from '../headerOptions';
 
 const Home = createStackNavigator();
@@ -13,6 +14,11 @@ const HomeStack = () => (
       options={headerOptions}
       name="PlaceOrder"
       component={PlaceOrder}
+    />
+    <Home.Screen
+      options={headerOptions}
+      name="Order"
+      component={Order}
     />
   </Home.Navigator>
 );

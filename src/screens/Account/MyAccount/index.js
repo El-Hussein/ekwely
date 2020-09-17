@@ -22,8 +22,11 @@ import IMAGES from '../../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 import {Line} from '../../../components/atoms/Line';
 import CheckBox from '../../../components/atoms/CheckBox';
+import {useNavigation} from '@react-navigation/native';
 
 const MyAccount = () => {
+  const navigation = useNavigation();
+
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
       <View style={styles.container}>
@@ -31,7 +34,7 @@ const MyAccount = () => {
           <AppText style={styles.newOrderText}>حسابي</AppText>
           <Button
             title={'تعديل'}
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('EditAccount')}
             titleStyle={styles.addToCartText}
             style={styles.addToCartButton}
           />
@@ -74,7 +77,7 @@ const MyAccount = () => {
 
           <Button
             title={'تغيير رمز المرور'}
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('EditPassword')}
             titleStyle={styles.changeAddressText}
           />
         </View>

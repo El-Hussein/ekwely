@@ -6,8 +6,9 @@ import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
 import AppInput from '../../components/atoms/AppInput';
-
+import {useNavigation} from '@react-navigation/native';
 const Support = () => {
+  const navigation = useNavigation();
   const [address, setAddress] = useState('');
   const [comment, setComment] = useState('');
 
@@ -30,7 +31,7 @@ const Support = () => {
         <View>
           <AppText style={styles.title}>الموضوع</AppText>
           <TextInput
-            style={[styles.comment,{height:calcHeight(150)}]}
+            style={[styles.comment, {height: calcHeight(150)}]}
             onChangeText={(text) => setComment(text)}
             value={comment}
             multiline={true}
@@ -39,7 +40,9 @@ const Support = () => {
         <View style={{paddingVertical: calcHeight(20)}}>
           <Button
             title={'إرسال'}
-            onPress={() => console.log('pressed')}
+            onPress={() => {
+              navigation.navigate('Home');
+            }}
             titleStyle={styles.addToCartText}
             style={styles.addToCartButton}
           />
