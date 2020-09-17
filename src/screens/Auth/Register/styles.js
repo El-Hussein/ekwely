@@ -53,11 +53,11 @@ export default StyleSheet.create({
   },
 
   addressVeiw: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row-reverse',
     width: calcWidth(283),
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
   mapImage: {
     width: calcWidth(23),
@@ -70,7 +70,8 @@ export default StyleSheet.create({
     fontSize: calcFont(18),
     color: COLORS.white,
     fontWeight: 'bold',
-    marginHorizontal:calcWidth(5)
+    maxWidth: calcWidth(215),
+    marginHorizontal: calcWidth(5),
   },
 
   pressTitle: {
