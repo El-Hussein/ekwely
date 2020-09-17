@@ -19,8 +19,10 @@ import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
+import {useNavigation} from '@react-navigation/native';
 
 const PlaceOrder = () => {
+  const navigation = useNavigation();
   const [value, onChangeText] = useState('');
   const [quickCleaning, setQuickCleaning] = useState(true);
   const [cashPayment, setCashPayment] = useState(false);
@@ -80,28 +82,30 @@ const PlaceOrder = () => {
           <View style={styles.counter}>
             <Button
               title={'+'}
-              onPress={() => changeCounter('increase')}
+              // onPress={() => changeCounter('increase')}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
             <AppText style={styles.counterText}>{item.number}</AppText>
             <Button
               title={'-'}
-              onPress={() => changeCounter('decrease')}
+              // onPress={() => changeCounter('decrease')}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
               disabled={item.number < 2}
             />
           </View>
           <AppText style={styles.price}>{item.totalPrice}</AppText>
-          <Image source={IMAGES.close} style={styles.close} />
+          <TouchableOpacity>
+            <Image source={IMAGES.close} style={styles.close} />
+          </TouchableOpacity>
         </View>
         <Line width={calcWidth(345)} color={COLORS.lightGray} />
       </View>
     );
   };
   return (
-    <ScrollView style={{backgroundColor: COLORS.white}}>
+    <ScrollView style={{backgroundColor: COLORS.white ,flex:1}}>
       <View style={styles.container}>
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>السلة</AppText>
@@ -146,7 +150,7 @@ const PlaceOrder = () => {
           <AppText style={styles.priceText}>160 ج</AppText>
         </View>
         <TouchableOpacity
-          onPress={toggleCashPayment}
+          // onPress={toggleCashPayment}
           style={styles.checkBoxContainer}>
           <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
           <IconIonicons
@@ -159,7 +163,7 @@ const PlaceOrder = () => {
         <View style={styles.orderButton}>
           <Button
             title={'تنفيذ الطلب'}
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('Home')}
             titleStyle={styles.completeOrder}
             style={styles.button}
           />

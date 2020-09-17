@@ -19,8 +19,10 @@ import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
+import {useNavigation} from '@react-navigation/native';
 
-const PlaceOrder = () => {
+const PlaceOrder = () => {  const navigation = useNavigation();
+
   const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(true);
   const [evening, setEvening] = useState(false);
@@ -178,7 +180,7 @@ const PlaceOrder = () => {
         <View style={styles.orderButton}>
           <Button
             title={'استكمال الطلب'}
-            onPress={() => console.log('pressed')}
+            onPress={() => navigation.navigate('Order')}
             titleStyle={styles.completeOrder}
             style={styles.button}
           />
