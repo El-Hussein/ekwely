@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import PlaceOrderScreen from '../../screens/PlaceOrder';
+import FavoriteScreen from '../../screens/Favorite';
 import { headerOptions } from '../headerOptions';
 
 const Favorite = createStackNavigator();
@@ -10,7 +10,7 @@ const FavoriteStack = () => (
     <Favorite.Screen
       options={headerOptions}
       name="Favorite"
-      component={PlaceOrderScreen}
+      component={FavoriteScreen}
     />
   </Favorite.Navigator>
 );
