@@ -54,7 +54,7 @@ const MyOrder = () => {
     );
   };
   return (
-    <ScrollView style={{backgroundColor:COLORS.white}}>
+    <ScrollView style={{backgroundColor:COLORS.white,flex:1}}>
       <View style={styles.myOrder}>
         <AppText style={styles.myOrderText}>قائمة الطلبات</AppText>
       </View>
