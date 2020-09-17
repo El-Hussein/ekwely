@@ -1,18 +1,15 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
 import Button from '../../../components/atoms/Button';
 import AppText from '../../../components/atoms/AppText';
 import IMAGES from '../../../common/images';
-import {color} from 'react-native-reanimated';
-import {Line} from '../../../components/atoms/Line';
-import {calcWidth, calcFont} from '../../../common/styles';
-import COLORS from '../../../common/colors';
+
 const Register = () => {
   const navigation = useNavigation();
+  const [addressData, setAddressData] = useState(false);
   const [registerData, setRegisterData] = useState({
     name: '',
     email: '',
@@ -148,9 +145,24 @@ const Register = () => {
 
         <View style={styles.addressVeiw}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-          <AppText style={styles.mapText}>لادخال العنوان</AppText>
-          <TouchableOpacity>
-            <AppText style={styles.pressTitle}>اضغط هنا</AppText>
+          <AppText numberOfLines={1} style={styles.mapText}>
+            {addressData?.streetAddress || 'لادخال العنوان'}
+          </AppText>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('SelectLocation', {
+                onGoBack: (address) => {
+                  setAddressData({
+                    ...addressData,
+                    ...address.coordinates,
+                    streetAddress: address.formattedAddress,
+                  });
+                },
+              });
+            }}>
+            <AppText style={styles.pressTitle}>
+              {addressData?.streetAddress ? 'تعديل' : 'اضغط هنا'}
+            </AppText>
           </TouchableOpacity>
         </View>
 
