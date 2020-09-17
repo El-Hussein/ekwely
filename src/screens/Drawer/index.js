@@ -1,13 +1,14 @@
-import React, {useState, useRef} from 'react';
-import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {View, Image, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
-import Button from '../../components/atoms/Button';
 import IMAGES from '../../common/images';
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {calcHeight, calcWidth} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
+import {USER_DATA} from '../../common/constants';
 
 const Raw = ({title, onPress}) => {
   return (
@@ -44,13 +45,25 @@ const Drawer = () => {
         />
         <Raw
           title="سياسة الاستخدام"
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('Support')}
         />
         <Raw
           title="للتواصل معنا"
           onPress={() => navigation.navigate('Contact')}
         />
-        <Raw title="تسجيل خروج" onPress={() => navigation.navigate('Login')} />
+        <Raw
+          title="تسجيل خروج"
+          onPress={() => {
+            AsyncStorage.removeItem(USER_DATA)
+              .then((response) => {
+                // remove user from redux
+                navigation.navigate('Auth');
+              })
+              .catch((error) => {
+                console.log('error deleting user from storage -> ', error);
+              });
+          }}
+        />
       </View>
     </View>
   );
