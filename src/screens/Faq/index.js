@@ -1,20 +1,9 @@
-import React, {useState, useRef} from 'react';
-import {
-  View,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import React from 'react';
+import {View, FlatList} from 'react-native';
 import styles from './styles';
-import COLORS from '../../common/colors';
-import IMAGES from '../../common/images';
 import AppText from '../../components/atoms/AppText';
 import AnimatedList from '../../components/atoms/AnimatedList';
-
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-
-import DropDown from '../../components/atoms/DropDown';
+import Header from '../../components/atoms/Header';
 const questions = [
   {
     id: '1',
@@ -22,28 +11,28 @@ const questions = [
     text:
       'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
     e: true,
-  },{
-    id: '1',
-    tile: 'السؤال يكتب هنا لاحقا',
-    text:
-      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
-    e: true,
-  },{
-    id: '1',
-    tile: 'السؤال يكتب هنا لاحقا',
-    text:
-      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
-    e: true,
-  },{
+  },
+  {
     id: '1',
     tile: 'السؤال يكتب هنا لاحقا',
     text:
       'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
     e: true,
   },
-  
-  
-  
+  {
+    id: '1',
+    tile: 'السؤال يكتب هنا لاحقا',
+    text:
+      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
+    e: true,
+  },
+  {
+    id: '1',
+    tile: 'السؤال يكتب هنا لاحقا',
+    text:
+      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
+    e: true,
+  },
 ];
 
 const _renderQuestionsItem = ({item}) => {
@@ -54,9 +43,10 @@ const _renderQuestionsItem = ({item}) => {
   );
 };
 
-const Faq = () => { 
+const Faq = () => {
   return (
     <View style={styles.container}>
+      <Header />
       <View style={styles.newOrder}>
         <AppText style={styles.newOrderText}>أسئلة شائعة</AppText>
       </View>

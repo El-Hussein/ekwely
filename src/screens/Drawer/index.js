@@ -10,7 +10,6 @@ import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
 
 const Raw = ({title, onPress}) => {
-
   return (
     <TouchableOpacity style={styles.row} onPress={onPress}>
       <AppText style={styles.text}>{title}</AppText>
@@ -24,7 +23,9 @@ const Drawer = () => {
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>
-        <Image source={IMAGES.back} style={styles.backImage} />
+        <TouchableOpacity>
+          <Image source={IMAGES.back} style={styles.backImage} />
+        </TouchableOpacity>
         <View style={styles.userOut}>
           <Image source={IMAGES.userImage} style={styles.userImage} />
         </View>
@@ -49,10 +50,7 @@ const Drawer = () => {
           title="للتواصل معنا"
           onPress={() => navigation.navigate('Contact')}
         />
-        <Raw
-          title="تسجيل خروج"
-          onPress={() => navigation.navigate('Login')}
-        />
+        <Raw title="تسجيل خروج" onPress={() => navigation.navigate('Login')} />
       </View>
     </View>
   );
