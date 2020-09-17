@@ -48,6 +48,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     paddingVertical: calcHeight(15),
     paddingBottom: calcHeight(20),
+    textAlign:'center'
   },
   row: {
     alignItems: 'flex-end',

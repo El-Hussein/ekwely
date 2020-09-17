@@ -7,6 +7,7 @@ import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
 import AppInput from '../../components/atoms/AppInput';
 import {useNavigation} from '@react-navigation/native';
+import Header from '../../components/atoms/Header';
 const Support = () => {
   const navigation = useNavigation();
   const [address, setAddress] = useState('');
@@ -14,6 +15,7 @@ const Support = () => {
 
   return (
     <View style={styles.container}>
+      <Header />
       <View style={styles.newOrder}>
         <AppText style={styles.newOrderText}>الدعم والمساعدة</AppText>
       </View>

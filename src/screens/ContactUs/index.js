@@ -15,7 +15,7 @@ import IMAGES from '../../common/images';
 import AppText from '../../components/atoms/AppText';
 import {Line} from '../../components/atoms/Line';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-
+import Header from '../../components/atoms/Header';
 const Raw = ({title, text}) => {
   return (
     <View style={styles.row}>
@@ -27,6 +27,7 @@ const Raw = ({title, text}) => {
 const ContactUs = () => {
   return (
     <View style={styles.container}>
+      <Header />
       <View style={styles.newOrder}>
         <AppText style={styles.newOrderText}>للتواصل معنا</AppText>
       </View>
@@ -44,16 +45,11 @@ const ContactUs = () => {
       <View>
         <AppText style={styles.branch}>فرع مدينة 6 اكتوبر</AppText>
         <Line width={calcWidth(345)} color={COLORS.midGray} />
-        <Raw
-          title="العنوان"
-          text="مجمع علي الدين بعد ميدان ڤوداڤون"
-        />
+        <Raw title="العنوان" text="مجمع علي الدين بعد ميدان ڤوداڤون" />
         <Raw title="الهاتف" text="01112563214" />
         <Line width={calcWidth(345)} color={COLORS.midGray} />
-      <Raw title="تابعونا على" />
+        <Raw title="تابعونا على" />
       </View>
-
-
       <View style={styles.media}>
         <Image source={IMAGES.facebook} style={styles.mediaImage} />
         <Image source={IMAGES.instagram} style={styles.mediaImage} />
