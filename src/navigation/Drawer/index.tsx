@@ -6,6 +6,8 @@ import MyOrder from '../../screens/MyOrder';
 import Faq from '../../screens/Faq';
 import Support from '../../screens/Support';
 import ContactUs from '../../screens/ContactUs';
+import SelectLocationScreen from '../../screens/select-location/select-location-screen';
+import {headerOptions} from '../headerOptions';
 
 const DrawerNavigator = createDrawerNavigator();
 
