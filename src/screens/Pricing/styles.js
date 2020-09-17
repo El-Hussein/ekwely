@@ -67,6 +67,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+
   /////////////////////////////////
   search: {
     width: calcWidth(360),

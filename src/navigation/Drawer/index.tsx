@@ -19,7 +19,8 @@ const DrawerNavigation = () => (
     openByDefault={false}
     drawerStyle={{
       width: '80%',
-    }}>
+    }}
+    >
     <DrawerNavigator.Screen
       component={MainTabs}
       name="Main"

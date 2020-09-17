@@ -97,7 +97,7 @@ const PlaceOrder = () => {
           </View>
           <AppText style={styles.price}>{item.totalPrice}</AppText>
           <TouchableOpacity>
-            <Image source={IMAGES.close} style={styles.close} />
+            <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
         </View>
         <Line width={calcWidth(345)} color={COLORS.lightGray} />
@@ -105,7 +105,7 @@ const PlaceOrder = () => {
     );
   };
   return (
-    <ScrollView style={{backgroundColor: COLORS.white ,flex:1}}>
+    <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={styles.container}>
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>السلة</AppText>
@@ -169,7 +169,7 @@ const PlaceOrder = () => {
           />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

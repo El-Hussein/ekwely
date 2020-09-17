@@ -10,7 +10,7 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
-  myOrder: {
+  newOrder: {
     width: '100%',
     height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
@@ -19,11 +19,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: calcWidth(10),
   },
-  myOrderText: {
+  newOrderText: {
     fontSize: calcFont(20),
     fontWeight: 'bold',
     color: '#121c2c',
   },
+
   /////////////////////////////////////////////
   tabViewStyle: {
     flex: 1,
@@ -67,78 +68,27 @@ export default StyleSheet.create({
   },
 
   ////////////////////////////////////////
-  order: {
-    backgroundColor: COLORS.midGray,
-    width: '95%',
-    borderRadius: calcWidth(5),
-    alignSelf: 'center',
-    height: calcHeight(140),
-    marginVertical: calcHeight(5),
-  },
-  title: {
-    marginVertical: calcHeight(10),
-    marginTop: calcHeight(7),
-    flexDirection: 'row-reverse',
+  item: {
+    width: '100%',
     justifyContent: 'space-between',
-    marginHorizontal: calcWidth(10),
-  },
-  orderNumber: {
-    width: '45%',
     flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-  },
-  orderNumText: {
-    color: COLORS.mainText,
-    fontSize: calcFont(18),
-    fontWeight: 'bold',
-  },
-  NumText: {
-    color: COLORS.mainText,
-    fontSize: calcFont(18),
-    fontWeight: 'bold',
-  },
-  sent: {
-    color: COLORS.mainText,
-    fontSize: calcFont(16),
-    fontWeight: 'bold',
-    backgroundColor: COLORS.yallow,
-    borderRadius: calcWidth(5),
-    alignSelf: 'center',
-    width: calcWidth(91),
-    height: calcHeight(32),
+    paddingVertical: calcHeight(15),
+    paddingHorizontal: calcWidth(15),
     alignItems: 'center',
-    textAlign: 'center',
-    textAlignVertical: 'center',
   },
-  desc: {
-    backgroundColor: COLORS.white,
-    width: '96%',
-    borderRadius: calcWidth(5),
-    alignSelf: 'center',
-    height: calcHeight(84),
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-  totalPriceText: {
-    color: COLORS.textGray,
+  product: {
+    color: COLORS.mainText,
     fontSize: calcFont(18),
-    fontWeight: 'bold',
-    width: calcWidth(135),
+    // fontWeight: 'bold',
+    lineHeight: calcHeight(27),
   },
-  priceText: {
-    color: COLORS.lightTextGray,
-    fontSize: calcFont(16),
+  close: {
+    width: calcWidth(22),
+    height: calcWidth(22),
+    resizeMode: 'contain',
+    tintColor: COLORS.mainText,
   },
-  dateTitleText: {
-    color: COLORS.textGray,
-    fontSize: calcFont(18),
-    fontWeight: 'bold',
-    width: calcWidth(135),
-  },
-  dateText: {
-    color: COLORS.lightTextGray,
-    fontSize: calcFont(16),
-  },
+
   EmptyComponent: {
     fontSize: calcFont(20),
     color: '#a3a3a3',
