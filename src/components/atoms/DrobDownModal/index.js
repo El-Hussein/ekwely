@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, FlatList, Platform } from "react-native";
-import Modal from "react-native-modal";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { AppText } from "../../../../../components/AppText";
-import { calcFont } from "../../../../../utils/responsive";
-import { colors } from "../../../../../constants/colors";
-import icons from "../../../../../constants/icons";
-import locale from "../../../../../locale";
-import { styles } from "./styles";
+import React, {useState} from 'react';
+import {View, TouchableOpacity, FlatList, Platform} from 'react-native';
+import Modal from 'react-native-modal';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {styles} from './styles';
+import COLORS from '../../../common/colors';
+import AppText from '../AppText';
+import {calcFont} from '../../../common/styles';
+import ICONS from '../../../common/icons';
 
 const DropDown = ({
   selected,
@@ -21,7 +20,7 @@ const DropDown = ({
   const [androidSelected, setAndroidSelected] = useState(selected || {});
   return (
     <>
-      {Platform.OS === "ios" ? (
+      {Platform.OS === 'ios' ? (
         <Modal
           isVisible={visible}
           onBackButtonPress={closeModal}
@@ -32,16 +31,15 @@ const DropDown = ({
           backdropOpacity={0.2}
           swipeDirection="down"
           useNativeDriver
-          hideModalContentWhileAnimating
-        >
+          hideModalContentWhileAnimating>
           <View style={styles.container}>
             <FlatList
               data={data}
               ListHeaderComponent={
                 <View style={styles.header}>
-                  <TouchableOpacity onPress={closeModal}>
+                  <TouchableOpacity activeOpacity={0.7} onPress={closeModal}>
                     <Icon
-                      name={icons.close}
+                      name={ICONS.close}
                       size={calcFont(25)}
                       style={styles.closeIcon}
                     />
@@ -50,21 +48,19 @@ const DropDown = ({
                 </View>
               }
               contentContainerStyle={styles.list}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <TouchableOpacity
+                  activeOpacity={0.7}
                   style={styles.card}
                   onPress={() => {
                     onPress(item);
                     closeModal();
-                  }}
-                >
+                  }}>
                   <AppText style={styles.nameText}>{item.name}</AppText>
                   <Icon
-                    name={icons.check}
+                    name={ICONS.check}
                     size={calcFont(25)}
-                    color={
-                      selected === item ? colors.fillColor : colors.white01
-                    }
+                    color={selected === item ? COLORS.main : COLORS.white}
                   />
                 </TouchableOpacity>
               )}
@@ -80,8 +76,7 @@ const DropDown = ({
           onSwipeCancel={closeModal}
           backdropOpacity={0.2}
           useNativeDriver
-          hideModalContentWhileAnimating
-        >
+          hideModalContentWhileAnimating>
           <View style={styles.androidContainer}>
             <FlatList
               ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -91,21 +86,21 @@ const DropDown = ({
                   <AppText style={styles.titleText}>{title}</AppText>
                 </View>
               }
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <TouchableOpacity
+                  activeOpacity={0.7}
                   onPress={() => setAndroidSelected(item)}
-                  style={styles.androidCard}
-                >
+                  style={styles.androidCard}>
                   <AppText style={styles.nameText}>{item.name}</AppText>
                   <View>
                     <Icon
                       name={
                         androidSelected === item
-                          ? icons.checkBoxMarked
-                          : icons.checkBox
+                          ? ICONS.checkBoxMarked
+                          : ICONS.checkBox
                       }
                       size={calcFont(25)}
-                      color={colors.fillColor}
+                      color={COLORS.main}
                     />
                   </View>
                 </TouchableOpacity>
@@ -113,16 +108,16 @@ const DropDown = ({
             />
             <View style={styles.buttons}>
               <TouchableOpacity
+                activeOpacity={0.7}
                 disabled={!androidSelected}
                 onPress={() => {
                   onSelectItem(androidSelected);
                   closeModal();
-                }}
-              >
-                <AppText style={styles.buttonText}>{locale.confirm}</AppText>
+                }}>
+                <AppText style={styles.buttonText}>تاكيد</AppText>
               </TouchableOpacity>
-              <TouchableOpacity onPress={closeModal}>
-                <AppText style={styles.buttonText}>{locale.cancel}</AppText>
+              <TouchableOpacity activeOpacity={0.7} onPress={closeModal}>
+                <AppText style={styles.buttonText}>الغاء</AppText>
               </TouchableOpacity>
             </View>
           </View>

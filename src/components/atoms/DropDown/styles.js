@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     tintColor: COLORS.drop,
   },
+  disabled: {
+    backgroundColor: COLORS.lightGray,
+  },
 });
 
 export {styles};
