@@ -120,54 +120,59 @@ const PlaceOrder = () => {
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
           }
+          ListFooterComponent={
+            <>
+              <TouchableOpacity
+                onPress={toggleQuickCleaning}
+                style={styles.checkBoxContainer}>
+                <AppText style={styles.checkboxText}>
+                  خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+                </AppText>
+                <IconIonicons
+                  name={quickCleaning ? 'md-checkbox' : 'square-outline'}
+                  size={calcFont(25)}
+                  color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+                />
+              </TouchableOpacity>
+
+              <Line width={calcWidth(345)} color={COLORS.lightGray} />
+
+              <View style={styles.total}>
+                <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+                <AppText style={styles.priceText}>200 ج</AppText>
+              </View>
+              <View style={styles.total}>
+                <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+                <AppText style={styles.PromoCode}>40 ج</AppText>
+              </View>
+              <View style={styles.total}>
+                <AppText style={styles.totalPriceText}>
+                  القيمة بعد الخصم
+                </AppText>
+                <AppText style={styles.priceText}>160 ج</AppText>
+              </View>
+              <TouchableOpacity
+                // onPress={toggleCashPayment}
+                style={styles.checkBoxContainer}>
+                <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
+                <IconIonicons
+                  name={cashPayment ? 'md-checkbox' : 'square-outline'}
+                  size={calcFont(25)}
+                  color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
+                />
+              </TouchableOpacity>
+
+              <View style={styles.orderButton}>
+                <Button
+                  title={'تنفيذ الطلب'}
+                  onPress={() => navigation.navigate('Home')}
+                  titleStyle={styles.completeOrder}
+                  style={styles.button}
+                />
+              </View>
+            </>
+          }
         />
-
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-          </AppText>
-          <IconIonicons
-            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-
-        <Line width={calcWidth(345)} color={COLORS.lightGray} />
-
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-          <AppText style={styles.priceText}>200 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.orderButton}>
-          <Button
-            title={'تنفيذ الطلب'}
-            onPress={() => navigation.navigate('Home')}
-            titleStyle={styles.completeOrder}
-            style={styles.button}
-          />
-        </View>
       </View>
     </View>
   );

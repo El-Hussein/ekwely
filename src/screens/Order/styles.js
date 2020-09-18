@@ -20,7 +20,7 @@ export default StyleSheet.create({
     paddingHorizontal: calcWidth(10),
   },
   newOrderText: {
-    color:'#121c2c',
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
   },
@@ -71,13 +71,14 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    paddingHorizontal: calcWidth(5),
+    paddingHorizontal: calcWidth(10),
     paddingVertical: calcHeight(10),
   },
   orderTimeText: {
     color: COLORS.textGray,
     fontSize: calcFont(18),
     fontWeight: 'bold',
+    marginHorizontal: calcWidth(10),
   },
   chooseService: {
     width: '100%',
