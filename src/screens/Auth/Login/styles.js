@@ -37,7 +37,6 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: calcHeight(60),
   },
-
   rTitle: {
     paddingVertical: calcHeight(20),
   },
