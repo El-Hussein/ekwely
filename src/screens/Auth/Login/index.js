@@ -2,17 +2,18 @@ import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
+import {useDispatch} from 'react-redux';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
 import Button from '../../../components/atoms/Button';
-import AppText from '../../../components/atoms/AppText';
 import IMAGES from '../../../common/images';
-import {color} from 'react-native-reanimated';
 import {makePostRequest} from '../../../utils/api.helpers';
 import {USER_DATA} from '../../../common/constants';
 import {validateEmail, validatePassword} from '../../../common/Validation';
+import {SIGN_IN} from '../../../redux/actions/types';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
@@ -54,7 +55,7 @@ const Login = () => {
           // save user data in AsyncStorage
           AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
           // save user data in the redux
-
+          dispatch({type: SIGN_IN, payload: response.data.data});
           // navigate to home screen
           navigation.navigate('Drawer');
         }

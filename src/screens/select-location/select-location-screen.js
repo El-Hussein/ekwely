@@ -32,8 +32,8 @@ class SelectLocationScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: 222,
-      longitude: 222,
+      latitude: 30.2333222,
+      longitude: 31.5552012,
       address: '',
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
@@ -159,8 +159,8 @@ class SelectLocationScreen extends Component {
               provider={PROVIDER_DEFAULT}
               followsUserLocation
               region={{
-                latitude,
-                longitude,
+                latitude: latitude || 30.044414342924416,
+                longitude: longitude || 31.23569928109646,
                 latitudeDelta,
                 longitudeDelta,
               }}

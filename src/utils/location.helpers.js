@@ -34,7 +34,9 @@ export const getMyLocation = () => {
           (error) => {
             reject(error);
           },
-          // { enableHighAccuracy: true },
+          {
+            timeout: 30000,
+          },
         );
       } else {
         reject(result);

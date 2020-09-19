@@ -56,10 +56,11 @@ const Register = () => {
     setPhoneError(phoneErr);
     setPasswordError(passwordErr);
     setPasswordConfirmError(passwordConfirmErr || passwordAndConfirmErr);
-
-    if (!addressData) {
+    if (!addressData?.streetAddress) {
       setAddressError(true);
     }
+
+    console.log(addressData);
 
     return (
       nameErr ||
@@ -67,7 +68,8 @@ const Register = () => {
       phoneErr ||
       passwordErr ||
       passwordAndConfirmErr ||
-      passwordConfirmErr
+      passwordConfirmErr ||
+      addressError
     );
   };
   const register = () => {
@@ -75,7 +77,6 @@ const Register = () => {
     setServerError('');
     setLoading(true);
     try {
-      console.log('what?');
       makePostRequest({
         url: '/Users/customerregister',
         data: {
@@ -92,7 +93,6 @@ const Register = () => {
         },
       })
         .then((response) => {
-          console.log('responce', response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
@@ -111,7 +111,6 @@ const Register = () => {
           setLoading(false);
         });
     } catch (error) {
-      console.log('error saving user in storage -> ', error);
       setLoading(false);
     }
   };
@@ -218,9 +217,7 @@ const Register = () => {
         </View>
         <View style={styles.addressVeiw}>
           {addressError && (
-            <AppText style={styles.error}>
-              من فضلك العنوان
-            </AppText>
+            <AppText style={styles.error}>من فضلك ادخل العنوان</AppText>
           )}
         </View>
         <View style={styles.loginButton}>

@@ -9,6 +9,7 @@ import {calcHeight, calcWidth} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
 import {USER_DATA} from '../../common/constants';
+import {useSelector} from 'react-redux';
 
 const Raw = ({title, onPress}) => {
   return (
@@ -19,6 +20,11 @@ const Raw = ({title, onPress}) => {
   );
 };
 const Drawer = () => {
+  const {user} = useSelector((state) => {
+    return {
+      user: state.auth.user,
+    };
+  });
   const navigation = useNavigation();
 
   return (
@@ -32,7 +38,7 @@ const Drawer = () => {
         </View>
       </View>
       <View>
-        <AppText style={styles.titleText}>Mahmoud Mohamed</AppText>
+        <AppText style={styles.titleText}>{user?.firstName}</AppText>
         <Line width={calcWidth(200)} color={COLORS.white} />
       </View>
       <View style={styles.menu}>
