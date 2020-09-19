@@ -92,6 +92,10 @@ export default StyleSheet.create({
     borderRadius: calcFont(30),
     backgroundColor: COLORS.yallow,
   },
+  error: {
+    fontSize: calcFont(16),
+    color: COLORS.error,
+  },
   loginTitle: {
     color: COLORS.mainText,
     fontSize: calcWidth(25),

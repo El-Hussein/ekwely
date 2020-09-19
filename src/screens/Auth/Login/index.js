@@ -10,6 +10,7 @@ import IMAGES from '../../../common/images';
 import {color} from 'react-native-reanimated';
 import {makePostRequest} from '../../../utils/api.helpers';
 import {USER_DATA} from '../../../common/constants';
+import {validateEmail, validatePassword} from '../../../common/Validation';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -19,12 +20,19 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
+  const _validate = () => {
+    let emailErr = validateEmail(loginData.email);
+    let passwordErr = validatePassword(loginData.password);
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+    console.log('hhhhhhhh', {emailError, passwordError});
+    return emailErr || passwordErr;
+  };
   const login = () => {
+    if (_validate()) return;
     setServerError('');
     setLoading(true);
     try {
@@ -63,43 +71,24 @@ const Login = () => {
       <View style={styles.loginForm}>
         <Image source={IMAGES.loginBg} style={styles.loginBg} />
         <AppInput
-          error={errors.email}
+          error={emailError}
           value={loginData.email}
           onChangeText={(email) => {
             setLoginData({...loginData, email});
           }}
           onEndEditing={() => {
-            if (loginData.email.length === 0) {
-              setErrors({...errors, email: 'هذا الحقل مطلوب'});
-            } else if (
-              !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-                loginData.email,
-              )
-            ) {
-              setErrors({...errors, email: 'البريد الالكتروني غير صحيح'});
-            } else {
-              setErrors({...errors, email: ''});
-            }
+            setEmailError(validateEmail(loginData.email));
           }}
           placeholder={'بريد الالكترونى أو أسم المستخدم'}
         />
         <AppInput
-          error={errors.password || serverError}
+          error={passwordError || serverError}
           value={loginData.password}
           onChangeText={(password) => {
             setLoginData({...loginData, password});
           }}
           onEndEditing={() => {
-            if (loginData.password.length === 0) {
-              setErrors({...errors, password: 'هذا الحقل مطلوب'});
-            } else if (loginData.password.length < 6) {
-              setErrors({
-                ...errors,
-                password: 'يجب الا يقل رمز المرور عن 6 احرف',
-              });
-            } else {
-              setErrors({...errors, password: ''});
-            }
+            setPasswordError(validatePassword(loginData.password));
           }}
           placeholder={'رمز المرور'}
           secureTextEntry={true}
