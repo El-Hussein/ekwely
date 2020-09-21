@@ -21,11 +21,12 @@ export default StyleSheet.create({
     width: calcWidth(276),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.main,
-    paddingVertical: calcHeight(20),
+    paddingVertical: calcHeight(15),
   },
   orderTitle: {
     color: COLORS.white,
     fontSize: calcFont(32),
+    lineHeight: calcHeight(40),
   },
   promoImage: {
     width: calcWidth(330),
