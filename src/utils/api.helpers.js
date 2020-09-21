@@ -2,7 +2,7 @@ import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 const CONNECTION_ERROR = 'حدث خطأ في الاتصال';
 const API_BASE_URL = 'http://app.key-frame.cf/';
-import store from '../redux/store';
+import {store} from '../redux/store';
 
 export const makePostRequest = async ({
   url,
@@ -55,7 +55,7 @@ export const makeRequest = async (
     url: `${API_BASE_URL}${url}`,
     method: method || 'get',
   };
-  const userToken = store.getState().auth.auth_token;
+  const userToken = store?.getState()?.auth.auth_token;
   if (userToken) {
     config.headers = headers
       ? {Authorization: `Bearer ${userToken}`, ...headers}
