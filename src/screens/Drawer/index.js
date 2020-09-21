@@ -38,7 +38,7 @@ const Drawer = () => {
         </View>
       </View>
       <View>
-        <AppText style={styles.titleText}>{user?.firstName}</AppText>
+        <AppText style={styles.titleText}>{user?.userName}</AppText>
         <Line width={calcWidth(200)} color={COLORS.white} />
       </View>
       <View style={styles.menu}>
@@ -63,6 +63,7 @@ const Drawer = () => {
             AsyncStorage.removeItem(USER_DATA)
               .then((response) => {
                 // remove user from redux
+
                 navigation.navigate('Auth');
               })
               .catch((error) => {

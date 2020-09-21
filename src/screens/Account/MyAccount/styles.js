@@ -20,7 +20,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   newOrderText: {
-    color:'#121c2c',
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
     color: COLORS.gray,
@@ -89,5 +89,16 @@ export default StyleSheet.create({
     height: calcHeight(30),
     resizeMode: 'contain',
     tintColor: COLORS.darkMain,
+  },
+  addressVeiw: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    width: calcWidth(283),
+    alignSelf: 'center',
+  },
+  error: {
+    fontSize: calcFont(16),
+    color: COLORS.error,
   },
 });

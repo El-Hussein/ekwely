@@ -25,6 +25,11 @@ const DrawerNavigation = () => (
     <DrawerNavigator.Screen component={Faq} name="FAQ" />
     <DrawerNavigator.Screen component={Support} name="Support" />
     <DrawerNavigator.Screen component={ContactUs} name="Contact" />
+    <DrawerNavigator.Screen
+      options={headerOptions}
+      name="SelectLocation"
+      component={SelectLocationScreen}
+    />
   </DrawerNavigator.Navigator>
 );
 
