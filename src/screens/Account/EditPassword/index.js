@@ -27,7 +27,9 @@ import {useNavigation} from '@react-navigation/native';
 const EditAccount = () => {
   const navigation = useNavigation();
 
-  const [value, onChangeText] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
       <View style={styles.container}>
@@ -53,8 +55,8 @@ const EditAccount = () => {
           <View style={styles.promoCode}>
             <TextInput
               style={styles.promoCodeInput}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
+              onChangeText={(text) => setOldPassword(text)}
+              value={oldPassword}
             />
           </View>
         </View>
@@ -64,8 +66,8 @@ const EditAccount = () => {
           <View style={styles.promoCode}>
             <TextInput
               style={styles.promoCodeInput}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
+              onChangeText={(text) => setNewPassword(text)}
+              value={newPassword}
             />
           </View>
         </View>
@@ -75,8 +77,8 @@ const EditAccount = () => {
           <View style={styles.promoCode}>
             <TextInput
               style={styles.promoCodeInput}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
+              onChangeText={(text) => setConfirmNewPassword(text)}
+              value={confirmNewPassword}
             />
           </View>
         </View>

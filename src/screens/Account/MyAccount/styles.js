@@ -12,12 +12,12 @@ export default StyleSheet.create({
 
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
-    backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(15),
+    flexDirection:'row-reverse',
+    justifyContent:'space-between',
     alignItems: 'center',
+    backgroundColor: COLORS.lightGray,
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
     color: '#121c2c',

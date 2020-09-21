@@ -12,30 +12,24 @@ export default StyleSheet.create({
   },
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    paddingHorizontal: calcWidth(10),
-    marginBottom: calcHeight(15),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
+    marginBottom:calcHeight(10)
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
   },
   /////////////////////////////////////////////
   text: {
     width: calcWidth(330),
-    alignSelf:'center',
+    alignSelf: 'center',
     color: COLORS.lightTextGray,
     fontSize: calcFont(16),
     fontWeight: 'bold',
-    paddingRight: calcWidth(15),
     textAlign: 'right',
-    paddingVertical: calcHeight(15),
-    lineHeight:calcHeight(24)
+    lineHeight: calcHeight(24),
   },
 });

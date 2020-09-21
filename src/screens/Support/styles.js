@@ -11,18 +11,14 @@ export default StyleSheet.create({
   },
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
   },
   /////////////////////////////////////////////
   comment: {
@@ -39,7 +35,7 @@ export default StyleSheet.create({
     fontSize: calcFont(16),
     textAlign: 'right',
     lineHeight: calcHeight(27),
-    textAlignVertical:'top'
+    textAlignVertical: 'top',
   },
 
   title: {
@@ -60,7 +56,7 @@ export default StyleSheet.create({
   },
   addToCartButton: {
     width: calcWidth(124),
-    height: calcHeight(42),
+    paddingVertical: calcHeight(5),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.yallow,
     alignSelf: 'flex-start',
