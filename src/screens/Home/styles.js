@@ -10,7 +10,6 @@ export default StyleSheet.create({
   scroll: {
     flex: 1,
     backgroundColor: COLORS.white,
-
   },
   orderButton: {
     width: '100%',
@@ -20,9 +19,9 @@ export default StyleSheet.create({
   },
   button: {
     width: calcWidth(276),
-    height: calcHeight(65),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.main,
+    paddingVertical: calcHeight(20),
   },
   orderTitle: {
     color: COLORS.white,
@@ -30,45 +29,44 @@ export default StyleSheet.create({
   },
   promoImage: {
     width: calcWidth(330),
-    height: calcHeight(98),
     resizeMode: 'contain',
-    marginVertical: calcHeight(30),
   },
   promoCode: {
-    width: calcWidth(182),
-    height: calcHeight(85),
+    // paddingVertical: calcHeight(10),
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    top: calcHeight(38),
-    right: calcWidth(40),
-    
+    top: '25%',
+    right: '15%',
   },
   promoCodeText: {
-    fontSize:calcFont(22),
-    fontWeight:'bold',
-    marginRight: calcWidth(10),
+    fontSize: calcFont(22),
+    fontWeight: 'bold',
+    // marginRight: calcWidth(10),
   },
   promoCodeNum: {
-    fontSize:calcFont(35),
-    letterSpacing: calcWidth(7),
-
+    fontSize: calcFont(25),
+    fontWeight: 'bold',
+    marginTop: calcHeight(15),
+    letterSpacing: calcWidth(9),
   },
-  
+
   promoDiscount: {
-    width: calcWidth(61),
-    height: calcHeight(85),
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    top: calcHeight(38),
-    left: calcWidth(35),
-    
+    top: '25%',
+    right: '70%',
   },
   promoDiscountText: {
-    fontSize:calcFont(20),
-    fontWeight:'bold',
-    color:COLORS.white
+    fontSize: calcFont(22),
+    fontWeight: 'bold',
+    color: COLORS.white,
   },
   promoDiscountNum: {
-    fontSize:calcFont(28),
-    color:COLORS.white,
-    fontWeight:'bold',
+    fontSize: calcFont(25),
+    marginTop: calcHeight(15),
+    color: COLORS.white,
+    fontWeight: 'bold',
   },
 });

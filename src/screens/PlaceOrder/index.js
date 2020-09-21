@@ -21,7 +21,8 @@ import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
 import {useNavigation} from '@react-navigation/native';
 
-const PlaceOrder = () => {  const navigation = useNavigation();
+const PlaceOrder = () => {
+  const navigation = useNavigation();
 
   const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(true);
@@ -73,12 +74,11 @@ const PlaceOrder = () => {  const navigation = useNavigation();
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.newOrder}>
-          <AppText style={styles.newOrderText}>طلب جديد</AppText>
-        </View>
-
+    <View style={styles.container}>
+      <View style={styles.newOrder}>
+        <AppText style={styles.newOrderText}>طلب جديد</AppText>
+      </View>
+      <ScrollView >
         <View style={styles.orderTime}>
           <Image source={IMAGES.out} style={styles.inOutImage} />
 
@@ -195,8 +195,8 @@ const PlaceOrder = () => {  const navigation = useNavigation();
             onChange={onChange}
           />
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

@@ -11,13 +11,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   myOrder: {
-    width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   myOrderText: {
     fontSize: calcFont(20),
@@ -72,19 +71,16 @@ export default StyleSheet.create({
   ////////////////////////////////////////
   order: {
     backgroundColor: COLORS.midGray,
-    width: '95%',
     borderRadius: calcWidth(5),
     alignSelf: 'center',
-    // height: calcHeight(140),
     marginVertical: calcHeight(5),
-    paddingVertical: calcHeight(15),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   title: {
-    marginVertical: calcHeight(10),
-    marginTop: calcHeight(7),
+    marginBottom: calcHeight(10),
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
-    marginHorizontal: calcWidth(10),
   },
   orderNumber: {
     width: '45%',

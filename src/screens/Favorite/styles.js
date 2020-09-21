@@ -46,7 +46,10 @@ export default StyleSheet.create({
   },
   labelStyle: {
     fontSize: calcFont(18),
-    fontWeight: 'bold',
+    fontWeight: 'normal',
+    textAlignVertical: 'top',
+    lineHeight: calcHeight(28),
+    fontFamily: 'din-next-lt-w23-medium',
     width: calcWidth(160),
     textAlign: 'center',
     margin: 0,
@@ -66,7 +69,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   ////////////////////////////////////////
   item: {
     width: '100%',

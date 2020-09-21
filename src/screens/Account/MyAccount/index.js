@@ -102,17 +102,15 @@ const MyAccount = () => {
           <Line width={calcWidth(345)} color={COLORS.lightGray} />
         </View>
 
+        
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
 
-          <TouchableOpacity
-            onPress={saveAddress}
-            loading={loading}
-            disabled={loading}>
-            <AppText numberOfLines={1} style={styles.changeAddressText}>
-              تغيير العنوان
-            </AppText>
-          </TouchableOpacity>
+          <Button
+            title={'تغيير العنوان'}
+            // onPress={() => navigation.navigate('EditPassword')}
+            titleStyle={styles.changeAddressText}
+          />
         </View>
         <View style={styles.addressVeiw}>
           {serverError ? (

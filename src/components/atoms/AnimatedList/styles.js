@@ -12,10 +12,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     width: calcWidth(350),
-    height: calcHeight(55),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.lightGray,
-    marginVertical: calcHeight(3),
+    marginVertical: calcHeight(5),
   },
 
   animatedTitle: {
