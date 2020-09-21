@@ -33,9 +33,6 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   promoCode: {
-    // paddingVertical: calcHeight(10),
-    // justifyContent: 'fle',
-    // alignItems: 'center',
     position: 'absolute',
     top: '25%',
     right: '10%',
@@ -43,7 +40,6 @@ export default StyleSheet.create({
   promoCodeText: {
     fontSize: calcFont(22),
     fontWeight: 'bold',
-    // marginRight: calcWidth(10),
   },
   promoCodeNum: {
     fontSize: calcFont(38),
@@ -54,8 +50,6 @@ export default StyleSheet.create({
   },
 
   promoDiscount: {
-    // justifyContent: 'center',
-    // alignItems: 'center',
     position: 'absolute',
     top: '25%',
     right: '67%',
