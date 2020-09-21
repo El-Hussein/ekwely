@@ -33,11 +33,11 @@ export default StyleSheet.create({
   },
   promoCode: {
     // paddingVertical: calcHeight(10),
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'fle',
+    // alignItems: 'center',
     position: 'absolute',
     top: '25%',
-    right: '15%',
+    right: '10%',
   },
   promoCodeText: {
     fontSize: calcFont(22),
@@ -45,18 +45,19 @@ export default StyleSheet.create({
     // marginRight: calcWidth(10),
   },
   promoCodeNum: {
-    fontSize: calcFont(25),
+    fontSize: calcFont(38),
+    lineHeight: calcHeight(45),
     fontWeight: 'bold',
     marginTop: calcHeight(15),
     letterSpacing: calcWidth(9),
   },
 
   promoDiscount: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     position: 'absolute',
     top: '25%',
-    right: '70%',
+    right: '67%',
   },
   promoDiscountText: {
     fontSize: calcFont(22),
@@ -64,7 +65,8 @@ export default StyleSheet.create({
     color: COLORS.white,
   },
   promoDiscountNum: {
-    fontSize: calcFont(25),
+    fontSize: calcFont(38),
+    lineHeight: calcHeight(45),
     marginTop: calcHeight(15),
     color: COLORS.white,
     fontWeight: 'bold',
