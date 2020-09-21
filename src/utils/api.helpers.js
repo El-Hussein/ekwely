@@ -76,6 +76,6 @@ export const makeRequest = async (
     }
   });
 
-  const response = await axios.request({...config, timeout: 3000});
+  const response = await axios.request({...config, timeout: 10000});
   return response;
 };
