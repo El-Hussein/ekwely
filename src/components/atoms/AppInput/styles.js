@@ -13,9 +13,12 @@ const styles = StyleSheet.create({
     borderWidth: calcHeight(2),
     paddingHorizontal: calcWidth(20),
     fontSize: calcFont(18),
-    fontWeight: 'bold',
     color: COLORS.white,
     textAlign: 'right',
+    lineHeight: calcHeight(30),
+    fontWeight: 'normal',
+    textAlignVertical: 'bottom',
+    fontFamily: 'din-next-lt-w23-medium',
   },
   error: {
     fontSize: calcFont(16),

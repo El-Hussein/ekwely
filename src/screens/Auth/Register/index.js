@@ -92,7 +92,7 @@ const Register = () => {
           },
         },
       })
-        .then((response) => {
+      .then((response) => {
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);

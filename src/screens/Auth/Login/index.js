@@ -49,6 +49,8 @@ const Login = () => {
           },
         },
       }).then((response) => {
+        console.log('kkkkkkkkeeeeeeeeee' ,response)
+
         if (response?.data?.status !== '200') {
           setServerError('اسم المستخدم او كلمة المرور خاطئة');
         } else if (response?.data?.data) {

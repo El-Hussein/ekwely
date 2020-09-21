@@ -9,12 +9,12 @@ const validateUserName = (userName) => {
 const validateEmail = (email) => {
   if (email.length === 0) {
     return 'هذا الحقل مطلوب';
-  } else if (
-    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-      String(email).toLowerCase(),
-    )
-  ) {
-    return 'البريد الالكتروني غير صحيح';
+    // } else if (
+    //   !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+    //     String(email).toLowerCase(),
+    //   )
+    // ) {
+    // return 'البريد الالكتروني غير صحيح';
   } else {
     return null;
   }
