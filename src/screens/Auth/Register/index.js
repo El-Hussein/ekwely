@@ -50,14 +50,17 @@ const Register = () => {
       registerData.password,
       registerData.passwordConfirm,
     );
+    let addressErr = false;
 
     setUserNameError(nameErr);
     setEmailError(emailErr);
     setPhoneError(phoneErr);
     setPasswordError(passwordErr);
     setPasswordConfirmError(passwordConfirmErr || passwordAndConfirmErr);
-    if (!addressData?.streetAddress) {
+    const {streetAddress, latitude, longitude} = addressData;
+    if (!streetAddress || !latitude || !longitude) {
       setAddressError(true);
+      addressErr = true;
     }
 
     console.log(addressData);
@@ -69,7 +72,7 @@ const Register = () => {
       passwordErr ||
       passwordAndConfirmErr ||
       passwordConfirmErr ||
-      addressError
+      addressErr
     );
   };
   const register = () => {
@@ -92,7 +95,7 @@ const Register = () => {
           },
         },
       })
-      .then((response) => {
+        .then((response) => {
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
