@@ -13,18 +13,14 @@ export default StyleSheet.create({
   },
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
   },
   /////////////////////////////////////////////
   tabViewStyle: {
@@ -47,7 +43,10 @@ export default StyleSheet.create({
   },
   labelStyle: {
     fontSize: calcFont(18),
-    fontWeight: 'bold',
+    fontWeight: 'normal',
+    textAlignVertical: 'top',
+    lineHeight: calcHeight(28),
+    fontFamily: 'din-next-lt-w23-medium',
     width: calcWidth(160),
     textAlign: 'center',
     margin: 0,
@@ -71,7 +70,6 @@ export default StyleSheet.create({
   /////////////////////////////////
   search: {
     width: calcWidth(360),
-    height: calcHeight(50),
     borderRadius: calcFont(3),
     backgroundColor: COLORS.lightGray,
     borderWidth: calcWidth(1),

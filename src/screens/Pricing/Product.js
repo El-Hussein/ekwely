@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -9,18 +9,36 @@ import {
 } from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
-import DropDown from '../../components/atoms/DropDown';
-import Button from '../../components/atoms/Button';
 import IMAGES from '../../common/images';
-import CheckBox from '../../components/atoms/CheckBox';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getProducts} from '../../redux/actions/Products';
 
-const Product = () => {
+const Product = (
+  getProducts,
+  products,
+  error,
+  errorMsg,
+  loading,
+) => {
+  const navigation = useNavigation();
+  const {user} = useSelector((state) => {
+    return {
+      user: state.auth.user,
+    };
+  });
+
   const [value, onChangeText] = useState('');
   const [favorite, setFavorite] = useState(true);
   const [cart, setCart] = useState(true);
+
+  useEffect(() => {
+    getProducts(user.id);
+  }, []);
 
   const toggleFavorite = () => {
     setFavorite(!favorite);
@@ -28,72 +46,73 @@ const Product = () => {
   const toggleCart = () => {
     setCart(!cart);
   };
-  const products = [
-    {
-      id: '1',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: true,
-      price: '150ج',
-    },
-    {
-      id: '2',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '3',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '4',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: true,
-      price: '150ج',
-    },
-    {
-      id: '1',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: true,
-      price: '150ج',
-    },
-    {
-      id: '2',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '3',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '4',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: true,
-      price: '150ج',
-    },
-  ];
+  // const products = [
+  //   {
+  //     id: '1',
+  //     image: IMAGES.p1,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: false,
+  //     isFav: true,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '2',
+  //     image: IMAGES.p2,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: true,
+  //     isFav: false,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '3',
+  //     image: IMAGES.p1,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: false,
+  //     isFav: false,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '4',
+  //     image: IMAGES.p2,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: true,
+  //     isFav: true,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '1',
+  //     image: IMAGES.p1,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: false,
+  //     isFav: true,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '2',
+  //     image: IMAGES.p2,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: true,
+  //     isFav: false,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '3',
+  //     image: IMAGES.p1,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: false,
+  //     isFav: false,
+  //     price: '150ج',
+  //   },
+  //   {
+  //     id: '4',
+  //     image: IMAGES.p2,
+  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
+  //     isCart: true,
+  //     isFav: true,
+  //     price: '150ج',
+  //   },
+  // ];
+
   const _renderProductItem = ({item}) => {
     return (
       <View>
@@ -108,7 +127,7 @@ const Product = () => {
             <View style={styles.cartFav}>
               <TouchableOpacity
                 style={
-                  item.isFav
+                  item.isFavourite
                     ? styles.favoriteOut
                     : [styles.favoriteOut, {backgroundColor: COLORS.midGrayo}]
                 }>
@@ -117,14 +136,14 @@ const Product = () => {
 
               <TouchableOpacity
                 style={
-                  item.isCart
+                  item.isItemBasket
                     ? styles.favoriteOut
                     : [styles.favoriteOut, {backgroundColor: COLORS.midGrayo}]
                 }>
                 <Image
                   source={IMAGES.cart}
                   style={
-                    item.isCart
+                    item.isItemBasket
                       ? styles.cartImage
                       : [styles.cartImage, {tintColor: COLORS.white}]
                   }
@@ -135,11 +154,11 @@ const Product = () => {
             <View style={styles.namePrice}>
               <View style={styles.price}>
                 <AppText numberOfLines={1} style={styles.priceText}>
-                  150ج
+                {item.price}ج
                 </AppText>
               </View>
               <AppText numberOfLines={1} style={styles.productName}>
-                {item.name}
+                {item.arName}
               </AppText>
             </View>
           </View>
@@ -168,12 +187,27 @@ const Product = () => {
         renderItem={_renderProductItem}
         numColumns={2}
         keyExtractor={(item, index) => `${index}`}
+        refreshing={loading}
         ListEmptyComponent={
-          <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
+          <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
         }
       />
     </>
   );
 };
+function mapStateToProps(state) {
+  return {
+    products: state.products.products,
+    error: state.products.error,
+    errorMsg: state.products.errorMsg,
+    loading: state.loading.loading,
+  };
+}
 
-export default Product;
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getProducts}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
