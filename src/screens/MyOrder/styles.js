@@ -101,7 +101,7 @@ export default StyleSheet.create({
     color: COLORS.mainText,
     fontSize: calcFont(16),
     fontWeight: 'bold',
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
     borderRadius: calcWidth(5),
     alignSelf: 'center',
     width: calcWidth(91),

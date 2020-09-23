@@ -6,7 +6,7 @@ const COLORS = {
   mainText: '#000000',
   border: '#5bcbcf',
   error: '#ff0000',
-  yallow: '#fed700',
+  yellow: '#fed700',
   line: 'e3e3e3',
   gray: '#121c2c',
   lightGray:'#f3f3f3',

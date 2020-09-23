@@ -58,7 +58,7 @@ export default StyleSheet.create({
     width: calcWidth(124),
     paddingVertical: calcHeight(5),
     borderRadius: calcFont(5),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
     alignSelf: 'flex-start',
   },
 });

@@ -83,6 +83,7 @@ export default StyleSheet.create({
     fontSize: calcFont(18),
     // fontWeight: 'bold',
     lineHeight: calcHeight(27),
+    width:'85%',
   },
   close: {
     width: calcWidth(22),

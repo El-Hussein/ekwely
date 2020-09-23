@@ -2,10 +2,13 @@ import {
   PRODUCTS_PENDING,
   PRODUCTS_SUCCESS,
   PRODUCTS_FAILED,
+  DRY_CLEAN_SUCCESS,
+ 
 } from '../actions/types';
 
 const initialState = {
   products: [],
+  dryClean: [],
   loading: false,
   error: '',
 };
@@ -24,13 +27,21 @@ export default function ProductsReducer(state = initialState, action) {
         loading: false,
         error: '',
       };
+
     case PRODUCTS_FAILED:
       return {
         ...state,
         loading: false,
-        error: action.payload.msg,
+        error: action.payload,
       };
 
+    case DRY_CLEAN_SUCCESS:
+      return {
+        ...state,
+        dryClean: action.payload,
+      };
+
+    
     default:
       return state;
   }

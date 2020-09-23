@@ -19,22 +19,16 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getProducts} from '../../redux/actions/Products';
 import {IMAGE_BASE_URL} from '../../common/constants';
+import Favorite from '../../components/atoms/Favorite';
 
-const Product = ({getProducts, products, error, errorMsg, loading}) => {
-  const navigation = useNavigation();
-  const {user} = useSelector((state) => {
-    return {
-      user: state.auth.user,
-    };
-  });
-
+const Product = ({getProducts, products,loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const [favorite, setFavorite] = useState(true);
   const [cart, setCart] = useState(true);
 
   useEffect(() => {
-    getProducts(user.id);
+    getProducts();
   }, []);
 
   const toggleFavorite = () => {
@@ -59,14 +53,7 @@ const Product = ({getProducts, products, error, errorMsg, loading}) => {
               alignItems: 'center',
             }}>
             <View style={styles.cartFav}>
-              <TouchableOpacity
-                style={
-                  item.isFavourite
-                    ? styles.favoriteOut
-                    : [styles.favoriteOut, {backgroundColor: COLORS.midGrayo}]
-                }>
-                <Image source={IMAGES.favorite} style={styles.favoriteImage} />
-              </TouchableOpacity>
+              <Favorite id={item.id} isFav={item.isFavourite} />
 
               <TouchableOpacity
                 style={

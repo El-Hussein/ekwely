@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
  
   swiperActiveDotStyle: {
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
   },
   
   swiperPaginationStyle: {

@@ -34,7 +34,7 @@ export default StyleSheet.create({
     width: calcWidth(75),
     height: calcHeight(30),
     borderRadius: calcFont(15),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
   },
   userImage: {
     width: calcWidth(75),
