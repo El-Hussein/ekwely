@@ -46,10 +46,25 @@ export default StyleSheet.create({
   buttons: {
     width: calcWidth(293),
     height: calcHeight(60),
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', 
     alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
+  },
+  input: {
+    width: calcWidth(293),
+    height: calcHeight(60),
+    borderRadius: calcFont(30),
+    borderColor: COLORS.border,
+    borderWidth: calcHeight(2),
+    paddingHorizontal: calcWidth(20),
+    fontSize: calcFont(18),
+    color: COLORS.white,
+    textAlign: 'right',
+    lineHeight: calcHeight(30),
+    fontWeight: 'normal',
+    textAlignVertical: 'bottom',
+    fontFamily: 'din-next-lt-w23-medium',
   },
 
   addressVeiw: {

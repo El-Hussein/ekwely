@@ -40,4 +40,19 @@ export default StyleSheet.create({
   rTitle: {
     paddingVertical: calcHeight(20),
   },
+  input: {
+    width: calcWidth(293),
+    height: calcHeight(60),
+    borderRadius: calcFont(30),
+    borderColor: COLORS.border,
+    borderWidth: calcHeight(2),
+    paddingHorizontal: calcWidth(20),
+    fontSize: calcFont(18),
+    color: COLORS.white,
+    textAlign: 'right',
+    lineHeight: calcHeight(30),
+    fontWeight: 'normal',
+    textAlignVertical: 'bottom',
+    fontFamily: 'din-next-lt-w23-medium',
+  },
 });

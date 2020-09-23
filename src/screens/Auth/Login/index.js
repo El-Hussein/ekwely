@@ -11,7 +11,7 @@ import {makePostRequest} from '../../../utils/api.helpers';
 import {USER_DATA} from '../../../common/constants';
 import {validateEmail, validatePassword} from '../../../common/Validation';
 import {SIGN_IN} from '../../../redux/actions/types';
-
+import Toast from 'react-native-simple-toast';
 const Login = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -49,12 +49,17 @@ const Login = () => {
           },
         },
       }).then((response) => {
-        console.log('kkkkkkkkeeeeeeeeee' ,response)
+        console.log('kkkkkkkkeeeeeeeeee', response);
 
         if (response?.data?.status !== '200') {
           setServerError('اسم المستخدم او كلمة المرور خاطئة');
         } else if (response?.data?.data) {
+          Toast.show(response.data.message);
           // save user data in AsyncStorage
+          setLoginData({
+            email: '',
+            password: '',
+          });
           AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
           // save user data in the redux
           dispatch({type: SIGN_IN, payload: response.data.data});
@@ -76,6 +81,7 @@ const Login = () => {
         <AppInput
           error={emailError}
           value={loginData.email}
+          inputStyle={styles.input}
           onChangeText={(email) => {
             setLoginData({...loginData, email});
           }}
@@ -87,6 +93,7 @@ const Login = () => {
         <AppInput
           error={passwordError || serverError}
           value={loginData.password}
+          inputStyle={styles.input}
           onChangeText={(password) => {
             setLoginData({...loginData, password});
           }}

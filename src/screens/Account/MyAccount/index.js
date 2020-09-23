@@ -14,7 +14,7 @@ import {makePostRequest} from '../../../utils/api.helpers';
 const MyAccount = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState('');
+  const [serverError, setServerError] = useState(''); 
   const [addressData, setAddressData] = useState(false);
   const {user} = useSelector((state) => {
     return {
