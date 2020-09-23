@@ -244,4 +244,7 @@ export default StyleSheet.create({
     width: '30%',
     textAlign: 'center',
   },
+  EmptyComponent: {
+    alignSelf: 'center',
+  },
 });

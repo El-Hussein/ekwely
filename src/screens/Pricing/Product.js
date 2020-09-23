@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
@@ -28,7 +29,7 @@ const Product = ({getProducts, products, error, errorMsg, loading}) => {
   });
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState(null);
   const [favorite, setFavorite] = useState(true);
   const [cart, setCart] = useState(true);
 
@@ -42,72 +43,6 @@ const Product = ({getProducts, products, error, errorMsg, loading}) => {
   const toggleCart = () => {
     setCart(!cart);
   };
-  // const products = [
-  //   {
-  //     id: '1',
-  //     image: IMAGES.p1,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: false,
-  //     isFav: true,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '2',
-  //     image: IMAGES.p2,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: true,
-  //     isFav: false,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '3',
-  //     image: IMAGES.p1,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: false,
-  //     isFav: false,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '4',
-  //     image: IMAGES.p2,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: true,
-  //     isFav: true,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '1',
-  //     image: IMAGES.p1,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: false,
-  //     isFav: true,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '2',
-  //     image: IMAGES.p2,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: true,
-  //     isFav: false,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '3',
-  //     image: IMAGES.p1,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: false,
-  //     isFav: false,
-  //     price: '150ج',
-  //   },
-  //   {
-  //     id: '4',
-  //     image: IMAGES.p2,
-  //     name: 'حفاظة جونيور مقاس 5 - 28 ق',
-  //     isCart: true,
-  //     isFav: true,
-  //     price: '150ج',
-  //   },
-  // ];
 
   const _renderProductItem = ({item}) => {
     return (
@@ -175,8 +110,12 @@ const Product = ({getProducts, products, error, errorMsg, loading}) => {
             onChangeText={(text) => {
               setSearchTerm(text);
               if (text === '') {
-                setFilteredData([]);
+                setFilteredData(null);
+                return;
               }
+              console.log(
+                products.filter((item) => item.arName.includes(searchTerm, 0)),
+              );
               if (text.length > 2)
                 setFilteredData(
                   products.filter((item) =>
@@ -191,17 +130,25 @@ const Product = ({getProducts, products, error, errorMsg, loading}) => {
           <Image source={IMAGES.search} style={styles.searchImage} />
         </View>
       </View>
-      <FlatList
-        columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
-        data={filteredData.length > 0 ? filteredData : products || []}
-        renderItem={_renderProductItem}
-        numColumns={2}
-        keyExtractor={(item, index) => `${index}`}
-        refreshing={loading}
-        ListEmptyComponent={
-          <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-        }
-      />
+      {loading ? (
+        <ActivityIndicator
+          color={COLORS.main}
+          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+          size={calcFont(30)}
+        />
+      ) : (
+        <FlatList
+          columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
+          data={filteredData || products || []}
+          renderItem={_renderProductItem}
+          numColumns={2}
+          keyExtractor={(item, index) => `${index}`}
+          refreshing={loading}
+          ListEmptyComponent={
+            <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+          }
+        />
+      )}
     </>
   );
 };
@@ -209,8 +156,7 @@ function mapStateToProps(state) {
   return {
     products: state.products.products,
     error: state.products.error,
-    errorMsg: state.products.errorMsg,
-    loading: state.loading.loading,
+    loading: state.products.loading,
   };
 }
 
