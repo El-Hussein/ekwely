@@ -13,6 +13,13 @@ const IMAGES = {
   search: require('../assets/Images/search.png'),
   p1: require('../assets/Images/p1.png'),
   p2: require('../assets/Images/p2.png'),
+  drop: require('../assets/Images/drop.png'),
+  instagram: require('../assets/Images/instagram.png'),
+  facebook: require('../assets/Images/facebook.png'),
+  back: require('../assets/Images/back.png'),
+  in: require('../assets/Images/in.png'),
+  out: require('../assets/Images/out.png'),
+  promoIcon: require('../assets/Images/promoIcon.png'),
 };
 
 export default IMAGES;

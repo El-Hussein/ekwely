@@ -1,46 +1,76 @@
 import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {useDispatch} from 'react-redux';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
 import Button from '../../../components/atoms/Button';
-import AppText from '../../../components/atoms/AppText';
 import IMAGES from '../../../common/images';
-import {color} from 'react-native-reanimated';
 import {makePostRequest} from '../../../utils/api.helpers';
-
+import {USER_DATA} from '../../../common/constants';
+import {validateEmail, validatePassword} from '../../../common/Validation';
+import {SIGN_IN} from '../../../redux/actions/types';
+import Toast from 'react-native-simple-toast';
 const Login = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState('');
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
   });
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
+  const _validate = () => {
+    let emailErr = validateEmail(loginData.email);
+    let passwordErr = validatePassword(loginData.password);
+    setEmailError(emailErr);
+    setPasswordError(passwordErr);
+    console.log('hhhhhhhh', {emailError, passwordError});
+    return emailErr || passwordErr;
+  };
   const login = () => {
+    if (_validate()) return;
+    setServerError('');
     setLoading(true);
     try {
       console.log('what?');
       makePostRequest({
         url: 'Users/login',
         data: {
-          UserName: loginData.email,
-          Password: loginData.password,
+          Data: {
+            UserName: loginData.email,
+            email: loginData.email,
+            Password: loginData.password,
+            UserType: 1,
+          },
         },
       }).then((response) => {
-        console.log('response');
-        console.log(response);
-        console.log('response');
+        console.log('kkkkkkkkeeeeeeeeee', response);
+
+        if (response?.data?.status !== '200') {
+          setServerError('اسم المستخدم او كلمة المرور خاطئة');
+        } else if (response?.data?.data) {
+          Toast.show(response.data.message);
+          // save user data in AsyncStorage
+          setLoginData({
+            email: '',
+            password: '',
+          });
+          AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
+          // save user data in the redux
+          dispatch({type: SIGN_IN, payload: response.data.data});
+          // navigate to home screen
+          navigation.navigate('Drawer');
+        }
         setLoading(false);
       });
     } catch (error) {
-      console.log('error');
-      console.log(error);
-      console.log('error');
+      setLoading(false);
+      console.log('error saving user in storage -> ', error);
     }
   };
 
@@ -49,51 +79,35 @@ const Login = () => {
       <View style={styles.loginForm}>
         <Image source={IMAGES.loginBg} style={styles.loginBg} />
         <AppInput
-          error={errors.email}
+          error={emailError}
           value={loginData.email}
+          inputStyle={styles.input}
           onChangeText={(email) => {
             setLoginData({...loginData, email});
           }}
           onEndEditing={() => {
-            if (loginData.email.length === 0) {
-              setErrors({...errors, email: 'هذا الحقل مطلوب'});
-            } else if (
-              !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-                loginData.email,
-              )
-            ) {
-              setErrors({...errors, email: 'البريد الالكتروني غير صحيح'});
-            } else {
-              setErrors({...errors, email: ''});
-            }
+            setEmailError(validateEmail(loginData.email));
           }}
           placeholder={'بريد الالكترونى أو أسم المستخدم'}
         />
         <AppInput
-          error={errors.password}
+          error={passwordError || serverError}
           value={loginData.password}
+          inputStyle={styles.input}
           onChangeText={(password) => {
             setLoginData({...loginData, password});
           }}
           onEndEditing={() => {
-            if (loginData.password.length === 0) {
-              setErrors({...errors, password: 'هذا الحقل مطلوب'});
-            } else if (loginData.password.length < 6) {
-              setErrors({
-                ...errors,
-                password: 'يجب الا يقل رمز المرور عن 6 احرف',
-              });
-            } else {
-              setErrors({...errors, password: ''});
-            }
+            setPasswordError(validatePassword(loginData.password));
           }}
           placeholder={'رمز المرور'}
+          secureTextEntry={true}
         />
         <View style={styles.loginButton}>
           <Button
             title={'دخول'}
-            // onPress={login}
-            onPress={() => navigation.navigate('Drawer')}
+            onPress={login}
+            // onPress={() => navigation.navigate('Drawer')}
             titleStyle={styles.loginTitle}
             style={styles.button}
             loading={loading}
@@ -104,6 +118,7 @@ const Login = () => {
         <Button
           title={'انشاء حساب جديد'}
           onPress={() => navigation.navigate('Register')}
+          style={styles.rTitle}
         />
       </View>
     </View>

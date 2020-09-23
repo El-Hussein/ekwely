@@ -12,15 +12,15 @@ export default StyleSheet.create({
 
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
-    backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
     flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(15),
+    justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: COLORS.lightGray,
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
     color: COLORS.gray,
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     height: calcHeight(42),
     borderRadius: calcFont(5),
     backgroundColor: '#00000088',
-    position:'absolute'
+    position: 'absolute',
   },
   titleText: {
     color: COLORS.textGray,
@@ -71,22 +71,24 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: calcHeight(5),
   },
-  promoCode: {
+  promoCodeInput: {
     width: calcWidth(345),
     height: calcHeight(46),
     borderRadius: calcFont(3),
     backgroundColor: COLORS.white,
     borderColor: COLORS.midLightGray,
     borderWidth: calcHeight(2),
-    alignItems: 'center',
+    paddingHorizontal: calcWidth(20),
+    fontSize: calcFont(18),
+    textAlign: 'right',
+    lineHeight: calcHeight(30),
+    fontWeight: 'normal',
+    textAlignVertical: 'center',
+    fontFamily: 'din-next-lt-w23-medium',
   },
-  promoCodeInput: {
-    width: calcWidth(330),
-    textAlign:'right'
-  },
+  
   //////////////////////////////////////////
   data: {
-    paddingBottom: calcHeight(10),
     width: '100%',
     paddingHorizontal: calcWidth(15),
   },

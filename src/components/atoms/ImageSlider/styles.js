@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     borderRadius: calcWidth(11),
   },
   swiperImageStyle: {
-    width: calcWidth(288),
-    height: calcHeight(255),
+    width: calcWidth(320),
+    height: calcHeight(290),
     alignSelf: 'center',
     
   },

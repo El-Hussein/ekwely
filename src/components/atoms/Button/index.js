@@ -3,6 +3,7 @@ import {TouchableOpacity, Text, ActivityIndicator} from 'react-native';
 // import AppText from '../AppText';
 import {styles} from './styles';
 import COLORS from '../../../common/colors';
+import AppText from '../AppText';
 const Button = ({title, onPress, style, titleStyle, loading, disabled}) => {
   return (
     <TouchableOpacity
@@ -13,7 +14,7 @@ const Button = ({title, onPress, style, titleStyle, loading, disabled}) => {
       {loading ? (
         <ActivityIndicator color={COLORS.main} />
       ) : (
-        <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
+        <AppText style={{...styles.title, ...titleStyle}}>{title}</AppText>
       )}
     </TouchableOpacity>
   );

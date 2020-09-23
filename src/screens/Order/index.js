@@ -28,7 +28,7 @@ import Product from './Product';
 const initialLayout = {width: Dimensions.get('window').width};
 
 const Order = () => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
   const [routes] = useState([
     {key: 'first', title: 'المنتجات'},
     {key: 'second', title: 'غسيل ومكوى'},
@@ -72,3 +72,4 @@ const Order = () => {
 };
 
 export default Order;
+ 

@@ -46,18 +46,33 @@ export default StyleSheet.create({
   buttons: {
     width: calcWidth(293),
     height: calcHeight(60),
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', 
     alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
   },
+  input: {
+    width: calcWidth(293),
+    height: calcHeight(60),
+    borderRadius: calcFont(30),
+    borderColor: COLORS.border,
+    borderWidth: calcHeight(2),
+    paddingHorizontal: calcWidth(20),
+    fontSize: calcFont(18),
+    color: COLORS.white,
+    textAlign: 'right',
+    lineHeight: calcHeight(30),
+    fontWeight: 'normal',
+    textAlignVertical: 'bottom',
+    fontFamily: 'din-next-lt-w23-medium',
+  },
 
   addressVeiw: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row-reverse',
     width: calcWidth(283),
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
   mapImage: {
     width: calcWidth(23),
@@ -70,7 +85,8 @@ export default StyleSheet.create({
     fontSize: calcFont(18),
     color: COLORS.white,
     fontWeight: 'bold',
-    marginHorizontal:calcWidth(5)
+    maxWidth: calcWidth(215),
+    marginHorizontal: calcWidth(5),
   },
 
   pressTitle: {
@@ -90,6 +106,10 @@ export default StyleSheet.create({
     height: calcHeight(60),
     borderRadius: calcFont(30),
     backgroundColor: COLORS.yallow,
+  },
+  error: {
+    fontSize: calcFont(16),
+    color: COLORS.error,
   },
   loginTitle: {
     color: COLORS.mainText,

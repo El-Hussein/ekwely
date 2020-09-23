@@ -6,6 +6,7 @@ import COLORS from '../../../common/colors';
 const AppInput = ({
   placeholder,
   value,
+  inputStyle,
   onChangeText,
   onEndEditing,
   error,
@@ -14,7 +15,7 @@ const AppInput = ({
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={inputStyle}
         placeholder={placeholder}
         placeholderTextColor={COLORS.white}
         value={value}

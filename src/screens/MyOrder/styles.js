@@ -11,18 +11,17 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   myOrder: {
-    width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   myOrderText: {
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
+    color: '#121c2c',
   },
   /////////////////////////////////////////////
   tabViewStyle: {
@@ -45,7 +44,10 @@ export default StyleSheet.create({
   },
   labelStyle: {
     fontSize: calcFont(18),
-    fontWeight: 'bold',
+    fontWeight: 'normal',
+    textAlignVertical: 'top',
+    lineHeight: calcHeight(28),
+    fontFamily: 'din-next-lt-w23-medium',
     width: calcWidth(160),
     textAlign: 'center',
     margin: 0,
@@ -53,7 +55,7 @@ export default StyleSheet.create({
   indicatorStyle: {
     borderRadius: calcWidth(5),
     backgroundColor: COLORS.main,
-    height: calcHeight(48),
+    height: calcHeight(49),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -65,21 +67,20 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   ////////////////////////////////////////
   order: {
     backgroundColor: COLORS.midGray,
-    width: '95%',
     borderRadius: calcWidth(5),
     alignSelf: 'center',
-    height: calcHeight(140),
     marginVertical: calcHeight(5),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   title: {
-    marginVertical: calcHeight(10),
-    marginTop: calcHeight(7),
+    marginBottom: calcHeight(10),
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
-    marginHorizontal: calcWidth(10),
   },
   orderNumber: {
     width: '45%',
@@ -114,9 +115,10 @@ export default StyleSheet.create({
     width: '96%',
     borderRadius: calcWidth(5),
     alignSelf: 'center',
-    height: calcHeight(84),
+    // height: calcHeight(84),
     justifyContent: 'center',
     alignItems: 'flex-end',
+    paddingVertical: calcHeight(5),
   },
   totalPriceText: {
     color: COLORS.textGray,

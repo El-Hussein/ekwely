@@ -19,8 +19,10 @@ import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
+import {useNavigation} from '@react-navigation/native';
 
 const PlaceOrder = () => {
+  const navigation = useNavigation();
   const [value, onChangeText] = useState('');
   const [quickCleaning, setQuickCleaning] = useState(true);
   const [cashPayment, setCashPayment] = useState(false);
@@ -80,28 +82,30 @@ const PlaceOrder = () => {
           <View style={styles.counter}>
             <Button
               title={'+'}
-              onPress={() => changeCounter('increase')}
+              // onPress={() => changeCounter('increase')}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
             <AppText style={styles.counterText}>{item.number}</AppText>
             <Button
               title={'-'}
-              onPress={() => changeCounter('decrease')}
+              // onPress={() => changeCounter('decrease')}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
               disabled={item.number < 2}
             />
           </View>
           <AppText style={styles.price}>{item.totalPrice}</AppText>
-          <Image source={IMAGES.close} style={styles.close} />
+          <TouchableOpacity>
+            <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
+          </TouchableOpacity>
         </View>
         <Line width={calcWidth(345)} color={COLORS.lightGray} />
       </View>
     );
   };
   return (
-    <ScrollView style={{backgroundColor: COLORS.white}}>
+    <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={styles.container}>
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>السلة</AppText>
@@ -116,56 +120,61 @@ const PlaceOrder = () => {
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
           }
+          ListFooterComponent={
+            <>
+              <TouchableOpacity
+                onPress={toggleQuickCleaning}
+                style={styles.checkBoxContainer}>
+                <AppText style={styles.checkboxText}>
+                  خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+                </AppText>
+                <IconIonicons
+                  name={quickCleaning ? 'md-checkbox' : 'square-outline'}
+                  size={calcFont(25)}
+                  color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+                />
+              </TouchableOpacity>
+
+              <Line width={calcWidth(345)} color={COLORS.lightGray} />
+
+              <View style={styles.total}>
+                <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+                <AppText style={styles.priceText}>200 ج</AppText>
+              </View>
+              <View style={styles.total}>
+                <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+                <AppText style={styles.PromoCode}>40 ج</AppText>
+              </View>
+              <View style={styles.total}>
+                <AppText style={styles.totalPriceText}>
+                  القيمة بعد الخصم
+                </AppText>
+                <AppText style={styles.priceText}>160 ج</AppText>
+              </View>
+              <TouchableOpacity
+                // onPress={toggleCashPayment}
+                style={styles.checkBoxContainer}>
+                <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
+                <IconIonicons
+                  name={cashPayment ? 'md-checkbox' : 'square-outline'}
+                  size={calcFont(25)}
+                  color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
+                />
+              </TouchableOpacity>
+
+              <View style={styles.orderButton}>
+                <Button
+                  title={'تنفيذ الطلب'}
+                  onPress={() => navigation.navigate('Home')}
+                  titleStyle={styles.completeOrder}
+                  style={styles.button}
+                />
+              </View>
+            </>
+          }
         />
-
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-          </AppText>
-          <IconIonicons
-            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-
-        <Line width={calcWidth(345)} color={COLORS.lightGray} />
-
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-          <AppText style={styles.priceText}>200 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.orderButton}>
-          <Button
-            title={'تنفيذ الطلب'}
-            onPress={() => console.log('pressed')}
-            titleStyle={styles.completeOrder}
-            style={styles.button}
-          />
-        </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

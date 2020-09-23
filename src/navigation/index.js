@@ -6,9 +6,11 @@ import DrawerNavigation from './Drawer';
 
 const RootStack = createStackNavigator();
 
-const AppNavigation = () => (
+const AppNavigation = ({initialRouteName}) => (
   <NavigationContainer>
-    <RootStack.Navigator headerMode="none">
+    <RootStack.Navigator
+      initialRouteName={initialRouteName}
+      headerMode={'none'}>
       <RootStack.Screen name="Auth" component={AuthStack} />
       <RootStack.Screen name="Drawer" component={DrawerNavigation} />
     </RootStack.Navigator>
