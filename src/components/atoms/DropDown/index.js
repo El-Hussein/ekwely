@@ -1,14 +1,18 @@
 import React from 'react';
-import {View, TextInput, Text, TouchableOpacity} from 'react-native';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
+import {View, TouchableOpacity, Image} from 'react-native';
 import {styles} from './styles';
 import AppText from '../AppText';
 import COLORS from '../../../common/colors';
-import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
-const DropDown = ({placeholder, data ,}) => {
+import IMAGES from '../../../common/images';
+import {calcFont} from '../../../common/styles';
+
+const DropDown = ({placeholder, onPress, disabled}) => {
   return (
     <View style={styles.container}>
-       <TouchableOpacity style={styles.dropDown}>
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={onPress}
+        style={[styles.dropDown, disabled && styles.disabled]}>
         <AppText
           style={{
             color: COLORS.lightTextGray,
@@ -17,11 +21,7 @@ const DropDown = ({placeholder, data ,}) => {
           }}>
           {placeholder}
         </AppText>
-        <IconIonicons
-          name="chevron-down"
-          size={calcFont(25)}
-          color={COLORS.lightTextGray}
-          />
+        <Image source={IMAGES.drop} style={styles.dropImage} />
       </TouchableOpacity>
     </View>
   );

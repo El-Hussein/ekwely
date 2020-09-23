@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity} from 'react-native';
+import Button from '../../components/atoms/Button';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import DropDown from '../../components/atoms/DropDown';
-import Button from '../../components/atoms/Button';
+import {useNavigation} from '@react-navigation/native';
 
 import CheckBox from '../../components/atoms/CheckBox';
 
 const Product = () => {
+  const navigation = useNavigation();
   const [favorite, setFavorite] = useState(true);
   const [pieces, setPieces] = useState(false);
   const [counter, setCounter] = useState(1);
@@ -78,7 +80,10 @@ const Product = () => {
       <View style={styles.confirmOrderButton}>
         <Button
           title={'تأكيد الطلب'}
-          onPress={() => console.log('pressed')}
+          onPress={() => {
+            navigation.popToTop();
+            navigation.navigate('Cart');
+          }}
           titleStyle={styles.confirmOrder}
           style={styles.button}
         />

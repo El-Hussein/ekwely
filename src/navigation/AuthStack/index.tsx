@@ -5,6 +5,7 @@ import RegisterScreen from '../../screens/Auth/Register';
 // import {Trans} from '../../i18n';
 import COLORS from '../../common/colors';
 import FONTS from '../../common/fonts';
+import SelectLocationScreen from '../../screens/select-location/select-location-screen';
 
 const headerCustomStyle = {
   headerTintColor: COLORS.white,
@@ -37,6 +38,13 @@ const AuthNavigator = () => (
       }}
       name="Register"
       component={RegisterScreen}
+    />
+    <AuthStack.Screen
+      options={{
+        headerShown: false,
+      }}
+      component={SelectLocationScreen}
+      name="SelectLocation"
     />
   </AuthStack.Navigator>
 );

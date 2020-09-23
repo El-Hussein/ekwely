@@ -12,18 +12,14 @@ export default StyleSheet.create({
 
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(5),
-    alignItems: 'center',
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
   },
   item: {
     width: '100%',
@@ -86,7 +82,7 @@ export default StyleSheet.create({
   },
   checkBoxContainer: {
     width: '100%',
-    paddingVertical: calcHeight(7),
+    paddingVertical: calcHeight(10),
     paddingHorizontal: calcWidth(15),
     alignSelf: 'flex-start',
     flexDirection: 'row',
@@ -130,7 +126,7 @@ export default StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'center',
     paddingVertical: calcHeight(2),
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(15),
     justifyContent: 'flex-start',
   },
   /////////////////////////////////
@@ -142,7 +138,7 @@ export default StyleSheet.create({
   },
   button: {
     width: calcWidth(204),
-    height: calcHeight(50),
+    paddingVertical: calcHeight(15),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.main,
   },

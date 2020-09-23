@@ -12,15 +12,15 @@ export default StyleSheet.create({
 
   newOrder: {
     width: '100%',
-    height: calcHeight(54),
-    backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(15),
+    flexDirection:'row-reverse',
+    justifyContent:'space-between',
     alignItems: 'center',
+    backgroundColor: COLORS.lightGray,
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
     color: COLORS.gray,
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     height: calcHeight(42),
     borderRadius: calcFont(5),
     backgroundColor: '#00000088',
-    position:'absolute'
+    position: 'absolute',
   },
   titleText: {
     color: COLORS.textGray,
@@ -82,7 +82,7 @@ export default StyleSheet.create({
   },
   promoCodeInput: {
     width: calcWidth(330),
-    textAlign:'right'
+    textAlign: 'right',
   },
   //////////////////////////////////////////
   data: {

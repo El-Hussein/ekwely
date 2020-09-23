@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import COLORS from '../../../common/colors';
 import {calcWidth, calcHeight, calcFont} from '../../../common/styles';
 
 export const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: colors.white01,
+    backgroundColor: COLORS.white,
     borderTopLeftRadius: calcFont(10),
     borderTopRightRadius: calcFont(10),
   },
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     paddingBottom: calcFont(20),
   },
   androidContainer: {
-    backgroundColor: colors.white01,
+    backgroundColor: COLORS.white,
     borderRadius: calcFont(5),
     maxHeight: '90%',
   },
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: calcFont(16),
     borderBottomWidth: 0.5,
-    borderBottomColor: colors.border,
+    borderBottomColor: COLORS.border,
   },
   androidHeader: {
     height: calcHeight(60),
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: calcFont(16),
     borderBottomWidth: 0.5,
-    borderBottomColor: colors.border,
+    borderBottomColor: COLORS.border,
   },
   iosModal: {
     margin: 0,
@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: calcFont(17),
-    width: '95%',
+    width: '90%',
   },
   titleText: {
     fontSize: calcFont(17),
@@ -73,9 +73,9 @@ export const styles = StyleSheet.create({
     height: calcHeight(50),
     textAlign: 'center',
     textAlignVertical: 'center',
-    color: colors.mainBlueText,
+    color: COLORS.main,
   },
   separator: {
-    height: calcHeight(20),
+    height: calcHeight(5),
   },
 });

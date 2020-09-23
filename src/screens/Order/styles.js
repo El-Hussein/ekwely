@@ -10,20 +10,16 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     paddingTop: calcHeight(10),
   },
-  newOrder: {
+  newOrder: { 
     width: '100%',
-    height: calcHeight(54),
     backgroundColor: COLORS.lightGray,
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    paddingHorizontal: calcWidth(10),
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(10),
   },
   newOrderText: {
-    color: COLORS.mainText,
+    color: '#121c2c',
     fontSize: calcFont(20),
     fontWeight: 'bold',
-    color: COLORS.gray,
   },
   /////////////////////////////////////////////
   tabViewStyle: {
@@ -46,7 +42,10 @@ export default StyleSheet.create({
   },
   labelStyle: {
     fontSize: calcFont(18),
-    fontWeight: 'bold',
+    fontWeight: 'normal',
+    textAlignVertical: 'top',
+    lineHeight: calcHeight(28),
+    fontFamily: 'din-next-lt-w23-medium',
     width: calcWidth(160),
     textAlign: 'center',
     margin: 0,
@@ -72,19 +71,20 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    paddingHorizontal: calcWidth(5),
+    paddingHorizontal: calcWidth(15),
     paddingVertical: calcHeight(10),
   },
   orderTimeText: {
     color: COLORS.textGray,
     fontSize: calcFont(18),
     fontWeight: 'bold',
+    marginHorizontal: calcWidth(10),
   },
   chooseService: {
     width: '100%',
     flexDirection: 'row-reverse',
     alignContent: 'flex-start',
-    paddingHorizontal: calcWidth(25),
+    paddingHorizontal: calcWidth(30),
     paddingVertical: calcHeight(10),
   },
   chooseServiceText: {
@@ -111,6 +111,7 @@ export default StyleSheet.create({
     marginHorizontal: calcWidth(10),
     flexDirection: 'row',
     width: calcWidth(344),
+    
   },
   addToCartText: {
     width: '100%',
@@ -118,8 +119,7 @@ export default StyleSheet.create({
     fontSize: calcFont(15),
   },
   addToCartButton: {
-    width: calcWidth(124),
-    height: calcHeight(42),
+    paddingVertical: calcHeight(10),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.yallow,
   },
@@ -128,7 +128,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    width: calcWidth(155),
+    width: calcWidth(150),
     paddingVertical: calcHeight(5),
     elevation: 1.3,
     borderRadius: calcFont(3),
@@ -138,9 +138,10 @@ export default StyleSheet.create({
   },
   counterButton: {
     width: calcWidth(38),
-    height: calcWidth(38),
     borderRadius: calcFont(3),
     backgroundColor: COLORS.lightGray,
+    paddingHorizontal: calcWidth(15),
+    paddingVertical: calcHeight(5),
   },
   counterButtonText: {
     color: COLORS.textGray,
@@ -160,9 +161,10 @@ export default StyleSheet.create({
   },
   button: {
     width: calcWidth(204),
-    height: calcHeight(50),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.main,
+    paddingVertical: calcHeight(15),
+
   },
   confirmOrder: {
     color: COLORS.white,

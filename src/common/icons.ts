@@ -15,5 +15,9 @@ const ICONS = {
   user: 'Union-33',
   qr: 'qrcode-scan',
   menu: 'Feed',
+  close: 'close',
+  check: 'check',
+  checkBox: 'radiobox-blank',
+  checkBoxMarked: 'radiobox-marked',
 };
 export default ICONS;
