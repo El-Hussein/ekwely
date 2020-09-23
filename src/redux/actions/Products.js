@@ -11,7 +11,7 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get products Action
-export function getProducts(id) {
+export const getProducts = (id) => {
   console.log('id');
   console.log(id);
   return (dispatch) => {
@@ -57,4 +57,4 @@ export function getProducts(id) {
     }
     dispatch({type: STOP_LOADING});
   };
-}
+};

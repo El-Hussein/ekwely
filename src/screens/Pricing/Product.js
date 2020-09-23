@@ -17,14 +17,9 @@ import {useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getProducts} from '../../redux/actions/Products';
+import {IMAGE_BASE_URL} from '../../common/constants';
 
-const Product = (
-  getProducts,
-  products,
-  error,
-  errorMsg,
-  loading,
-) => {
+const Product = ({getProducts, products, error, errorMsg, loading}) => {
   const navigation = useNavigation();
   const {user} = useSelector((state) => {
     return {
@@ -32,7 +27,8 @@ const Product = (
     };
   });
 
-  const [value, onChangeText] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
   const [favorite, setFavorite] = useState(true);
   const [cart, setCart] = useState(true);
 
@@ -117,7 +113,10 @@ const Product = (
     return (
       <View>
         <View style={styles.item}>
-          <Image source={item.image} style={styles.productImage} />
+          <Image
+            source={{uri: IMAGE_BASE_URL + item.image}}
+            style={styles.productImage}
+          />
           <View
             style={{
               justifyContent: 'space-between',
@@ -154,7 +153,7 @@ const Product = (
             <View style={styles.namePrice}>
               <View style={styles.price}>
                 <AppText numberOfLines={1} style={styles.priceText}>
-                {item.price}ج
+                  {item.price}ج
                 </AppText>
               </View>
               <AppText numberOfLines={1} style={styles.productName}>
@@ -173,17 +172,28 @@ const Product = (
         <View style={styles.search}>
           <TextInput
             style={styles.searchInput}
-            onChangeText={(text) => onChangeText(text)}
+            onChangeText={(text) => {
+              setSearchTerm(text);
+              if (text === '') {
+                setFilteredData([]);
+              }
+              if (text.length > 2)
+                setFilteredData(
+                  products.filter((item) =>
+                    item.arName.includes(searchTerm, 0),
+                  ),
+                );
+            }}
             placeholder="ابحث عن ..."
             placeholderTextColor={COLORS.mainText}
-            value={value}
+            value={searchTerm}
           />
           <Image source={IMAGES.search} style={styles.searchImage} />
         </View>
       </View>
       <FlatList
         columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
-        data={products}
+        data={filteredData.length > 0 ? filteredData : products || []}
         renderItem={_renderProductItem}
         numColumns={2}
         keyExtractor={(item, index) => `${index}`}

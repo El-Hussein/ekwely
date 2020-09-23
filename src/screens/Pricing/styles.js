@@ -86,6 +86,7 @@ export default StyleSheet.create({
     width: calcWidth(300),
     fontWeight: 'bold',
     fontSize: calcFont(18),
+    textAlign: 'right',
   },
   searchImage: {
     width: calcWidth(22),
