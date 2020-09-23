@@ -86,6 +86,7 @@ export default StyleSheet.create({
     width: calcWidth(300),
     fontWeight: 'bold',
     fontSize: calcFont(18),
+    textAlign: 'right',
   },
   searchImage: {
     width: calcWidth(22),
@@ -242,5 +243,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     width: '30%',
     textAlign: 'center',
+  },
+  EmptyComponent: {
+    alignSelf: 'center',
   },
 });

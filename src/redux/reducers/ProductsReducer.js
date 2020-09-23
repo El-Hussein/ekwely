@@ -6,24 +6,29 @@ import {
 
 const initialState = {
   products: [],
-  error: false,
-  errorMsg: '',
+  loading: false,
+  error: '',
 };
 
 export default function ProductsReducer(state = initialState, action) {
   switch (action.type) {
+    case PRODUCTS_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
     case PRODUCTS_SUCCESS:
       return {
         ...state,
         products: action.payload,
-        error: null,
-        errorMsg: '',
+        loading: false,
+        error: '',
       };
     case PRODUCTS_FAILED:
       return {
         ...state,
-        error: action.payload.errors,
-        errorMsg: action.payload.msg,
+        loading: false,
+        error: action.payload.msg,
       };
 
     default:
