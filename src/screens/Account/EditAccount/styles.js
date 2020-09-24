@@ -19,6 +19,7 @@ export default StyleSheet.create({
     paddingHorizontal: calcWidth(15),
     paddingVertical: calcHeight(10),
   },
+
   newOrderText: {
     color: '#121c2c',
     fontSize: calcFont(20),
@@ -71,18 +72,22 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: calcHeight(5),
   },
-  promoCode: {
+
+  promoCodeInput: {
     width: calcWidth(345),
     height: calcHeight(46),
     borderRadius: calcFont(3),
     backgroundColor: COLORS.white,
     borderColor: COLORS.midLightGray,
     borderWidth: calcHeight(2),
-    alignItems: 'center',
-  },
-  promoCodeInput: {
-    width: calcWidth(330),
+    paddingHorizontal: calcWidth(20),
+    fontSize: calcFont(18),
+    color:COLORS.lightTextGray,
     textAlign: 'right',
+    lineHeight: calcHeight(30),
+    fontWeight: 'normal',
+    textAlignVertical: 'center',
+    fontFamily: 'din-next-lt-w23-medium',
   },
   //////////////////////////////////////////
   data: {
