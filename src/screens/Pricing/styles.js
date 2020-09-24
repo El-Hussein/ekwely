@@ -86,6 +86,7 @@ export default StyleSheet.create({
     width: calcWidth(300),
     fontWeight: 'bold',
     fontSize: calcFont(18),
+    textAlign: 'right',
   },
   searchImage: {
     width: calcWidth(22),
@@ -133,7 +134,7 @@ export default StyleSheet.create({
   favoriteOut: {
     width: calcWidth(32),
     height: calcWidth(32),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: calcWidth(Platform.OS === 'ios' ? 32 : 16),
@@ -163,7 +164,7 @@ export default StyleSheet.create({
     height: calcHeight(24),
     paddingHorizontal: calcWidth(10),
     borderRadius: calcFont(5),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
     position: 'absolute',
     top: calcHeight(-12),
   },
@@ -178,7 +179,7 @@ export default StyleSheet.create({
     width: calcWidth(360),
     height: calcHeight(50),
     borderRadius: calcFont(3),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
     paddingHorizontal: calcWidth(10),
@@ -242,5 +243,8 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     width: '30%',
     textAlign: 'center',
+  },
+  EmptyComponent: {
+    alignSelf: 'center',
   },
 });

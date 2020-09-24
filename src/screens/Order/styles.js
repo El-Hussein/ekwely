@@ -121,7 +121,7 @@ export default StyleSheet.create({
   addToCartButton: {
     paddingVertical: calcHeight(10),
     borderRadius: calcFont(5),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
   },
 
   counter: {

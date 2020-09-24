@@ -105,7 +105,7 @@ export default StyleSheet.create({
     width: calcWidth(293),
     height: calcHeight(60),
     borderRadius: calcFont(30),
-    backgroundColor: COLORS.yallow,
+    backgroundColor: COLORS.yellow,
   },
   error: {
     fontSize: calcFont(16),

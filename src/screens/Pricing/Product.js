@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -6,99 +6,39 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
-import DropDown from '../../components/atoms/DropDown';
-import Button from '../../components/atoms/Button';
 import IMAGES from '../../common/images';
-import CheckBox from '../../components/atoms/CheckBox';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getProducts} from '../../redux/actions/Products';
+import {IMAGE_BASE_URL} from '../../common/constants';
+import Favorite from '../../components/atoms/Favorite';
 
-const Product = () => {
-  const [value, onChangeText] = useState('');
-  const [favorite, setFavorite] = useState(true);
-  const [cart, setCart] = useState(true);
+const Product = ({getProducts, products,loading}) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState(null);
 
-  const toggleFavorite = () => {
-    setFavorite(!favorite);
-  };
-  const toggleCart = () => {
-    setCart(!cart);
-  };
-  const products = [
-    {
-      id: '1',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: true,
-      price: '150ج',
-    },
-    {
-      id: '2',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '3',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '4',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: true,
-      price: '150ج',
-    },
-    {
-      id: '1',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: true,
-      price: '150ج',
-    },
-    {
-      id: '2',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '3',
-      image: IMAGES.p1,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: false,
-      isFav: false,
-      price: '150ج',
-    },
-    {
-      id: '4',
-      image: IMAGES.p2,
-      name: 'حفاظة جونيور مقاس 5 - 28 ق',
-      isCart: true,
-      isFav: true,
-      price: '150ج',
-    },
-  ];
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  
+
   const _renderProductItem = ({item}) => {
     return (
       <View>
         <View style={styles.item}>
-          <Image source={item.image} style={styles.productImage} />
+          <Image
+            source={{uri: IMAGE_BASE_URL + item.image}}
+            style={styles.productImage}
+          />
           <View
             style={{
               justifyContent: 'space-between',
@@ -106,25 +46,18 @@ const Product = () => {
               alignItems: 'center',
             }}>
             <View style={styles.cartFav}>
-              <TouchableOpacity
-                style={
-                  item.isFav
-                    ? styles.favoriteOut
-                    : [styles.favoriteOut, {backgroundColor: COLORS.midGrayo}]
-                }>
-                <Image source={IMAGES.favorite} style={styles.favoriteImage} />
-              </TouchableOpacity>
+              <Favorite id={item.id} isFav={item.isFavourite} />
 
               <TouchableOpacity
                 style={
-                  item.isCart
+                  item.isItemBasket
                     ? styles.favoriteOut
                     : [styles.favoriteOut, {backgroundColor: COLORS.midGrayo}]
                 }>
                 <Image
                   source={IMAGES.cart}
                   style={
-                    item.isCart
+                    item.isItemBasket
                       ? styles.cartImage
                       : [styles.cartImage, {tintColor: COLORS.white}]
                   }
@@ -135,11 +68,11 @@ const Product = () => {
             <View style={styles.namePrice}>
               <View style={styles.price}>
                 <AppText numberOfLines={1} style={styles.priceText}>
-                  150ج
+                  {item.price}ج
                 </AppText>
               </View>
               <AppText numberOfLines={1} style={styles.productName}>
-                {item.name}
+                {item.arName}
               </AppText>
             </View>
           </View>
@@ -154,26 +87,63 @@ const Product = () => {
         <View style={styles.search}>
           <TextInput
             style={styles.searchInput}
-            onChangeText={(text) => onChangeText(text)}
+            onChangeText={(text) => {
+              setSearchTerm(text);
+              if (text === '') {
+                setFilteredData(null);
+                return;
+              }
+              console.log(
+                products.filter((item) => item.arName.includes(searchTerm, 0)),
+              );
+              if (text.length > 2)
+                setFilteredData(
+                  products.filter((item) =>
+                    item.arName.includes(searchTerm, 0),
+                  ),
+                );
+            }}
             placeholder="ابحث عن ..."
             placeholderTextColor={COLORS.mainText}
-            value={value}
+            value={searchTerm}
           />
           <Image source={IMAGES.search} style={styles.searchImage} />
         </View>
       </View>
-      <FlatList
-        columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
-        data={products}
-        renderItem={_renderProductItem}
-        numColumns={2}
-        keyExtractor={(item, index) => `${index}`}
-        ListEmptyComponent={
-          <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
-        }
-      />
+      {loading ? (
+        <ActivityIndicator
+          color={COLORS.main}
+          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+          size={calcFont(30)}
+        />
+      ) : (
+        <FlatList
+          columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
+          data={filteredData || products || []}
+          renderItem={_renderProductItem}
+          numColumns={2}
+          keyExtractor={(item, index) => `${Math.random()*100}`}
+          refreshing={loading}
+          ListEmptyComponent={
+            <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+          }
+        />
+      )}
     </>
   );
 };
+function mapStateToProps(state) {
+  return {
+    products: state.products.products,
+    error: state.products.error,
+    loading: state.products.loading,
+  };
+}
 
-export default Product;
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getProducts}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
