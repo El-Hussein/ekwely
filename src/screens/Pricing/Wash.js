@@ -52,9 +52,7 @@ const Wash = ({ products, loading}) => {
                 setFilteredData(null);
                 return;
               }
-              console.log(
-                products.filter((item) => item.arName.includes(searchTerm, 0)),
-              );
+              
               if (text.length > 1)
                 setFilteredData(
                   products.filter((item) =>

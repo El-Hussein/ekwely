@@ -10,7 +10,7 @@ import COLORS from '../../../common/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { calcFont } from '../../../common/styles';
 
-const Favorite = ({id, isFav, setFavorite, deleteFavorite,error}) => {
+const Favorite = ({id, isFav, setFavorite, deleteFavorite,}) => {
   const [favorite, toggleFavorite] = useState(isFav);
   const toggle = () => {
     toggleFavorite(!favorite);
@@ -37,11 +37,7 @@ const Favorite = ({id, isFav, setFavorite, deleteFavorite,error}) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    error: state.favorite.message,
-  };
-}
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -49,4 +45,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Favorite);
+export default connect(mapDispatchToProps)(Favorite);
