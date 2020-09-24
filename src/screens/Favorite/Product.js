@@ -61,7 +61,7 @@ const Product = ({getProducts, products, loading, deleteFavorite}) => {
             marginVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${index}`}
+          keyExtractor={(item, index) => `${Math.random()*100}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد مفضله</AppText>
           }

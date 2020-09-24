@@ -8,20 +8,11 @@ import {connect} from 'react-redux';
 import {setCart, deleteCart} from '../../../redux/actions/Cart';
 import IMAGES from '../../../common/images';
 
-const Cart = ({id, isCart, setCart, deleteCart}) => {
-  const [Cart, toggleCart] = useState(isFav);
-  const toggle = () => {
-    toggleCart(!cart);
-    if (isCart) {
-      deleteCart(id);
-    } else {
-      setCart(id);
-    }
-  };
+const Cart = (cart) => {
+  
 
   return (
     <TouchableOpacity
-    onPress={toggle}
       style={
         cart
           ? styles.favoriteOut
@@ -39,16 +30,5 @@ const Cart = ({id, isCart, setCart, deleteCart}) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    // error: state.favorite.error,
-  };
-}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators({setFavorite, deleteFavorite}, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default (Cart);

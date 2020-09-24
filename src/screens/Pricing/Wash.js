@@ -22,7 +22,6 @@ const Wash = ({ products, loading}) => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
-  console.log('hi',products)
   const _renderProductItem = ({item}) => {
     return (
       <View>
@@ -99,7 +98,7 @@ const Wash = ({ products, loading}) => {
           }}
           data={filteredData || products || []}
           renderItem={_renderProductItem}
-          keyExtractor={(item, index) => `${index}`}
+          keyExtractor={(item, index) => `${Math.random()*100}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
           }

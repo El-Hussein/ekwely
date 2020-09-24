@@ -24,19 +24,12 @@ import Favorite from '../../components/atoms/Favorite';
 const Product = ({getProducts, products,loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
-  const [favorite, setFavorite] = useState(true);
-  const [cart, setCart] = useState(true);
 
   useEffect(() => {
     getProducts();
   }, []);
 
-  const toggleFavorite = () => {
-    setFavorite(!favorite);
-  };
-  const toggleCart = () => {
-    setCart(!cart);
-  };
+  
 
   const _renderProductItem = ({item}) => {
     return (
@@ -129,7 +122,7 @@ const Product = ({getProducts, products,loading}) => {
           data={filteredData || products || []}
           renderItem={_renderProductItem}
           numColumns={2}
-          keyExtractor={(item, index) => `${index}`}
+          keyExtractor={(item, index) => `${Math.random()*100}`}
           refreshing={loading}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
