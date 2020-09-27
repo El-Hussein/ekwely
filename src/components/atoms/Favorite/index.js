@@ -45,4 +45,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapDispatchToProps)(Favorite);
+export default connect(null, mapDispatchToProps)(Favorite);

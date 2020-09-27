@@ -24,3 +24,9 @@ export const PRODUCTS_FAILED = 'PRODUCTS_FAILED';
 export const DRY_CLEAN_SUCCESS = 'DRY_CLEAN_SUCCESS';
 
 
+/////////////////////////
+// faq
+/////////////////////////
+export const FAQ_SUCCESS = 'FAQ_SUCCESS';
+export const FAQ_FAILED = 'FAQ_FAILED';
+export const FAQ_PENDING = 'FAQ_PENDING';
