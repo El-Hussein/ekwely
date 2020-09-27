@@ -109,19 +109,18 @@ const EditAccount = () => {
         const source = {uri: response.uri};
         const formData = new FormData();
         // formData.append('userType', 1);
-        formData.append('formdata', {
+        formData.append('file', {
           uri:
             Platform.OS === 'android' ? response.uri : 'file://' + response.uri,
-          name: 'formdata',
+          name: 'file',
           type: 'image/jpeg', // or your mime type what you want
         });
         makePostRequest({
           url: 'UploadDownload/upload',
-          data: {
-            formData,
-          },
+          data: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
+            Accept: 'application/json',
           },
         })
           .then((response) => {
@@ -131,7 +130,7 @@ const EditAccount = () => {
           })
           .catch((error) => {
             console.log('error.response');
-            console.log(error.response);
+            console.log(error);
             console.log('error.response');
           });
         // You can also display the image using data:
