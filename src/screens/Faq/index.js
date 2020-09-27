@@ -1,67 +1,70 @@
-import React from 'react';
-import {View, FlatList} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, FlatList, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import AnimatedList from '../../components/atoms/AnimatedList';
 import Header from '../../components/atoms/Header';
-const questions = [
-  {
-    id: '1',
-    tile: 'السؤال يكتب هنا لاحقا',
-    text:
-      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
-    e: true,
-  },
-  {
-    id: '1',
-    tile: 'السؤال يكتب هنا لاحقا',
-    text:
-      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
-    e: true,
-  },
-  {
-    id: '1',
-    tile: 'السؤال يكتب هنا لاحقا',
-    text:
-      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
-    e: true,
-  },
-  {
-    id: '1',
-    tile: 'السؤال يكتب هنا لاحقا',
-    text:
-      'عاصمة لمصر حتى بداية الأسرة السادسة الفرعونية، حين انتقلت العاصمة إلى (منف) في الشمال. استُلهم اسم المحافظة من اسم عاصمتها الأقصر التي تعددت أسماؤها على مر العصور',
-    e: true,
-  },
-];
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getFaq} from '../../redux/actions/Faq';
+import COLORS from '../../common/colors';
+import { calcHeight , calcFont} from '../../common/styles';
 
-const _renderQuestionsItem = ({item}) => {
-  return (
-    <AnimatedList listTitle={item.tile}>
-      <AppText style={styles.text}>{item.text}</AppText>
-    </AnimatedList>
-  );
-};
-
-const Faq = () => {
+const Faq = ({getFaq, faq, loading}) => {
+  useEffect(() => {
+    console.log('start');
+    getFaq();
+    console.log('responce', faq);
+  }, []);
+  const _renderQuestionsItem = ({item}) => {
+    return (
+      <AnimatedList listTitle={item.arName}>
+        <AppText style={styles.text}>{item.decription}</AppText>
+      </AnimatedList>
+    );
+  };
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.newOrder}>
         <AppText style={styles.newOrderText}>أسئلة شائعة</AppText>
       </View>
-      <FlatList
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-        data={questions}
-        scrollEnabled={true}
-        renderItem={_renderQuestionsItem}
-        keyExtractor={(item, index) => `${index}`}
-        ListEmptyComponent={
-          <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
-        }
-      />
+      {loading ? (
+        <ActivityIndicator
+          color={COLORS.main}
+          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+          size={calcFont(30)}
+        />
+      ) : (
+        <FlatList
+          contentContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          data={faq}
+          scrollEnabled={true}
+          renderItem={_renderQuestionsItem}
+          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          ListEmptyComponent={
+            <AppText style={styles.EmptyComponent}>لا توجد أسئله</AppText>
+          }
+        />
+      )}
     </View>
   );
 };
 
-export default Faq;
+function mapStateToProps(state) {
+  return {
+    faq: state.faq.faq,
+    loading: state.faq.loading,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getFaq}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Faq);
