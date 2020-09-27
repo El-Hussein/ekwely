@@ -11,5 +11,6 @@ export default combineReducers({
   loading:Loading,
   products:ProductsReducer,
   cart:CartReducer,
+  faq:FaqReducer,
   
 });

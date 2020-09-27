@@ -1,68 +1,44 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
-  Image,
   TouchableOpacity,
-  TextInput,
-  ScrollView,
-  Platform,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
-import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
-import ImagesSlider from '../../components/atoms/ImageSlider';
-import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getCart ,setCart} from '../../redux/actions/Cart';
 
-const PlaceOrder = () => {
+const serviceTypeMap = {
+  0: 'غسيل',
+  1: 'مكوي',
+  2: 'غسيل ومكوي',
+  3: 'تصليح',
+};
+
+const PlaceOrder = ({getCart, cart, loading, totalPrice ,setCart}) => {
+  useEffect(() => {
+    getCart();
+  }, []);
   const navigation = useNavigation();
-  const [value, onChangeText] = useState('');
-  const [quickCleaning, setQuickCleaning] = useState(true);
-  const [cashPayment, setCashPayment] = useState(false);
+  // const [quickCleaning, setQuickCleaning] = useState(true);
+  // const [cashPayment, setCashPayment] = useState(false);
 
-  const toggleQuickCleaning = () => {
-    setQuickCleaning(!quickCleaning);
-  };
-  const toggleCashPayment = () => {
-    setCashPayment(!cashPayment);
-  };
-  const cart = [
-    {
-      id: '1',
-      product: 'فستان',
-      totalPrice: '60 ج',
-      type: 'غسيل ومكوي',
-      number: 1,
-    },
-    {
-      id: '2',
-      product: 'علبة مناديل كبيرة',
-      totalPrice: '60 ج',
-      type: 'غسيل ومكوي',
-      number: 1,
-    },
-    {
-      id: '3',
-      product: 'فستان',
-      totalPrice: '60 ج',
-      type: 'غسيل ومكوي',
-      number: 1,
-    },
-    {
-      id: '4',
-      product: 'علبة مناديل كبيرة',
-      totalPrice: '60 ج',
-      type: 'غسيل ومكوي',
-      number: 1,
-    },
-  ];
+  // const toggleQuickCleaning = () => {
+  //   setQuickCleaning(!quickCleaning);
+  // };
+  // const toggleCashPayment = () => {
+  //   setCashPayment(!cashPayment);
+  // };
+
   const changeCounter = (type) => {
     if (type == 'increase') {
       setCounter(counter + 1);
@@ -76,26 +52,32 @@ const PlaceOrder = () => {
       <View>
         <View style={styles.item}>
           <View style={styles.name}>
-            <AppText style={styles.product}>{item.product}</AppText>
-            <AppText style={styles.type}>{item.type}</AppText>
+            <AppText numberOfLines={1} style={styles.product}>
+              {item.itemName}
+            </AppText>
+            <AppText style={styles.type}>
+              {item.serviceType === null
+                ? 'منتج'
+                : serviceTypeMap[item.serviceType]}
+            </AppText>
           </View>
           <View style={styles.counter}>
             <Button
               title={'+'}
-              // onPress={() => changeCounter('increase')}
+              onPress={() => setCart(item.itemId, item.quantity+1)}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
-            <AppText style={styles.counterText}>{item.number}</AppText>
+            <AppText style={styles.counterText}>{item.quantity}</AppText>
             <Button
               title={'-'}
-              // onPress={() => changeCounter('decrease')}
+              onPress={() => setCart(item.itemId, item.quantity-1)}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
-              disabled={item.number < 2}
+              disabled={item.quantity < 2}
             />
           </View>
-          <AppText style={styles.price}>{item.totalPrice}</AppText>
+          <AppText style={styles.price}>{item.price} ج</AppText>
           <TouchableOpacity>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
@@ -110,19 +92,26 @@ const PlaceOrder = () => {
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>السلة</AppText>
         </View>
-        <FlatList
-          data={cart}
-          renderItem={_renderCartItem}
-          contentContainerStyle={{
-            width: calcWidth(375),
-          }}
-          keyExtractor={(item, index) => `${index}`}
-          ListEmptyComponent={
-            <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
-          }
-          ListFooterComponent={
-            <>
-              <TouchableOpacity
+        {loading ? (
+          <ActivityIndicator
+            color={COLORS.main}
+            style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+            size={calcFont(30)}
+          />
+        ) : (
+          <FlatList
+            data={cart}
+            renderItem={_renderCartItem}
+            contentContainerStyle={{
+              width: calcWidth(375),
+            }}
+            keyExtractor={(item, index) => `${Math.random() * 100}`}
+            ListEmptyComponent={
+              <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+            }
+            ListFooterComponent={
+              <>
+                {/* <TouchableOpacity
                 onPress={toggleQuickCleaning}
                 style={styles.checkBoxContainer}>
                 <AppText style={styles.checkboxText}>
@@ -133,15 +122,13 @@ const PlaceOrder = () => {
                   size={calcFont(25)}
                   color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
-              <Line width={calcWidth(345)} color={COLORS.lightGray} />
-
-              <View style={styles.total}>
-                <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-                <AppText style={styles.priceText}>200 ج</AppText>
-              </View>
-              <View style={styles.total}>
+                <View style={styles.total}>
+                  <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+                  <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+                </View>
+                {/* <View style={styles.total}>
                 <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
                 <AppText style={styles.PromoCode}>40 ج</AppText>
               </View>
@@ -150,8 +137,8 @@ const PlaceOrder = () => {
                   القيمة بعد الخصم
                 </AppText>
                 <AppText style={styles.priceText}>160 ج</AppText>
-              </View>
-              <TouchableOpacity
+              </View> */}
+                {/* <TouchableOpacity
                 // onPress={toggleCashPayment}
                 style={styles.checkBoxContainer}>
                 <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
@@ -160,22 +147,38 @@ const PlaceOrder = () => {
                   size={calcFont(25)}
                   color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
-              <View style={styles.orderButton}>
-                <Button
-                  title={'تنفيذ الطلب'}
-                  onPress={() => navigation.navigate('Home')}
-                  titleStyle={styles.completeOrder}
-                  style={styles.button}
-                />
-              </View>
-            </>
-          }
-        />
+                <View style={styles.orderButton}>
+                  <Button
+                    title={'أستكمال الطلب'}
+                    onPress={() => navigation.navigate('Home')}
+                    titleStyle={styles.completeOrder}
+                    style={styles.button}
+                  />
+                </View>
+              </>
+            }
+          />
+        )}
       </View>
     </View>
   );
 };
 
-export default PlaceOrder;
+function mapStateToProps(state) {
+  return {
+    cart: state.cart.cart,
+    totalPrice: state.cart.totalPrice,
+    error: state.cart.error,
+    loading: state.cart.loading,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getCart ,setCart}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder);
