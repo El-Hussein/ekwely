@@ -20,16 +20,15 @@ import {connect} from 'react-redux';
 import {getProducts} from '../../redux/actions/Products';
 import {IMAGE_BASE_URL} from '../../common/constants';
 import Favorite from '../../components/atoms/Favorite';
+import Cart from '../../components/atoms/Cart';
 
-const Product = ({getProducts, products,loading}) => {
+const Product = ({getProducts, products, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
 
   useEffect(() => {
     getProducts();
   }, []);
-
-  
 
   const _renderProductItem = ({item}) => {
     return (
@@ -47,22 +46,7 @@ const Product = ({getProducts, products,loading}) => {
             }}>
             <View style={styles.cartFav}>
               <Favorite id={item.id} isFav={item.isFavourite} />
-
-              <TouchableOpacity
-                style={
-                  item.isItemBasket
-                    ? styles.favoriteOut
-                    : [styles.favoriteOut, {backgroundColor: COLORS.midGrayo}]
-                }>
-                <Image
-                  source={IMAGES.cart}
-                  style={
-                    item.isItemBasket
-                      ? styles.cartImage
-                      : [styles.cartImage, {tintColor: COLORS.white}]
-                  }
-                />
-              </TouchableOpacity>
+              <Cart id={item.id} isCart={item.isItemBasket} />
             </View>
 
             <View style={styles.namePrice}>
@@ -122,7 +106,7 @@ const Product = ({getProducts, products,loading}) => {
           data={filteredData || products || []}
           renderItem={_renderProductItem}
           numColumns={2}
-          keyExtractor={(item, index) => `${Math.random()*100}`}
+          keyExtractor={(item, index) => `${Math.random() * 100}`}
           refreshing={loading}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
