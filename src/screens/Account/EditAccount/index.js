@@ -9,6 +9,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
 import COLORS from '../../../common/colors';
 import AppText from '../../../components/atoms/AppText';
@@ -90,6 +91,59 @@ const EditAccount = () => {
       setLoading(false);
     }
   };
+
+  const imagePickerOptions = {
+    title: 'Select Avatar',
+  };
+  const openGallery = () => {
+    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+        const formData = new FormData();
+        // formData.append('userType', 1);
+        formData.append('formdata', {
+          uri:
+            Platform.OS === 'android' ? response.uri : 'file://' + response.uri,
+          name: 'formdata',
+          type: 'image/jpeg', // or your mime type what you want
+        });
+        makePostRequest({
+          url: 'UploadDownload/upload',
+          data: {
+            formData,
+          },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+          .then((response) => {
+            console.log('response');
+            console.log(response);
+            console.log('response');
+          })
+          .catch((error) => {
+            console.log('error.response');
+            console.log(error.response);
+            console.log('error.response');
+          });
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        // this.setState({
+        //   avatarSource: source,
+        // });
+      }
+    });
+  };
+
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
       <View style={styles.container}>
@@ -117,7 +171,7 @@ const EditAccount = () => {
           <Image source={IMAGES.userImage} style={styles.userImage} />
           <Button
             title={'حمل الصوره'}
-            onPress={() => console.log('pressed')}
+            onPress={openGallery}
             titleStyle={styles.addToCartText}
             style={styles.addToCartButton}
           />
