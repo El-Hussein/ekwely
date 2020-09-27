@@ -10,7 +10,6 @@ import IMAGES from '../../../common/images';
 import {makePostRequest} from '../../../utils/api.helpers';
 import {USER_DATA} from '../../../common/constants';
 import {calcFont} from '../../../common/styles';
-import Toast from 'react-native-simple-toast';
 import {
   validateUserName,
   validateEmail,
@@ -101,15 +100,6 @@ const Register = () => {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
-            Toast.show(response.data.message);
-            // save user data in AsyncStorage
-            setLoginData({
-              userName: '',
-              email: '',
-              phone: '',
-              password: '',
-              passwordConfirm: '',
-            });
             // save user data in AsyncStorage
             AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
             // save user data in the redux
