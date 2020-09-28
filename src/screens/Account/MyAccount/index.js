@@ -1,12 +1,19 @@
-import React, {useState} from 'react';
-import {View, Image, ScrollView, TouchableOpacity} from 'react-native';
-
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
+import Toast from 'react-native-simple-toast';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
 import COLORS from '../../../common/colors';
 import AppText from '../../../components/atoms/AppText';
 import Button from '../../../components/atoms/Button';
 import IMAGES from '../../../common/images';
-import {calcWidth} from '../../../common/styles';
+import {calcFont, calcHeight, calcWidth} from '../../../common/styles';
 import {Line} from '../../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -14,8 +21,8 @@ import {makePostRequest} from '../../../utils/api.helpers';
 const MyAccount = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [serverError, setServerError] = useState(''); 
-  const [addressData, setAddressData] = useState(false);
+  const [serverError, setServerError] = useState(false);
+  const [addressData, setAddressData] = useState({});
   const {user} = useSelector((state) => {
     return {
       user: state.auth.user,
@@ -32,18 +39,23 @@ const MyAccount = () => {
       },
     });
   };
+  console.log(addressData);
+  useEffect(() => {
+    console.log('entered effect');
+    if (addressData.streetAddress) {
+      saveAddress();
+    }
+  }, [addressData.streetAddress]);
+
   const saveAddress = () => {
-    console.log('kkkkkkkkkkkkkk');
-    changeAddress();
-    console.log(addressData);
+    console.log('entered save address');
     setServerError('');
     setLoading(true);
     try {
       makePostRequest({
-        url: '/Users/auth_UpdateUser',
+        url: 'Users/EditUserProfile',
         data: {
           Data: {
-            UserName: registerData.userName,
             Address: addressData.streetAddress,
             Lang: addressData.longitude,
             Lat: addressData.latitude,
@@ -51,19 +63,26 @@ const MyAccount = () => {
         },
       })
         .then((response) => {
+          console.log('entered success addresss', response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
-            console.log('okkkkk');
+            // 'تم تغييير العن,ان بن[اح'
+            Toast.show('تم تغيير العنوان بنجاح');
           }
           setLoading(false);
+          setAddressData({});
         })
         .catch((error) => {
+          console.log('entered failed addresss', error.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
+          setAddressData({});
         });
     } catch (error) {
+      console.log('entered error addresss', error);
+      setAddressData({});
       setLoading(false);
     }
   };
@@ -102,25 +121,39 @@ const MyAccount = () => {
           <Line width={calcWidth(345)} color={COLORS.lightGray} />
         </View>
 
-        
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-
+          {/* <Icon
+            name="map-marker-alt"
+            size={calcFont(22)}
+            color={COLORS.white}
+          /> */}
           <Button
             title={'تغيير العنوان'}
-            // onPress={() => navigation.navigate('EditPassword')}
+            onPress={() => changeAddress()}
             titleStyle={styles.changeAddressText}
           />
+          {loading ? (
+            <ActivityIndicator
+              color={COLORS.main}
+              style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+              size={calcFont(20)}
+            />
+          ) : null}
         </View>
         <View style={styles.addressVeiw}>
-          {serverError ? (
+          {!!serverError && (
             <AppText style={styles.error}>{serverError}</AppText>
-          ) : null}
+          )}
         </View>
 
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-
+          {/* <Icon
+            name="lock-outline"
+            size={calcFont(22)}
+            color={COLORS.white}
+          /> */}
           <Button
             title={'تغيير رمز المرور'}
             onPress={() => navigation.navigate('EditPassword')}
