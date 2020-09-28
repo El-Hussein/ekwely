@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, ActivityIndicator} from 'react-native';
 import Button from '../../components/atoms/Button';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import styles from './styles';
@@ -8,11 +8,21 @@ import AppText from '../../components/atoms/AppText';
 import AppInput from '../../components/atoms/AppInput';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/atoms/Header';
-const Support = () => {
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {setSupport} from '../../redux/actions/Support';
+const Support = ({setSupport, loading}) => {
   const navigation = useNavigation();
   const [address, setAddress] = useState('');
   const [comment, setComment] = useState('');
-
+  const send = () => {
+    if(address&&comment){
+      console.log('kkkk' ,[address,comment]);
+      setSupport(address,comment);
+      setAddress('');
+      setComment('');
+    }
+  };
   return (
     <View style={styles.container}>
       <Header />
@@ -39,19 +49,40 @@ const Support = () => {
             multiline={true}
           />
         </View>
-        <View style={{paddingVertical: calcHeight(20)}}>
-          <Button
-            title={'إرسال'}
-            onPress={() => {
-              navigation.navigate('Home');
-            }}
-            titleStyle={styles.addToCartText}
-            style={styles.addToCartButton}
+        {loading ? (
+          <ActivityIndicator
+            color={COLORS.main}
+            style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+            size={calcFont(30)}
           />
-        </View>
+        ) : (
+          <View style={{paddingVertical: calcHeight(20)}}>
+            <Button
+              title={'إرسال'}
+              onPress={() => {
+                send();
+                navigation.navigate('Home');
+              }}
+              titleStyle={styles.addToCartText}
+              style={styles.addToCartButton}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
 };
 
-export default Support;
+function mapStateToProps(state) {
+  return {
+    loading: state.products.loading,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({setSupport}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Support);
