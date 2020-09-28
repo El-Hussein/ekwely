@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   newOrder: {
     width: '100%',
