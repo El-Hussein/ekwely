@@ -10,14 +10,14 @@ import COLORS from '../../../common/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {calcFont} from '../../../common/styles';
 
-const Cart = ({id, isCart, setCart, deleteCart}) => {
+const Cart = ({id, isCart,serviceType ,isProduct, setCart, deleteCart}) => {
   const [cart, toggleCart] = useState(isCart);
   const toggle = () => {
     toggleCart(!cart);
     if (isCart) {
-      deleteCart(id);
+      // deleteCart(id);
     } else {
-      setCart(id);
+      setCart(id,1,serviceType,isProduct);
     }
   };
 

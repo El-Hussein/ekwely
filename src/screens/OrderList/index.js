@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useCallback} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -12,22 +12,24 @@ import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getCart ,setCart} from '../../redux/actions/Cart';
+import {getCart ,deleteCart} from '../../redux/actions/Cart';
 
-const serviceTypeMap = {
+const serviceTypeMap = { 
   0: 'غسيل',
   1: 'مكوي',
   2: 'غسيل ومكوي',
   3: 'تصليح',
 };
 
-const PlaceOrder = ({getCart, cart, loading, totalPrice ,setCart}) => {
-  useEffect(() => {
-    getCart();
-  }, []);
+const PlaceOrder = ({getCart, cart, loading, totalPrice ,deleteCart }) => {
+  useFocusEffect(
+    useCallback(() => {
+      getCart();
+    }, []),
+  );
   const navigation = useNavigation();
   // const [quickCleaning, setQuickCleaning] = useState(true);
   // const [cashPayment, setCashPayment] = useState(false);
@@ -39,13 +41,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice ,setCart}) => {
   //   setCashPayment(!cashPayment);
   // };
 
-  const changeCounter = (type) => {
-    if (type == 'increase') {
-      setCounter(counter + 1);
-    } else {
-      setCounter(counter - 1);
-    }
-  };
+
 
   const _renderCartItem = ({item}) => {
     return (
@@ -64,21 +60,25 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice ,setCart}) => {
           <View style={styles.counter}>
             <Button
               title={'+'}
-              onPress={() => setCart(item.itemId, item.quantity+1)}
+              // onPress={() => setCart(item.itemId, item.quantity+1)}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
             <AppText style={styles.counterText}>{item.quantity}</AppText>
             <Button
               title={'-'}
-              onPress={() => setCart(item.itemId, item.quantity-1)}
+              // onPress={() => setCart(item.itemId, item.quantity-1)}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
               disabled={item.quantity < 2}
             />
           </View>
           <AppText style={styles.price}>{item.price} ج</AppText>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            console.log('item',item.id)
+              deleteCart(item.id);
+              getCart(true);
+            }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
         </View>
@@ -177,7 +177,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getCart ,setCart}, dispatch),
+    ...bindActionCreators({getCart ,deleteCart}, dispatch),
   };
 }
 

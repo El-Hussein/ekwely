@@ -11,14 +11,21 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get set Action
-export const setCart = (id, quantity = 1) => {
+export const setCart = (id, quantity, serviceType, isProduct) => {
   return (dispatch) => {
     console.log('start');
     try {
       makePostRequest({
         url: 'ItemBasket/auth_SetItemBasket',
         data: {
-          Data: {Id: 0, Quantity: quantity, ItemId: id},
+          Data: {
+            Id: 0,
+            Quantity: quantity,
+            ItemId: id,
+            ServiceType: serviceType,
+            IsProduct: isProduct,
+            IsFastClean: false,
+          },
         },
       })
         .then((response) => {
@@ -51,12 +58,13 @@ export const deleteCart = (id) => {
   return (dispatch) => {
     try {
       makePostRequest({
-        url: ' ItemBasket/auth_DeleteItemBasket',
+        url: 'ItemBasket/auth_DeleteItemBasket',
         data: {
           Data: {Id: id},
         },
       })
         .then((response) => {
+          console.log('bbbbbb', response);
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
@@ -81,9 +89,9 @@ export const deleteCart = (id) => {
 };
 
 // get cart Action
-export const getCart = () => {
+export const getCart = (hideLoading) => {
   return (dispatch) => {
-    dispatch({type: CART_PENDING});
+    if (!hideLoading) dispatch({type: CART_PENDING});
     try {
       makePostRequest({
         url: 'ItemBasket/auth_GetBasket',
@@ -92,7 +100,6 @@ export const getCart = () => {
         },
       })
         .then((response) => {
-          console.log('responceeeeeeeeeeee', response);
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
