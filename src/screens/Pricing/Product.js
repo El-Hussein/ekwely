@@ -46,7 +46,12 @@ const Product = ({getProducts, products, loading}) => {
             }}>
             <View style={styles.cartFav}>
               <Favorite id={item.id} isFav={item.isFavourite} />
-              <Cart id={item.id} isCart={item.isItemBasket} />
+              <Cart
+                id={item.id}
+                isCart={item.isItemBasket}
+                serviceType={item.serviceType}
+                isProduct={item.isProduct}
+              />
             </View>
 
             <View style={styles.namePrice}>
