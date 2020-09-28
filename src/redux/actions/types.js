@@ -46,3 +46,12 @@ export const CURRENT_ORDER_FAILED = 'CURRENT_ORDER_FAILED';
 export const HISTORY_ORDER_PENDING = 'HISTORY_ORDER_PENDING';
 export const HISTORY_ORDER_SUCCESS = 'HISTORY_ORDER_SUCCESS';
 export const HISTORY_ORDER_FAILED = 'HISTORY_ORDER_FAILED';
+
+
+
+/////////////////////////
+// SUPPORT
+/////////////////////////
+export const SUPPORT_PENDING = 'SUPPORT_PENDING';
+export const SUPPORT_SUCCESS = 'SUPPORT_SUCCESS';
+export const SUPPORT_FAILED = 'SUPPORT_FAILED';
