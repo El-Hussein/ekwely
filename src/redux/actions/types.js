@@ -30,3 +30,19 @@ export const DRY_CLEAN_SUCCESS = 'DRY_CLEAN_SUCCESS';
 export const FAQ_SUCCESS = 'FAQ_SUCCESS';
 export const FAQ_FAILED = 'FAQ_FAILED';
 export const FAQ_PENDING = 'FAQ_PENDING';
+
+
+/////////////////////////
+// CURRENT_ORDER
+/////////////////////////
+export const CURRENT_ORDER_PENDING = 'CURRENT_ORDER_PENDING';
+export const CURRENT_ORDER_SUCCESS = 'CURRENT_ORDER_SUCCESS';
+export const CURRENT_ORDER_FAILED = 'CURRENT_ORDER_FAILED';
+
+
+/////////////////////////
+// HISTORY_ORDER
+/////////////////////////
+export const HISTORY_ORDER_PENDING = 'HISTORY_ORDER_PENDING';
+export const HISTORY_ORDER_SUCCESS = 'HISTORY_ORDER_SUCCESS';
+export const HISTORY_ORDER_FAILED = 'HISTORY_ORDER_FAILED';

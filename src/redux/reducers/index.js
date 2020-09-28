@@ -5,11 +5,13 @@ import ProductsReducer from './ProductsReducer';
 import FavoriteReducer from './FavoriteReducer';
 import FaqReducer from './FaqReducer';
 import CartReducer from './CartReducer';
+import OrderReducer from './OrderReducer';
 
 export default combineReducers({
   auth: authReducer,
   loading:Loading,
   products:ProductsReducer,
   cart:CartReducer,
+  order:OrderReducer,
   
 });
