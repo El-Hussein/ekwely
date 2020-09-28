@@ -13,5 +13,6 @@ export default combineReducers({
   products:ProductsReducer,
   cart:CartReducer,
   order:OrderReducer,
+  faq:FaqReducer,
   
 });
