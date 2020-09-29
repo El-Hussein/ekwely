@@ -23,7 +23,7 @@ import {useNavigation} from '@react-navigation/native';
 
 const PlaceOrder = () => {
   const navigation = useNavigation();
-
+ 
   const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(true);
   const [evening, setEvening] = useState(false);
@@ -180,7 +180,7 @@ const PlaceOrder = () => {
         <View style={styles.orderButton}>
           <Button
             title={'استكمال الطلب'}
-            onPress={() => navigation.navigate('Order')}
+            onPress={() => navigation.navigate('Home')}
             titleStyle={styles.completeOrder}
             style={styles.button}
           />
