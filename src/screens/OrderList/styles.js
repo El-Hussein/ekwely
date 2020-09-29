@@ -25,7 +25,7 @@ export default StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
     flexDirection: 'row-reverse',
-    paddingVertical: calcHeight(10),
+    paddingVertical: calcHeight(20),
     paddingHorizontal: calcWidth(15),
     alignItems: 'center',
   },
@@ -36,11 +36,14 @@ export default StyleSheet.create({
     color: COLORS.mainText,
     fontSize: calcFont(18),
     fontWeight: 'bold',
+    alignSelf: 'flex-end',
+    width: calcWidth(110),
   },
   type: {
     color: COLORS.lightTextGray,
     fontSize: calcFont(16),
     fontWeight: 'bold',
+    alignSelf: 'flex-end',
   },
   counter: {
     justifyContent: 'space-between',
@@ -71,8 +74,15 @@ export default StyleSheet.create({
   },
   price: {
     color: COLORS.mainText,
-    fontSize: calcFont(22),
+    fontSize: calcFont(18),
     fontWeight: 'bold',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    lineHeight: calcHeight(40),
+    flex: 1,
+    marginHorizontal: calcWidth(10),
   },
   close: {
     width: calcWidth(20),
@@ -125,9 +135,10 @@ export default StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignItems: 'center',
-    paddingVertical: calcHeight(2),
+    paddingVertical: calcHeight(10),
     paddingHorizontal: calcWidth(15),
     justifyContent: 'flex-start',
+    marginVertical:calcHeight(30)
   },
   /////////////////////////////////
   orderButton: {
@@ -145,5 +156,8 @@ export default StyleSheet.create({
   completeOrder: {
     color: COLORS.white,
     fontSize: calcFont(20),
+  },
+  EmptyComponent: {
+    alignSelf: 'center',
   },
 });
