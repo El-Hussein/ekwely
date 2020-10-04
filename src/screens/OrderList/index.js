@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+
 import {
   View,
   TouchableOpacity,
@@ -15,9 +16,9 @@ import {Line} from '../../components/atoms/Line';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getCart, deleteCart} from '../../redux/actions/Cart';
 
 const serviceTypeMap = {
+
   0: 'غسيل',
   1: 'مكوي',
   2: 'غسيل ومكوي',
@@ -25,21 +26,14 @@ const serviceTypeMap = {
 };
 
 const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
+
   useFocusEffect(
     useCallback(() => {
       getCart();
     }, []),
   );
   const navigation = useNavigation();
-  // const [quickCleaning, setQuickCleaning] = useState(true);
-  // const [cashPayment, setCashPayment] = useState(false);
 
-  // const toggleQuickCleaning = () => {
-  //   setQuickCleaning(!quickCleaning);
-  // };
-  // const toggleCashPayment = () => {
-  //   setCashPayment(!cashPayment);
-  // };
 
   const _renderCartItem = ({item}) => {
     return (
@@ -77,6 +71,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
               console.log('item', item.id);
               deleteCart(item.id);
               getCart();
+
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
@@ -110,9 +105,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
             }
             ListFooterComponent={
               <>
-                
 
-                
 
                 <View style={styles.orderButton}>
                   <Button
@@ -143,6 +136,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators({getCart, deleteCart}, dispatch),
+
   };
 }
 

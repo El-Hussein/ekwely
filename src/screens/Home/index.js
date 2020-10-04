@@ -28,7 +28,7 @@ const Home = () => {
         <View style={styles.orderButton}>
           <Button
             title={'اطلب الان'}
-            onPress={() => navigation.navigate('PlaceOrder')}
+            onPress={() => navigation.navigate('Order')}
             titleStyle={styles.orderTitle}
             style={styles.button}
           />
