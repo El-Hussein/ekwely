@@ -76,7 +76,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice ,deleteCart }) => {
           <AppText style={styles.price}>{item.price} ج</AppText>
           <TouchableOpacity onPress={() => {
             console.log('item',item.id)
-              deleteCart(item.id);
+              deleteCart(item.id); 
               getCart(true);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
@@ -152,7 +152,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice ,deleteCart }) => {
                 <View style={styles.orderButton}>
                   <Button
                     title={'أستكمال الطلب'}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => navigation.navigate('PlaceOrder')}
                     titleStyle={styles.completeOrder}
                     style={styles.button}
                   />
