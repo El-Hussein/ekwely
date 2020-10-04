@@ -110,8 +110,8 @@ const EditAccount = () => {
         const formData = new FormData();
         // formData.append('userType', 1);
         formData.append('file', {
-          uri:
-            Platform.OS === 'android' ? response.uri : 'file://' + response.uri,
+          ...response,
+          uri:Platform.OS === 'android' ? response.uri : 'file://' + response.uri,
           name: 'file',
           type: 'image/jpeg', // or your mime type what you want
         });
@@ -120,7 +120,6 @@ const EditAccount = () => {
           data: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
-            Accept: 'application/json',
           },
         })
           .then((response) => {

@@ -1,4 +1,5 @@
-import React, { useCallback} from 'react';
+import React, {useCallback} from 'react';
+
 import {
   View,
   TouchableOpacity,
@@ -15,32 +16,23 @@ import {Line} from '../../components/atoms/Line';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getCart ,deleteCart} from '../../redux/actions/Cart';
 
-const serviceTypeMap = { 
+const serviceTypeMap = {
+
   0: 'غسيل',
   1: 'مكوي',
   2: 'غسيل ومكوي',
   3: 'تصليح',
 };
 
-const PlaceOrder = ({getCart, cart, loading, totalPrice ,deleteCart }) => {
+const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
+
   useFocusEffect(
     useCallback(() => {
       getCart();
     }, []),
   );
   const navigation = useNavigation();
-  // const [quickCleaning, setQuickCleaning] = useState(true);
-  // const [cashPayment, setCashPayment] = useState(false);
-
-  // const toggleQuickCleaning = () => {
-  //   setQuickCleaning(!quickCleaning);
-  // };
-  // const toggleCashPayment = () => {
-  //   setCashPayment(!cashPayment);
-  // };
-
 
 
   const _renderCartItem = ({item}) => {
@@ -74,10 +66,12 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice ,deleteCart }) => {
             />
           </View>
           <AppText style={styles.price}>{item.price} ج</AppText>
-          <TouchableOpacity onPress={() => {
-            console.log('item',item.id)
-              deleteCart(item.id); 
-              getCart(true);
+          <TouchableOpacity
+            onPress={() => {
+              console.log('item', item.id);
+              deleteCart(item.id);
+              getCart();
+
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
@@ -111,43 +105,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice ,deleteCart }) => {
             }
             ListFooterComponent={
               <>
-                {/* <TouchableOpacity
-                onPress={toggleQuickCleaning}
-                style={styles.checkBoxContainer}>
-                <AppText style={styles.checkboxText}>
-                  خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-                </AppText>
-                <IconIonicons
-                  name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-                  size={calcFont(25)}
-                  color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-                />
-              </TouchableOpacity> */}
 
-                <View style={styles.total}>
-                  <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-                  <AppText style={styles.priceText}>{totalPrice} ج</AppText>
-                </View>
-                {/* <View style={styles.total}>
-                <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-                <AppText style={styles.PromoCode}>40 ج</AppText>
-              </View>
-              <View style={styles.total}>
-                <AppText style={styles.totalPriceText}>
-                  القيمة بعد الخصم
-                </AppText>
-                <AppText style={styles.priceText}>160 ج</AppText>
-              </View> */}
-                {/* <TouchableOpacity
-                // onPress={toggleCashPayment}
-                style={styles.checkBoxContainer}>
-                <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-                <IconIonicons
-                  name={cashPayment ? 'md-checkbox' : 'square-outline'}
-                  size={calcFont(25)}
-                  color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-                />
-              </TouchableOpacity> */}
 
                 <View style={styles.orderButton}>
                   <Button
@@ -177,7 +135,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getCart ,deleteCart}, dispatch),
+    ...bindActionCreators({getCart, deleteCart}, dispatch),
+
   };
 }
 
