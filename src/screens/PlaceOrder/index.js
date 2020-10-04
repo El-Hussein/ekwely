@@ -29,6 +29,7 @@ const PlaceOrder = () => {
   const [evening, setEvening] = useState(false);
   const [morningDelivery, setMorningDelivery] = useState(true);
   const [eveningDelivery, setEveningDelivery] = useState(false);
+
   const Morning = () => {
     if (morning == false) {
       setMorning(!morning);
@@ -68,7 +69,15 @@ const PlaceOrder = () => {
     setShow(true);
     setMode(currentMode);
   };
+  const [quickCleaning, setQuickCleaning] = useState(true);
+  const [cashPayment, setCashPayment] = useState(false);
 
+  const toggleQuickCleaning = () => {
+    setQuickCleaning(!quickCleaning);
+  };
+  const toggleCashPayment = () => {
+    setCashPayment(!cashPayment);
+  };
   const showDatepicker = () => {
     showMode('date');
   };
@@ -78,7 +87,7 @@ const PlaceOrder = () => {
       <View style={styles.newOrder}>
         <AppText style={styles.newOrderText}>طلب جديد</AppText>
       </View>
-      <ScrollView >
+      <ScrollView>
         <View style={styles.orderTime}>
           <Image source={IMAGES.out} style={styles.inOutImage} />
 
@@ -176,11 +185,112 @@ const PlaceOrder = () => {
           />
           <Image source={IMAGES.promoIcon} style={styles.promoImage} />
         </View>
-
+        <TouchableOpacity
+          onPress={toggleQuickCleaning}
+          style={styles.checkBoxContainer}>
+          <AppText style={styles.checkboxText}>
+            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+          </AppText>
+          <IconIonicons
+            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
+        <View style={styles.total}>
+          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+        </View>
+        <View style={styles.total}>
+          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+          <AppText style={styles.PromoCode}>40 ج</AppText>
+        </View>
+        <View style={styles.total}>
+          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
+          <AppText style={styles.priceText}>160 ج</AppText>
+        </View>
+        <TouchableOpacity
+          // onPress={toggleCashPayment}
+          style={styles.checkBoxContainer}>
+          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
+          <IconIonicons
+            name={cashPayment ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={toggleQuickCleaning}
+          style={styles.checkBoxContainer}>
+          <AppText style={styles.checkboxText}>
+            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+          </AppText>
+          <IconIonicons
+            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
+        <View style={styles.total}>
+          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+        </View>
+        <View style={styles.total}>
+          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+          <AppText style={styles.PromoCode}>40 ج</AppText>
+        </View>
+        <View style={styles.total}>
+          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
+          <AppText style={styles.priceText}>160 ج</AppText>
+        </View>
+        <TouchableOpacity
+          // onPress={toggleCashPayment}
+          style={styles.checkBoxContainer}>
+          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
+          <IconIonicons
+            name={cashPayment ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={toggleQuickCleaning}
+          style={styles.checkBoxContainer}>
+          <AppText style={styles.checkboxText}>
+            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+          </AppText>
+          <IconIonicons
+            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
+        <View style={styles.total}>
+          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+        </View>
+        <View style={styles.total}>
+          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+          <AppText style={styles.PromoCode}>40 ج</AppText>
+        </View>
+        <View style={styles.total}>
+          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
+          <AppText style={styles.priceText}>160 ج</AppText>
+        </View>
+        <TouchableOpacity
+          // onPress={toggleCashPayment}
+          style={styles.checkBoxContainer}>
+          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
+          <IconIonicons
+            name={cashPayment ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
         <View style={styles.orderButton}>
           <Button
             title={'استكمال الطلب'}
-            onPress={() => navigation.navigate('Order')}
+            onPress={() => navigation.navigate('Home')}
             titleStyle={styles.completeOrder}
             style={styles.button}
           />
