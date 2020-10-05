@@ -31,9 +31,12 @@ const Wash = ({
   getProducts,
 }) => {
   useEffect(() => {
-    getProducts();
-    getWashFavorite();
-    getProductsFavorite();
+    if (wash.length === 0) {
+      getProducts();
+    }
+    if (washFav.length === 0) {
+      getWashFavorite();
+    }
   }, []);
   const navigation = useNavigation();
   const [favorite, setFavorite] = useState(true);
@@ -75,6 +78,7 @@ const Wash = ({
 
   const handlePieceSelect = (item) => {
     setSelectedPiece(item);
+    setSelectedService(null);
   };
 
   const closeServiceModal = () => {
@@ -84,6 +88,10 @@ const Wash = ({
   const handleServiceSelect = (item) => {
     setSelectedService(item);
   };
+
+  console.log('selectedPiece');
+  console.log(selectedPiece);
+  console.log('selectedPiece');
 
   return (
     <View style={styles.container}>
@@ -98,7 +106,7 @@ const Wash = ({
           setFavoriteDropDownVisible(true);
         }}
         disabled={!favorite}
-        placeholder="اختر من المفضلة"
+        placeholder={selectedPiece ? selectedPiece.name : 'اختر من المفضلة'}
       />
       <View style={styles.orderTime}>
         <TouchableOpacity onPress={togglePieces}>
@@ -111,7 +119,7 @@ const Wash = ({
           setPieceDropDownVisible(true);
         }}
         disabled={!pieces}
-        placeholder="اختر القطعة"
+        placeholder={selectedPiece ? selectedPiece.name : 'اختر القطعة'}
       />
 
       <View style={styles.chooseService}>
@@ -121,7 +129,7 @@ const Wash = ({
         onPress={() => {
           setServiceDropDownVisible(true);
         }}
-        placeholder="اختر الخدمة"
+        placeholder={selectedService ? selectedService.name : 'اختر الخدمة'}
       />
 
       <View style={styles.addToCart}>
@@ -163,11 +171,14 @@ const Wash = ({
       </View>
       {/* dropdown */}
       <DropDownModal
-        data={[
-          {id: 1, name: 'غاده', value: 1, serviceType: [0, 3]},
-          {id: 2, name: 'حسين', value: 2, serviceType: [0, 1, 2]},
-          {id: 3, name: 'عبير', value: 3, serviceType: [1, 3]},
-        ]}
+        data={washFav.map((fav) => {
+          return {
+            id: fav.id,
+            name: fav.arName,
+            value: fav.id,
+            serviceType: fav.serviceType,
+          };
+        })}
         visible={favoriteDropDownVisible}
         onPress={(item) => handlePieceSelect(item)}
         closeModal={closeFavoriteModal}
@@ -177,11 +188,14 @@ const Wash = ({
         title="اختر من المفضلة"
       />
       <DropDownModal
-        data={[
-          {id: 1, name: 'قطعه 1', value: 1, serviceType: [0, 3]},
-          {id: 2, name: 'قطعه 2', value: 2, serviceType: [0, 1, 2]},
-          {id: 3, name: 'قطعه 3', value: 3, serviceType: [1, 3]},
-        ]}
+        data={wash.map((fav) => {
+          return {
+            id: fav.id,
+            name: fav.arName,
+            value: fav.id,
+            serviceType: fav.serviceType,
+          };
+        })}
         visible={pieceDropDownVisible}
         onPress={(item) => handlePieceSelect(item)}
         closeModal={closePieceModal}
