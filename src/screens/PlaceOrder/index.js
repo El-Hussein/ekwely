@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Image,
@@ -20,15 +20,20 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
 import {useNavigation} from '@react-navigation/native';
-
-const PlaceOrder = () => {
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getCart, deleteCart} from '../../redux/actions/Cart';
+const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
   const navigation = useNavigation();
- 
+
+  useEffect(() => {
+    getCart();
+  }, []);
   const [value, onChangeText] = useState('');
-  const [morning, setMorning] = useState(true);
-  const [evening, setEvening] = useState(false);
-  const [morningDelivery, setMorningDelivery] = useState(true);
-  const [eveningDelivery, setEveningDelivery] = useState(false);
+  const [morning, setMorning] = useState(false);
+  const [evening, setEvening] = useState(true);
+  const [morningDelivery, setMorningDelivery] = useState(false);
+  const [eveningDelivery, setEveningDelivery] = useState(true);
 
   const Morning = () => {
     if (morning == false) {
@@ -69,17 +74,17 @@ const PlaceOrder = () => {
     setShow(true);
     setMode(currentMode);
   };
-  const [quickCleaning, setQuickCleaning] = useState(true);
-  const [cashPayment, setCashPayment] = useState(false);
+  const showDatepicker = () => {
+    showMode('date');
+  };
+  const [quickCleaning, setQuickCleaning] = useState(false);
+  const [usePromoCode, setUsePromoCode] = useState(false);
 
   const toggleQuickCleaning = () => {
     setQuickCleaning(!quickCleaning);
   };
-  const toggleCashPayment = () => {
-    setCashPayment(!cashPayment);
-  };
-  const showDatepicker = () => {
-    showMode('date');
+  const toggleUsePromoCode = () => {
+    setUsePromoCode(!usePromoCode);
   };
 
   return (
@@ -175,28 +180,39 @@ const PlaceOrder = () => {
           />
         </View>
 
-        <View style={styles.promoCode}>
-          <TextInput
-            style={styles.promoCodeInput}
-            onChangeText={(text) => onChangeText(text)}
-            placeholder="ادخل كود الخصم"
-            placeholderTextColor={COLORS.lightTextGray}
-            value={value}
+        <Line width={calcWidth(345)} color={COLORS.lightGray} />
+
+        <TouchableOpacity style={styles.checkBox}>
+          <AppText style={styles.checkboxText}>الدفع نقدي</AppText>
+          <IconIonicons
+            name={'md-checkbox'}
+            size={calcFont(25)}
+            color={COLORS.main}
           />
-          <Image source={IMAGES.promoIcon} style={styles.promoImage} />
-        </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={toggleUsePromoCode}
+          style={styles.checkBox}>
+          <AppText style={styles.checkboxText}>استخدام كود الخصم</AppText>
+          <IconIonicons
+            name={usePromoCode ? 'md-checkbox' : 'square-outline'}
+            size={calcFont(25)}
+            color={usePromoCode ? COLORS.main : COLORS.midLightGray}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
+          style={styles.checkBox}>
           <AppText style={styles.checkboxText}>
             خدمة التنظيف السريع (تسليم خلال 24 ساعه)
           </AppText>
           <IconIonicons
             name={quickCleaning ? 'md-checkbox' : 'square-outline'}
             size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+            color={quickCleaning ? COLORS.main : COLORS.midLightGray}
           />
         </TouchableOpacity>
+
         <View style={styles.total}>
           <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
           <AppText style={styles.priceText}>{totalPrice} ج</AppText>
@@ -209,84 +225,7 @@ const PlaceOrder = () => {
           <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
           <AppText style={styles.priceText}>160 ج</AppText>
         </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-          </AppText>
-          <IconIonicons
-            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-          </AppText>
-          <IconIonicons
-            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
+
         <View style={styles.orderButton}>
           <Button
             title={'استكمال الطلب'}
@@ -310,4 +249,19 @@ const PlaceOrder = () => {
   );
 };
 
-export default PlaceOrder;
+function mapStateToProps(state) {
+  return {
+    cart: state.cart.cart,
+    totalPrice: state.cart.totalPrice,
+    error: state.cart.error,
+    loading: state.cart.loading,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getCart, deleteCart}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder);

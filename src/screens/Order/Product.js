@@ -1,37 +1,63 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import Button from '../../components/atoms/Button';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
+import DropDownModal from '../../components/atoms/DrobDownModal';
 import DropDown from '../../components/atoms/DropDown';
-import {useNavigation} from '@react-navigation/native';
-
+import Button from '../../components/atoms/Button';
 import CheckBox from '../../components/atoms/CheckBox';
+import {useNavigation} from '@react-navigation/native';
+import {connect} from 'react-redux';
 
-const Product = () => {
+
+
+const Product = ({ productsItem, loading ,productsFav}) => {
   const navigation = useNavigation();
   const [favorite, setFavorite] = useState(true);
-  const [pieces, setPieces] = useState(false);
+  const [products, setProducts] = useState(false);
   const [counter, setCounter] = useState(1);
+  const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productDropDownVisible, setProductDropDownVisible] = useState(false);
 
   const toggleFavorite = () => {
-    if (favorite == false) {
+    if (favorite === false) {
       setFavorite(!favorite);
-      setPieces(!pieces);
+      setProducts(!products);
     }
   };
-  const togglePieces = () => {
-    if (pieces == false) {
+  const toggleProducts = () => {
+    if (products === false) {
       setFavorite(!favorite);
-      setPieces(!pieces);
+      setProducts(!products);
     }
   };
   const changeCounter = (type) => {
-    if (type == 'increase') {
+    if (type === 'increase') {
       setCounter(counter + 1);
     } else {
       setCounter(counter - 1);
     }
+  };
+
+  const closeFavoriteModal = () => {
+    setFavoriteDropDownVisible(false);
+  };
+
+  const closeProductModal = () => {
+    setProductDropDownVisible(false);
+  };
+
+  const handleProductSelect = (item) => {
+    setSelectedProduct(item);
+  };
+
+  const closeServiceModal = () => {
+    setServiceDropDownVisible(false);
+  };
+
+  const handleServiceSelect = (item) => {
+    setSelectedService(item);
   };
 
   return (
@@ -42,14 +68,28 @@ const Product = () => {
         </TouchableOpacity>
         <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
       </View>
-      <DropDown placeholder="اختر من المفضلة" />
+      <DropDown
+        onPress={() => {
+          setFavoriteDropDownVisible(true);
+        }}
+        disabled={!favorite}
+        placeholder="اختر من المفضلة"
+      />
       <View style={styles.orderTime}>
-        <TouchableOpacity onPress={togglePieces}>
-          <CheckBox selected={pieces} />
+        <TouchableOpacity onPress={toggleProducts}>
+          <CheckBox selected={products} />
         </TouchableOpacity>
         <AppText style={styles.orderTimeText}>اختر المنتج</AppText>
       </View>
-      <DropDown placeholder="اختر المنتج" />
+      <DropDown
+        onPress={() => {
+          setProductDropDownVisible(true);
+        }}
+        disabled={!products}
+        placeholder="اختر المنتج"
+      />
+
+      
 
       <View style={styles.addToCart}>
         <Button
@@ -88,8 +128,47 @@ const Product = () => {
           style={styles.button}
         />
       </View>
+      {/* dropdown */}
+      <DropDownModal
+        data={[
+          {id: 1, name: 'غاده', value: 1,},
+          {id: 2, name: 'حسين', value: 2, },
+          {id: 3, name: 'عبير', value: 3, },
+        ]}
+        visible={favoriteDropDownVisible}
+        onPress={(item) => handleProductSelect(item)}
+        closeModal={closeFavoriteModal}
+        onPressConfirm={(item) => handleProductSelect(item)}
+        onSelectItem={(item) => handleProductSelect(item)}
+        selected={selectedProduct}
+        title="اختر من المفضلة"
+      />
+      <DropDownModal
+        data={[
+          {id: 1, name: 'قطعه 1', value: 1, },
+          {id: 2, name: 'قطعه 2', value: 2, },
+          {id: 3, name: 'قطعه 3', value: 3, },
+        ]}
+        visible={productDropDownVisible}
+        onPress={(item) => handleProductSelect(item)}
+        closeModal={closeProductModal}
+        onPressConfirm={(item) => handleProductSelect(item)}
+        onSelectItem={(item) => handleProductSelect(item)}
+        selected={selectedProduct}
+        title="اختر المنتج"
+      />
+      
     </View>
   );
 };
 
-export default Product;
+function mapStateToProps(state) {
+  return {
+    productsItem: state.products.products,
+    productsFav: state.favorite.products,
+
+  };
+}
+
+
+export default connect(mapStateToProps) (Product);

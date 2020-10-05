@@ -13,7 +13,6 @@ import Toast from 'react-native-simple-toast';
 // get set Action
 export const setCart = (id, quantity, serviceType, isProduct) => {
   return (dispatch) => {
-    console.log('start');
     try {
       makePostRequest({
         url: 'ItemBasket/auth_SetItemBasket',
@@ -29,11 +28,9 @@ export const setCart = (id, quantity, serviceType, isProduct) => {
         },
       })
         .then((response) => {
-          console.log('jiii');
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
-            console.log('add', response);
             dispatch({type: ADD_SUCCESS, payload: response.data.message});
           }
         })
@@ -54,17 +51,19 @@ export const setCart = (id, quantity, serviceType, isProduct) => {
   };
 };
 
-export const deleteCart = (id) => {
+export const deleteCart = (id, isItem) => {
+  console.log('delete',isItem ,id)
   return (dispatch) => {
     try {
       makePostRequest({
-        url: 'ItemBasket/auth_DeleteItemBasket',
+        url: !isItem
+          ? 'ItemBasket/auth_DeleteItemBasket'
+          : 'ItemBasket/auth_DeleteItemBasketByItemId',
         data: {
           Data: {Id: id},
         },
       })
         .then((response) => {
-          console.log('bbbbbb', response);
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {

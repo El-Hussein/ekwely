@@ -16,5 +16,6 @@ export default combineReducers({
   order:OrderReducer,
   faq:FaqReducer,
   support:SupportReducer,
+  favorite:FavoriteReducer,
   
 });

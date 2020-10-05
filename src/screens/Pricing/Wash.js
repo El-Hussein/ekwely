@@ -13,8 +13,6 @@ import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
-import {useSelector} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Favorite from '../../components/atoms/Favorite';
 const Wash = ({ products, loading}) => {

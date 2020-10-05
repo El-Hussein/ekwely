@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -13,7 +13,7 @@ import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -25,10 +25,12 @@ import Cart from '../../components/atoms/Cart';
 const Product = ({getProducts, products, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getProducts();
+    }, []),
+  );
+ 
 
   const _renderProductItem = ({item}) => {
     return (

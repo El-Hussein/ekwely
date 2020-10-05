@@ -1,5 +1,4 @@
 import React, {useCallback} from 'react';
-
 import {
   View,
   TouchableOpacity,
@@ -16,24 +15,29 @@ import {Line} from '../../components/atoms/Line';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {getCart, deleteCart, setCart} from '../../redux/actions/Cart';
 
 const serviceTypeMap = {
-
   0: 'غسيل',
   1: 'مكوي',
   2: 'غسيل ومكوي',
   3: 'تصليح',
 };
 
-const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
-
+const PlaceOrder = ({
+  getCart,
+  cart,
+  loading,
+  totalPrice,
+  deleteCart,
+  setCart,
+}) => {
   useFocusEffect(
     useCallback(() => {
       getCart();
     }, []),
   );
   const navigation = useNavigation();
-
 
   const _renderCartItem = ({item}) => {
     return (
@@ -52,14 +56,32 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
           <View style={styles.counter}>
             <Button
               title={'+'}
-              // onPress={() => setCart(item.itemId, item.quantity+1)}
+              onPress={
+                (() =>
+                 { setCart(
+                    item.itemId,
+                    item.quantity + 1,
+                    item.serviceType,
+                    item.isProduct,
+                  ) ,getCart(true)}
+                )
+              }
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
             <AppText style={styles.counterText}>{item.quantity}</AppText>
             <Button
               title={'-'}
-              // onPress={() => setCart(item.itemId, item.quantity-1)}
+              onPress={
+                (() =>
+                  {setCart(
+                    item.itemId,
+                    item.quantity - 1,
+                    item.serviceType,
+                    item.isProduct,
+                  ) ,getCart(true)}
+                )
+              }
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
               disabled={item.quantity < 2}
@@ -69,9 +91,8 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
           <TouchableOpacity
             onPress={() => {
               console.log('item', item.id);
-              deleteCart(item.id);
-              getCart();
-
+              deleteCart(item.id, false);
+              getCart(true);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
@@ -105,7 +126,10 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
             }
             ListFooterComponent={
               <>
-
+                <View style={styles.total}>
+                  <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
+                  <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+                </View>
 
                 <View style={styles.orderButton}>
                   <Button
@@ -135,8 +159,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getCart, deleteCart}, dispatch),
-
+    ...bindActionCreators({getCart, deleteCart, setCart}, dispatch),
   };
 }
 

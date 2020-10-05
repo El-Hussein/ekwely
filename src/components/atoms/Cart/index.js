@@ -9,15 +9,27 @@ import styles from './styles';
 import COLORS from '../../../common/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {calcFont} from '../../../common/styles';
+import {getProducts} from '../../../redux/actions/Products';
 
-const Cart = ({id, isCart,serviceType ,isProduct, setCart, deleteCart}) => {
+const Cart = ({
+  id,
+  isCart,
+  serviceType,
+  isProduct,
+  setCart,
+  deleteCart,
+  getProducts,
+}) => {
   const [cart, toggleCart] = useState(isCart);
   const toggle = () => {
+    console.log('isCart', isCart);
     toggleCart(!cart);
     if (isCart) {
-      // deleteCart(id);
+      deleteCart(id, true);
+      getProducts(true);
     } else {
-      setCart(id,1,serviceType,isProduct);
+      setCart(id, 1, serviceType, isProduct);
+      getProducts(true);
     }
   };
 
@@ -35,7 +47,7 @@ const Cart = ({id, isCart,serviceType ,isProduct, setCart, deleteCart}) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({setCart, deleteCart}, dispatch),
+    ...bindActionCreators({setCart, deleteCart, getProducts}, dispatch),
   };
 }
 
