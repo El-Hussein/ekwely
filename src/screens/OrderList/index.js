@@ -35,7 +35,7 @@ const PlaceOrder = ({
 }) => {
   useFocusEffect(
     useCallback(() => {
-      getCart();
+      if (cart.length === 0) getCart();
     }, []),
   );
   const navigation = useNavigation();

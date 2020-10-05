@@ -22,19 +22,24 @@ import CheckBox from '../../components/atoms/CheckBox';
 import {useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getCart, deleteCart} from '../../redux/actions/Cart';
-const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
-  const navigation = useNavigation();
+import {useSelector} from 'react-redux';
 
-  useEffect(() => {
-    getCart();
-  }, []);
+const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
+  const navigation = useNavigation();
+  const {user} = useSelector((state) => {
+    return {
+      user: state.auth.user,
+    };
+  });
+
   const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(false);
   const [evening, setEvening] = useState(true);
   const [morningDelivery, setMorningDelivery] = useState(false);
   const [eveningDelivery, setEveningDelivery] = useState(true);
-
+  const [addressData, setAddressData] = useState(false);
+  const [sendAddress, setSendAddress] = useState(user.address);
+  const [deliveredAddress, setDeliveredAddress] = useState(user.address);
   const Morning = () => {
     if (morning == false) {
       setMorning(!morning);
@@ -63,7 +68,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-
+  console.log('date', date);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -105,8 +110,10 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
               color: COLORS.lightTextGray,
               fontSize: calcFont(16),
               fontWeight: 'bold',
-            }}>
-            اختر التاريخ
+              width: '80%',
+            }}
+            numberOfLines={1}>
+            {new Date(date).toString()}
           </AppText>
           <IconFeather
             name="calendar"
@@ -129,12 +136,25 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
 
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-          <AppText style={styles.changeAddressText}>
-            شارع محمد فوزى متفرع من عباس العقاد
+          <AppText numberOfLines={1} style={styles.changeAddressText}>
+            {sendAddress}
           </AppText>
           <Button
             title={'تغيير'}
-            onPress={() => console.log('pressed')}
+            onPress={() => {
+              navigation.navigate('SelectLocation', {
+                onGoBack: (address) => {
+                  setAddressData({
+                    ...addressData,
+                    ...address.coordinates,
+                    streetAddress: address.formattedAddress,
+                  });
+                },
+              });
+              console.log(addressData);
+              setSendAddress(addressData.streetAddress);
+              setAddressData(false);
+            }}
             titleStyle={styles.pressText}
             style={styles.press}
           />
@@ -169,12 +189,24 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
 
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-          <AppText style={styles.changeAddressText}>
-            شارع محمد فوزى متفرع من عباس العقاد
+          <AppText numberOfLines={1} style={styles.changeAddressText}>
+            {deliveredAddress}
           </AppText>
           <Button
             title={'تغيير'}
-            onPress={() => console.log('pressed')}
+            onPress={() => {
+              navigation.navigate('SelectLocation', {
+                onGoBack: (address) => {
+                  setAddressData({
+                    ...addressData,
+                    ...address.coordinates,
+                    streetAddress: address.formattedAddress,
+                  });
+                },
+              });
+              setDeliveredAddress(addressData.streetAddress);
+              setAddressData(false);
+            }}
             titleStyle={styles.pressText}
             style={styles.press}
           />
@@ -190,19 +222,19 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
             color={COLORS.main}
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={toggleUsePromoCode}
-          style={styles.checkBox}>
-          <AppText style={styles.checkboxText}>استخدام كود الخصم</AppText>
-          <IconIonicons
-            name={usePromoCode ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={usePromoCode ? COLORS.main : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBox}>
+        {!!totalPromoCodeDiscount && (
+          <TouchableOpacity
+            onPress={toggleUsePromoCode}
+            style={styles.checkBox}>
+            <AppText style={styles.checkboxText}>استخدام كود الخصم</AppText>
+            <IconIonicons
+              name={usePromoCode ? 'md-checkbox' : 'square-outline'}
+              size={calcFont(25)}
+              color={usePromoCode ? COLORS.main : COLORS.midLightGray}
+            />
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity onPress={toggleQuickCleaning} style={styles.checkBox}>
           <AppText style={styles.checkboxText}>
             خدمة التنظيف السريع (تسليم خلال 24 ساعه)
           </AppText>
@@ -217,14 +249,22 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
           <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
           <AppText style={styles.priceText}>{totalPrice} ج</AppText>
         </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
+        {!!usePromoCode && (
+          <View style={styles.total}>
+            <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+            <AppText style={styles.PromoCode}>
+              {totalPromoCodeDiscount} ج
+            </AppText>
+          </View>
+        )}
+        {!!usePromoCode && (
+          <View style={styles.total}>
+            <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
+            <AppText style={styles.priceText}>
+              {totalPrice - totalPromoCodeDiscount}ج
+            </AppText>
+          </View>
+        )}
 
         <View style={styles.orderButton}>
           <Button
@@ -253,15 +293,10 @@ function mapStateToProps(state) {
   return {
     cart: state.cart.cart,
     totalPrice: state.cart.totalPrice,
+    totalPromoCodeDiscount: state.cart.totalPromoCodeDiscount,
     error: state.cart.error,
     loading: state.cart.loading,
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators({getCart, deleteCart}, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder);
+export default connect(mapStateToProps)(PlaceOrder);

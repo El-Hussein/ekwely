@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, ToastAndroid} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import DropDownModal from '../../components/atoms/DrobDownModal';
@@ -10,6 +10,8 @@ import {useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getProducts} from '../../redux/actions/Products';
+import {setCart, deleteCart} from '../../redux/actions/Cart';
+import Toast from 'react-native-simple-toast';
 
 import {
   getProductsFavorite,
@@ -29,6 +31,7 @@ const Wash = ({
   loading,
   getWashFavorite,
   getProducts,
+  setCart,
 }) => {
   useEffect(() => {
     if (wash.length === 0) {
@@ -89,10 +92,22 @@ const Wash = ({
     setSelectedService(item);
   };
 
-  console.log('selectedPiece');
-  console.log(selectedPiece);
-  console.log('selectedPiece');
+  const addToCart = () => {
+    console.log('selectedPiece');
+    console.log(selectedPiece, selectedService, counter);
+    console.log('selectedPiece');
+    if (selectedPiece && selectedService) {
+      console.log('selectedPiece');
+      setCart(selectedPiece.id, counter, selectedService.value, false);
+      Toast.show('تم بنجاح');
+      setCounter(1);
+      setSelectedPiece(null);
+      setSelectedService(null);
 
+    } else {
+      Toast.show('من فضلك اختر القطعه او الخدمه');
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.orderTime}>
@@ -135,7 +150,7 @@ const Wash = ({
       <View style={styles.addToCart}>
         <Button
           title={'اضف الى السلة'}
-          onPress={() => console.log('pressed')}
+          onPress={() => addToCart()}
           titleStyle={styles.addToCartText}
           style={styles.addToCartButton}
         />
@@ -228,7 +243,6 @@ function mapStateToProps(state) {
   return {
     wash: state.products.dryClean,
     washFav: state.favorite.wash,
-    error: state.favorite.error,
     loading: state.favorite.loading,
   };
 }
@@ -236,7 +250,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(
-      {getProductsFavorite, getWashFavorite, getProducts},
+      {getProductsFavorite, getWashFavorite, getProducts, setCart},
       dispatch,
     ),
   };

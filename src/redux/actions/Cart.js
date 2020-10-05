@@ -111,6 +111,7 @@ export const getCart = (hideLoading) => {
               payload: {
                 cart: c,
                 totalPrice: response.data.data.totalPrice,
+                totalPromoCodeDiscount: response.data.data.totalPromoCodeDiscount,
               },
             });
           }
