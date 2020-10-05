@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -16,6 +16,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getCart, deleteCart, setCart} from '../../redux/actions/Cart';
+import Loader from '../../components/atoms/Loader';
 
 const serviceTypeMap = {
   0: 'غسيل',
@@ -38,6 +39,7 @@ const PlaceOrder = ({
     }, []),
   );
   const navigation = useNavigation();
+  const [localeLoading, setLocaleLoading] = useState(false);
 
   const _renderCartItem = ({item}) => {
     return (
@@ -56,32 +58,40 @@ const PlaceOrder = ({
           <View style={styles.counter}>
             <Button
               title={'+'}
-              onPress={
-                (() =>
-                 { setCart(
-                    item.itemId,
-                    item.quantity + 1,
-                    item.serviceType,
-                    item.isProduct,
-                  ) ,getCart(true)}
-                )
-              }
+              onPress={() => {
+                setLocaleLoading(true);
+                setCart(
+                  item.itemId,
+                  item.quantity + 1,
+                  item.serviceType,
+                  item.isProduct,
+                  item.id,
+                );
+                setTimeout(() => {
+                  getCart(true);
+                  setLocaleLoading(false);
+                }, 1000);
+              }}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
             <AppText style={styles.counterText}>{item.quantity}</AppText>
             <Button
               title={'-'}
-              onPress={
-                (() =>
-                  {setCart(
-                    item.itemId,
-                    item.quantity - 1,
-                    item.serviceType,
-                    item.isProduct,
-                  ) ,getCart(true)}
-                )
-              }
+              onPress={() => {
+                setLocaleLoading(true);
+                setCart(
+                  item.itemId,
+                  item.quantity - 1,
+                  item.serviceType,
+                  item.isProduct,
+                  item.id,
+                );
+                setTimeout(() => {
+                  getCart(true);
+                  setLocaleLoading(false);
+                }, 1000);
+              }}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
               disabled={item.quantity < 2}
@@ -90,9 +100,12 @@ const PlaceOrder = ({
           <AppText style={styles.price}>{item.price} ج</AppText>
           <TouchableOpacity
             onPress={() => {
-              console.log('item', item.id);
+              setLocaleLoading(true);
               deleteCart(item.id, false);
-              getCart(true);
+              setTimeout(() => {
+                getCart(true);
+                setLocaleLoading(false);
+              }, 1000);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
@@ -103,6 +116,7 @@ const PlaceOrder = ({
   };
   return (
     <View style={{backgroundColor: COLORS.white, flex: 1}}>
+      <Loader visible={localeLoading} />
       <View style={styles.container}>
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>السلة</AppText>

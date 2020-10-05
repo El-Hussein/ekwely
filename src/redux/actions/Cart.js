@@ -11,14 +11,14 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get set Action
-export const setCart = (id, quantity, serviceType, isProduct) => {
+export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
   return (dispatch) => {
     try {
       makePostRequest({
         url: 'ItemBasket/auth_SetItemBasket',
         data: {
           Data: {
-            Id: 0,
+            Id: cartId,
             Quantity: quantity,
             ItemId: id,
             ServiceType: serviceType,
@@ -52,7 +52,7 @@ export const setCart = (id, quantity, serviceType, isProduct) => {
 };
 
 export const deleteCart = (id, isItem) => {
-  console.log('delete',isItem ,id)
+  console.log('delete', isItem, id);
   return (dispatch) => {
     try {
       makePostRequest({
