@@ -8,7 +8,7 @@ import IMAGES from '../../common/images';
 import {calcHeight, calcWidth} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
-import {USER_DATA} from '../../common/constants';
+import {IMAGE_BASE_URL, USER_DATA} from '../../common/constants';
 import {useSelector} from 'react-redux';
 
 const Raw = ({title, onPress}) => {
@@ -26,7 +26,7 @@ const Drawer = ({toggleDrawer}) => {
     };
   });
   const navigation = useNavigation();
-
+  console.log(IMAGE_BASE_URL + user.image);
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>
@@ -34,7 +34,14 @@ const Drawer = ({toggleDrawer}) => {
           <Image source={IMAGES.back} style={styles.backImage} />
         </TouchableOpacity>
         <View style={styles.userOut}>
-          <Image source={IMAGES.userImage} style={styles.userImage} />
+          <Image
+            source={
+              user?.image
+                ? {uri: IMAGE_BASE_URL + user.image}
+                : IMAGES.userImage
+            }
+            style={user?.image ? styles.userImage : styles.defaultImage}
+          />
         </View>
       </View>
       <View>

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 
@@ -9,11 +9,17 @@ export default StyleSheet.create({
     paddingVertical: calcHeight(8),
     backgroundColor: COLORS.gray,
   },
-  userImage: {
+  defaultImage: {
     width: calcWidth(75),
     height: calcHeight(75),
     resizeMode: 'contain',
     tintColor: COLORS.lightTextGray,
+  },
+  userImage: {
+    width: calcWidth(134),
+    height: calcWidth(134),
+    borderRadius: calcWidth(Platform.OS === 'ios' ? 134 : 72),
+    resizeMode: 'cover',
   },
   backImage: {
     width: calcWidth(35),
