@@ -1,4 +1,4 @@
-import {StyleSheet, CheckBox} from 'react-native';
+import {StyleSheet, CheckBox, Platform} from 'react-native';
 import COLORS from '../../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 import {color} from 'react-native-reanimated';
@@ -12,8 +12,8 @@ export default StyleSheet.create({
 
   newOrder: {
     width: '100%',
-    flexDirection:'row-reverse',
-    justifyContent:'space-between',
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: COLORS.lightGray,
     paddingHorizontal: calcWidth(15),
@@ -38,6 +38,12 @@ export default StyleSheet.create({
     backgroundColor: COLORS.yellow,
   },
   userImage: {
+    width: calcWidth(134),
+    height: calcWidth(134),
+    borderRadius: calcWidth(Platform.OS === 'ios' ? 134 : 72),
+    resizeMode: 'cover',
+  },
+  defaultImage: {
     width: calcWidth(75),
     height: calcHeight(75),
     resizeMode: 'contain',
@@ -75,14 +81,13 @@ export default StyleSheet.create({
 
   promoCodeInput: {
     width: calcWidth(345),
-    height: calcHeight(46),
     borderRadius: calcFont(3),
     backgroundColor: COLORS.white,
     borderColor: COLORS.midLightGray,
     borderWidth: calcHeight(2),
     paddingHorizontal: calcWidth(20),
     fontSize: calcFont(18),
-    color:COLORS.lightTextGray,
+    color: COLORS.lightTextGray,
     textAlign: 'right',
     lineHeight: calcHeight(30),
     fontWeight: 'normal',

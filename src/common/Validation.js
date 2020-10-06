@@ -1,5 +1,5 @@
 const validateUserName = (userName) => {
-  if (userName.length === 0) {
+  if (!userName || userName.length === 0) {
     return 'هذا الحقل مطلوب';
   } else {
     return null;
@@ -7,7 +7,7 @@ const validateUserName = (userName) => {
 };
 
 const validateEmail = (email) => {
-  if (email.length === 0) {
+  if (!email || email.length === 0) {
     return 'هذا الحقل مطلوب';
     // } else if (
     //   !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
@@ -21,7 +21,7 @@ const validateEmail = (email) => {
 };
 
 const validatePhone = (phone) => {
-  if (phone.length === 0) {
+  if (!phone || phone.length === 0) {
     return 'هذا الحقل مطلوب';
   } else if (phone.length < 11) {
     return 'رقم الهاتف غير صحيح';

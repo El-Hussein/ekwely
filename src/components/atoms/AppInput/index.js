@@ -15,7 +15,7 @@ const AppInput = ({
   return (
     <View style={styles.container}>
       <TextInput
-        style={inputStyle}
+        style={[styles.input, inputStyle]}
         placeholder={placeholder}
         placeholderTextColor={COLORS.white}
         value={value}
