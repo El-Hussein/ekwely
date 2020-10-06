@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import Order from './Order';
@@ -9,11 +9,15 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getCurrentOrder} from '../../redux/actions/Order';
 import COLORS from '../../common/colors';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Product = ({getCurrentOrder, order, loading}) => {
-  useEffect(() => {
-    getCurrentOrder();
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getCurrentOrder();
+    }, []),
+  );
   const _renderOrderItem = ({item}) => {
     return <Order item={item} type="قيد التنفيذ" />;
   };
@@ -31,8 +35,8 @@ const Product = ({getCurrentOrder, order, loading}) => {
           data={order}
           renderItem={_renderOrderItem}
           contentContainerStyle={{
-            marginVertical: calcHeight(10),
             width: calcWidth(375),
+            paddingVertical:calcHeight(10),
           }}
           keyExtractor={(item, index) => `${Math.random() * 100}`}
           ListEmptyComponent={

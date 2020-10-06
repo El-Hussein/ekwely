@@ -78,14 +78,12 @@ const DropDown = ({
           useNativeDriver
           hideModalContentWhileAnimating>
           <View style={styles.androidContainer}>
+            <View style={styles.androidHeader}>
+              <AppText style={styles.titleText}>{title}</AppText>
+            </View>
             <FlatList
               ItemSeparatorComponent={() => <View style={styles.separator} />}
               data={data}
-              ListHeaderComponent={
-                <View style={styles.androidHeader}>
-                  <AppText style={styles.titleText}>{title}</AppText>
-                </View>
-              }
               renderItem={({item}) => {
                 return (
                   <TouchableOpacity

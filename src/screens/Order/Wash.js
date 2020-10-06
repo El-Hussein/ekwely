@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, TouchableOpacity, ToastAndroid} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
@@ -6,7 +6,7 @@ import DropDownModal from '../../components/atoms/DrobDownModal';
 import DropDown from '../../components/atoms/DropDown';
 import Button from '../../components/atoms/Button';
 import CheckBox from '../../components/atoms/CheckBox';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getProducts} from '../../redux/actions/Products';
@@ -33,23 +33,30 @@ const Wash = ({
   getProducts,
   setCart,
 }) => {
-  useEffect(() => {
-    if (wash.length === 0) {
-      getProducts();
-    }
-    if (washFav.length === 0) {
-      getWashFavorite();
-    }
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (wash.length === 0) {
+        getProducts();
+      }
+      if (washFav.length === 0) {
+        getWashFavorite();
+      }    }, []),
+  );
   const navigation = useNavigation();
-  const [favorite, setFavorite] = useState(true);
-  const [pieces, setPieces] = useState(false);
+  const [favorite, setFavorite] = useState(washFav.length > 0);
+  const [pieces, setPieces] = useState(washFav.length === 0);
   const [counter, setCounter] = useState(1);
   const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [serviceDropDownVisible, setServiceDropDownVisible] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
+
+  useEffect(() => {
+    setFavorite(washFav.length > 0);
+    setPieces(washFav.length === 0);
+  }, [washFav]);
 
   const toggleFavorite = () => {
     if (favorite === false) {
@@ -93,36 +100,35 @@ const Wash = ({
   };
 
   const addToCart = () => {
-    console.log('selectedPiece');
-    console.log(selectedPiece, selectedService, counter);
-    console.log('selectedPiece');
     if (selectedPiece && selectedService) {
-      console.log('selectedPiece');
       setCart(selectedPiece.id, counter, selectedService.value, false);
-      Toast.show('تم بنجاح');
+      Toast.show('تم الاضافه الي السله');
       setCounter(1);
       setSelectedPiece(null);
       setSelectedService(null);
-
     } else {
       Toast.show('من فضلك اختر القطعه او الخدمه');
     }
   };
   return (
     <View style={styles.container}>
-      <View style={styles.orderTime}>
-        <TouchableOpacity onPress={toggleFavorite}>
-          <CheckBox selected={favorite} />
-        </TouchableOpacity>
-        <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
-      </View>
-      <DropDown
-        onPress={() => {
-          setFavoriteDropDownVisible(true);
-        }}
-        disabled={!favorite}
-        placeholder={selectedPiece ? selectedPiece.name : 'اختر من المفضلة'}
-      />
+      {washFav.length > 0 && (
+        <>
+          <View style={styles.orderTime}>
+            <TouchableOpacity onPress={toggleFavorite}>
+              <CheckBox selected={favorite} />
+            </TouchableOpacity>
+            <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
+          </View>
+          <DropDown
+            onPress={() => {
+              setFavoriteDropDownVisible(true);
+            }}
+            disabled={!favorite}
+            placeholder={selectedPiece ? selectedPiece.name : 'اختر من المفضلة'}
+          />
+        </>
+      )}
       <View style={styles.orderTime}>
         <TouchableOpacity onPress={togglePieces}>
           <CheckBox selected={pieces} />

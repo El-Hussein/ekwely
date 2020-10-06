@@ -6,7 +6,9 @@ import {
   TextInput,
   ScrollView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
+import dayjs from 'dayjs';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -23,9 +25,13 @@ import {useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {useSelector} from 'react-redux';
+import {setOrder} from '../../redux/actions/Order';
+import {makePostRequest} from '../../utils/api.helpers';
+import Toast from 'react-native-simple-toast';
 
-const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
+const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
   const {user} = useSelector((state) => {
     return {
       user: state.auth.user,
@@ -37,9 +43,29 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
   const [evening, setEvening] = useState(true);
   const [morningDelivery, setMorningDelivery] = useState(false);
   const [eveningDelivery, setEveningDelivery] = useState(true);
-  const [addressData, setAddressData] = useState(false);
-  const [sendAddress, setSendAddress] = useState(user.address);
-  const [deliveredAddress, setDeliveredAddress] = useState(user.address);
+  const [isOriginalAddress, setIsOriginalAddress] = useState(true);
+  const [sendAddress, setSendAddress] = useState({
+    address: user.address,
+    lat: user.lat,
+    lang: user.lang,
+  });
+  const [deliveredAddress, setDeliveredAddress] = useState({
+    address: user.address,
+    lat: user.lat,
+    lang: user.lang,
+  });
+  useEffect(() => {
+    setSendAddress({
+      address: user.address,
+      lat: user.lat,
+      lang: user.lang,
+    });
+    setDeliveredAddress({
+      address: user.address,
+      lat: user.lat,
+      lang: user.lang,
+    });
+  }, [user.address]);
   const Morning = () => {
     if (morning == false) {
       setMorning(!morning);
@@ -65,7 +91,7 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
     }
   };
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(Date.now() + 24 * 60 * 60 * 1000);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   console.log('date', date);
@@ -91,7 +117,48 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
   const toggleUsePromoCode = () => {
     setUsePromoCode(!usePromoCode);
   };
-
+  const setOrder = () => {
+    setLoading(true);
+    try {
+      makePostRequest({
+        url: 'api/Order/auth_AddBulkOrder',
+        data: {
+          Data: {
+            IsOrignalAddress: isOriginalAddress,
+            NewDeliverAddress: deliveredAddress.address,
+            NewDeliverLat: deliveredAddress.lat,
+            NewDeliverLang: deliveredAddress.lang,
+            NewSendAddress: sendAddress.address,
+            NewSendLat: sendAddress.lat,
+            NewSendLang: sendAddress.lang,
+            SendDate: dayjs(date).locale('SA').format('DD MMM YYYY'),
+            DeliverDate: dayjs(date).add(quickCleaning ? 1 : 2, 'day'),
+            SendTime: evening ? 0 : 1,
+            DeliverTime: eveningDelivery ? 0 : 1,
+            IsFastClean: quickCleaning,
+          },
+        },
+      })
+        .then((response) => {
+          if (response?.data?.status !== '200') {
+            Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+            setLoading(false);
+          } else if (response?.data?.data) {
+            Toast.show(response.data.message);
+            navigation.popToTop();
+            navigation.navigate('Home');
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+          setLoading(false);
+        });
+    } catch (error) {
+      Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+      setLoading(false);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.newOrder}>
@@ -113,7 +180,7 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
               width: '80%',
             }}
             numberOfLines={1}>
-            {new Date(date).toString()}
+            {dayjs(date).locale('SA').format('DD MMM YYYY')}
           </AppText>
           <IconFeather
             name="calendar"
@@ -137,23 +204,21 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
           <AppText numberOfLines={1} style={styles.changeAddressText}>
-            {sendAddress}
+            {sendAddress.address}
           </AppText>
           <Button
             title={'تغيير'}
             onPress={() => {
               navigation.navigate('SelectLocation', {
                 onGoBack: (address) => {
-                  setAddressData({
-                    ...addressData,
-                    ...address.coordinates,
-                    streetAddress: address.formattedAddress,
+                  setSendAddress({
+                    lat: address.coordinates.latitude,
+                    lang: address.coordinates.longitude,
+                    address: address.formattedAddress,
                   });
                 },
               });
-              console.log(addressData);
-              setSendAddress(addressData.streetAddress);
-              setAddressData(false);
+              setIsOriginalAddress(false);
             }}
             titleStyle={styles.pressText}
             style={styles.press}
@@ -190,22 +255,21 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
           <AppText numberOfLines={1} style={styles.changeAddressText}>
-            {deliveredAddress}
+            {deliveredAddress.address}
           </AppText>
           <Button
             title={'تغيير'}
             onPress={() => {
               navigation.navigate('SelectLocation', {
                 onGoBack: (address) => {
-                  setAddressData({
-                    ...addressData,
-                    ...address.coordinates,
-                    streetAddress: address.formattedAddress,
+                  setDeliveredAddress({
+                    lat: address.coordinates.latitude,
+                    lang: address.coordinates.longitude,
+                    address: address.formattedAddress,
                   });
                 },
               });
-              setDeliveredAddress(addressData.streetAddress);
-              setAddressData(false);
+              setIsOriginalAddress(false);
             }}
             titleStyle={styles.pressText}
             style={styles.press}
@@ -249,6 +313,14 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
           <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
           <AppText style={styles.priceText}>{totalPrice} ج</AppText>
         </View>
+        {!!quickCleaning && (
+          <View style={styles.total}>
+            <AppText style={styles.totalPromoCode}>
+              تكاليف التنظيف السريع
+            </AppText>
+            <AppText style={styles.PromoCode}>20 ج</AppText>
+          </View>
+        )}
         {!!usePromoCode && (
           <View style={styles.total}>
             <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
@@ -267,12 +339,20 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
         )}
 
         <View style={styles.orderButton}>
-          <Button
-            title={'استكمال الطلب'}
-            onPress={() => navigation.navigate('Home')}
-            titleStyle={styles.completeOrder}
-            style={styles.button}
-          />
+          {loading ? (
+            <ActivityIndicator
+              color={COLORS.main}
+              style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+              size={calcFont(30)}
+            />
+          ) : (
+            <Button
+              title={'تنفيذ الطلب'}
+              onPress={() => setOrder()}
+              titleStyle={styles.completeOrder}
+              style={styles.button}
+            />
+          )}
         </View>
         {show && (
           <DateTimePicker
@@ -282,6 +362,7 @@ const PlaceOrder = ({cart, loading, totalPrice, totalPromoCodeDiscount}) => {
             is24Hour={true}
             display="default"
             onChange={onChange}
+            minimumDate={Date.now() + 24 * 60 * 60 * 1000}
           />
         )}
       </ScrollView>
@@ -295,7 +376,6 @@ function mapStateToProps(state) {
     totalPrice: state.cart.totalPrice,
     totalPromoCodeDiscount: state.cart.totalPromoCodeDiscount,
     error: state.cart.error,
-    loading: state.cart.loading,
   };
 }
 

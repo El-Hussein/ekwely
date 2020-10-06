@@ -139,21 +139,25 @@ const PlaceOrder = ({
               <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
             }
             ListFooterComponent={
-              <>
-                <View style={styles.total}>
-                  <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-                  <AppText style={styles.priceText}>{totalPrice} ج</AppText>
-                </View>
+              cart.length > 0 && (
+                <>
+                  <View style={styles.total}>
+                    <AppText style={styles.totalPriceText}>
+                      اجمالي القيمه
+                    </AppText>
+                    <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+                  </View>
 
-                <View style={styles.orderButton}>
-                  <Button
-                    title={'أستكمال الطلب'}
-                    onPress={() => navigation.navigate('PlaceOrder')}
-                    titleStyle={styles.completeOrder}
-                    style={styles.button}
-                  />
-                </View>
-              </>
+                  <View style={styles.orderButton}>
+                    <Button
+                      title={'أستكمال الطلب'}
+                      onPress={() => navigation.navigate('PlaceOrder')}
+                      titleStyle={styles.completeOrder}
+                      style={styles.button}
+                    />
+                  </View>
+                </>
+              )
             }
           />
         )}

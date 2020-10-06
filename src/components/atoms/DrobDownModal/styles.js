@@ -67,6 +67,7 @@ export const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: calcHeight(15)
   },
   buttonText: {
     width: calcWidth(100),

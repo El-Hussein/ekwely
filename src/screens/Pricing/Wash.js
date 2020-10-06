@@ -94,7 +94,7 @@ const Wash = ({ products, loading}) => {
           }}
           data={filteredData || products || []}
           renderItem={_renderProductItem}
-          keyExtractor={(item, index) => `${Math.random()*100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
           }

@@ -27,10 +27,11 @@ const Product = ({getProducts, products, loading}) => {
   const [filteredData, setFilteredData] = useState(null);
   useFocusEffect(
     useCallback(() => {
-      getProducts();
+      if (products.length === 0) {
+        getProducts();
+      }
     }, []),
   );
- 
 
   const _renderProductItem = ({item}) => {
     return (
@@ -113,7 +114,7 @@ const Product = ({getProducts, products, loading}) => {
           data={filteredData || products || []}
           renderItem={_renderProductItem}
           numColumns={2}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           refreshing={loading}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
