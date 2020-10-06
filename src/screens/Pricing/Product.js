@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -13,7 +13,7 @@ import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -25,10 +25,13 @@ import Cart from '../../components/atoms/Cart';
 const Product = ({getProducts, products, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      if (products.length === 0) {
+        getProducts();
+      }
+    }, []),
+  );
 
   const _renderProductItem = ({item}) => {
     return (
@@ -111,7 +114,7 @@ const Product = ({getProducts, products, loading}) => {
           data={filteredData || products || []}
           renderItem={_renderProductItem}
           numColumns={2}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           refreshing={loading}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>

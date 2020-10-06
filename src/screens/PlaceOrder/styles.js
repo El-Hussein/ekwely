@@ -60,6 +60,57 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+
+
+  checkBox: {
+    width: '100%',
+    paddingVertical: calcHeight(10),
+    paddingHorizontal: calcWidth(15),
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: calcWidth(5),
+    justifyContent: 'flex-end',
+  },
+
+  checkboxText: {
+    color: COLORS.textGray,
+    fontSize: calcFont(16),
+    paddingHorizontal: calcWidth(10),
+    fontWeight: 'bold',
+  },
+//////////////////////////////////////////
+
+  totalPromoCode: {
+    color: COLORS.error,
+    fontSize: calcFont(18),
+    fontWeight: 'bold',
+    width: calcWidth(250),
+  },
+  PromoCode: {
+    color: COLORS.error,
+    fontSize: calcFont(22),
+    fontWeight: 'bold',
+  },
+  totalPriceText: {
+    color: COLORS.gray,
+    fontSize: calcFont(18),
+    fontWeight: 'bold',
+    width: calcWidth(250),
+  },
+  priceText: {
+    color: COLORS.gray,
+    fontSize: calcFont(22),
+    fontWeight: 'bold',
+  },
+  total: {
+    width: '100%',
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    paddingVertical: calcHeight(10),
+    paddingHorizontal: calcWidth(15),
+    justifyContent: 'flex-start',
+  },
   //////////////////////////////////////////
   changeAddress: {
     flexDirection: 'row-reverse',
@@ -75,7 +126,7 @@ export default StyleSheet.create({
   },
 
   pressText: {
-    color: COLORS.darkMain,
+    color: COLORS.main,
     fontSize: calcFont(18),
   },
   press: {
@@ -109,26 +160,7 @@ export default StyleSheet.create({
     color: COLORS.lightTextGray,
     lineHeight: calcHeight(27),
   },
-  promoCode: {
-    width: calcWidth(345),
-    justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
-    paddingHorizontal: calcWidth(15),
-    alignItems: 'center',
-    alignSelf: 'center',
-    elevation: 1,
-    borderRadius: calcFont(3),
-    borderWidth: calcWidth(1),
-    borderColor: COLORS.midLightGray,
-    backgroundColor: COLORS.lightGray,
-    marginTop: calcHeight(10),
-  },
-  promoCodeInput: {
-    width: calcWidth(300),
-    fontWeight: 'bold',
-    fontSize: calcFont(18),
-    color: COLORS.lightTextGray,
-  },
+
   /////////////////////////////////
   orderButton: {
     width: '100%',

@@ -1,23 +1,62 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, TouchableOpacity, ToastAndroid} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import DropDownModal from '../../components/atoms/DrobDownModal';
 import DropDown from '../../components/atoms/DropDown';
 import Button from '../../components/atoms/Button';
 import CheckBox from '../../components/atoms/CheckBox';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getProducts} from '../../redux/actions/Products';
+import {setCart, deleteCart} from '../../redux/actions/Cart';
+import Toast from 'react-native-simple-toast';
 
-const Wash = () => {
+import {
+  getProductsFavorite,
+  getWashFavorite,
+} from '../../redux/actions/Favorite';
+const services = [
+  {id: 1, name: 'مكوي', value: 0},
+  {id: 2, name: 'غسيل', value: 1},
+  {id: 3, name: 'غسيل ومكوي', value: 2},
+  {id: 4, name: 'تصليح', value: 3},
+];
+
+const Wash = ({
+  getProductsFavorite,
+  wash,
+  washFav,
+  loading,
+  getWashFavorite,
+  getProducts,
+  setCart,
+}) => {
+
+  useFocusEffect(
+    useCallback(() => {
+      if (wash.length === 0) {
+        getProducts();
+      }
+      if (washFav.length === 0) {
+        getWashFavorite();
+      }    }, []),
+  );
   const navigation = useNavigation();
-  const [favorite, setFavorite] = useState(true);
-  const [pieces, setPieces] = useState(false);
+  const [favorite, setFavorite] = useState(washFav.length > 0);
+  const [pieces, setPieces] = useState(washFav.length === 0);
   const [counter, setCounter] = useState(1);
   const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [serviceDropDownVisible, setServiceDropDownVisible] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
+
+  useEffect(() => {
+    setFavorite(washFav.length > 0);
+    setPieces(washFav.length === 0);
+  }, [washFav]);
 
   const toggleFavorite = () => {
     if (favorite === false) {
@@ -48,10 +87,8 @@ const Wash = () => {
   };
 
   const handlePieceSelect = (item) => {
-    console.log('item');
-    console.log(item);
-    console.log('item');
-    setSelectedPiece(item.value);
+    setSelectedPiece(item);
+    setSelectedService(null);
   };
 
   const closeServiceModal = () => {
@@ -59,27 +96,39 @@ const Wash = () => {
   };
 
   const handleServiceSelect = (item) => {
-    console.log('item');
-    console.log(item);
-    console.log('item');
-    setSelectedService(item.value);
+    setSelectedService(item);
   };
 
+  const addToCart = () => {
+    if (selectedPiece && selectedService) {
+      setCart(selectedPiece.id, counter, selectedService.value, false);
+      Toast.show('تم الاضافه الي السله');
+      setCounter(1);
+      setSelectedPiece(null);
+      setSelectedService(null);
+    } else {
+      Toast.show('من فضلك اختر القطعه او الخدمه');
+    }
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.orderTime}>
-        <TouchableOpacity onPress={toggleFavorite}>
-          <CheckBox selected={favorite} />
-        </TouchableOpacity>
-        <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
-      </View>
-      <DropDown
-        onPress={() => {
-          setFavoriteDropDownVisible(true);
-        }}
-        disabled={!favorite}
-        placeholder="اختر من المفضلة"
-      />
+      {washFav.length > 0 && (
+        <>
+          <View style={styles.orderTime}>
+            <TouchableOpacity onPress={toggleFavorite}>
+              <CheckBox selected={favorite} />
+            </TouchableOpacity>
+            <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
+          </View>
+          <DropDown
+            onPress={() => {
+              setFavoriteDropDownVisible(true);
+            }}
+            disabled={!favorite}
+            placeholder={selectedPiece ? selectedPiece.name : 'اختر من المفضلة'}
+          />
+        </>
+      )}
       <View style={styles.orderTime}>
         <TouchableOpacity onPress={togglePieces}>
           <CheckBox selected={pieces} />
@@ -91,7 +140,7 @@ const Wash = () => {
           setPieceDropDownVisible(true);
         }}
         disabled={!pieces}
-        placeholder="اختر القطعة"
+        placeholder={selectedPiece ? selectedPiece.name : 'اختر القطعة'}
       />
 
       <View style={styles.chooseService}>
@@ -101,13 +150,13 @@ const Wash = () => {
         onPress={() => {
           setServiceDropDownVisible(true);
         }}
-        placeholder="اختر الخدمة"
+        placeholder={selectedService ? selectedService.name : 'اختر الخدمة'}
       />
 
       <View style={styles.addToCart}>
         <Button
           title={'اضف الى السلة'}
-          onPress={() => console.log('pressed')}
+          onPress={() => addToCart()}
           titleStyle={styles.addToCartText}
           style={styles.addToCartButton}
         />
@@ -143,11 +192,14 @@ const Wash = () => {
       </View>
       {/* dropdown */}
       <DropDownModal
-        data={[
-          {id: 1, name: 'غاده', value: 1},
-          {id: 2, name: 'حسين', value: 2},
-          {id: 3, name: 'عبير', value: 3},
-        ]}
+        data={washFav.map((fav) => {
+          return {
+            id: fav.id,
+            name: fav.arName,
+            value: fav.id,
+            serviceType: fav.serviceType,
+          };
+        })}
         visible={favoriteDropDownVisible}
         onPress={(item) => handlePieceSelect(item)}
         closeModal={closeFavoriteModal}
@@ -157,11 +209,14 @@ const Wash = () => {
         title="اختر من المفضلة"
       />
       <DropDownModal
-        data={[
-          {id: 1, name: 'قطعه 1', value: 1},
-          {id: 2, name: 'قطعه 2', value: 2},
-          {id: 3, name: 'قطعه 3', value: 3},
-        ]}
+        data={wash.map((fav) => {
+          return {
+            id: fav.id,
+            name: fav.arName,
+            value: fav.id,
+            serviceType: fav.serviceType,
+          };
+        })}
         visible={pieceDropDownVisible}
         onPress={(item) => handlePieceSelect(item)}
         closeModal={closePieceModal}
@@ -171,11 +226,13 @@ const Wash = () => {
         title="اختر القطعة"
       />
       <DropDownModal
-        data={[
-          {id: 1, name: 'خدمة 1', value: 1},
-          {id: 2, name: 'خدمة 2', value: 2},
-          {id: 3, name: 'خدمة 3', value: 3},
-        ]}
+        data={
+          !selectedPiece
+            ? services
+            : services.filter((service) =>
+                selectedPiece?.serviceType?.includes(service.value),
+              )
+        }
         visible={serviceDropDownVisible}
         onPress={(item) => handleServiceSelect(item)}
         closeModal={closeServiceModal}
@@ -188,4 +245,21 @@ const Wash = () => {
   );
 };
 
-export default Wash;
+function mapStateToProps(state) {
+  return {
+    wash: state.products.dryClean,
+    washFav: state.favorite.wash,
+    loading: state.favorite.loading,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators(
+      {getProductsFavorite, getWashFavorite, getProducts, setCart},
+      dispatch,
+    ),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wash);

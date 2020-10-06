@@ -78,33 +78,33 @@ const DropDown = ({
           useNativeDriver
           hideModalContentWhileAnimating>
           <View style={styles.androidContainer}>
+            <View style={styles.androidHeader}>
+              <AppText style={styles.titleText}>{title}</AppText>
+            </View>
             <FlatList
               ItemSeparatorComponent={() => <View style={styles.separator} />}
               data={data}
-              ListHeaderComponent={
-                <View style={styles.androidHeader}>
-                  <AppText style={styles.titleText}>{title}</AppText>
-                </View>
-              }
-              renderItem={({item}) => (
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => setAndroidSelected(item)}
-                  style={styles.androidCard}>
-                  <AppText style={styles.nameText}>{item.name}</AppText>
-                  <View>
-                    <Icon
-                      name={
-                        androidSelected === item
-                          ? ICONS.checkBoxMarked
-                          : ICONS.checkBox
-                      }
-                      size={calcFont(25)}
-                      color={COLORS.main}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={({item}) => {
+                return (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => setAndroidSelected(item)}
+                    style={styles.androidCard}>
+                    <AppText style={styles.nameText}>{item.name}</AppText>
+                    <View>
+                      <Icon
+                        name={
+                          androidSelected?.id === item?.id
+                            ? ICONS.checkBoxMarked
+                            : ICONS.checkBox
+                        }
+                        size={calcFont(25)}
+                        color={COLORS.main}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                );
+              }}
             />
             <View style={styles.buttons}>
               <TouchableOpacity

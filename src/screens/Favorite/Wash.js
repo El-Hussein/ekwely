@@ -1,5 +1,10 @@
-import React from 'react';
-import {View, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
+import React, { useCallback } from 'react';
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import styles from './styles';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import AppText from '../../components/atoms/AppText';
@@ -8,10 +13,21 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import COLORS from '../../common/colors';
 import {getProducts} from '../../redux/actions/Products';
-import {deleteFavorite} from '../../redux/actions/Favorite';
 import {Line} from '../../components/atoms/Line';
-const Wash = ({products, loading, getProducts, deleteFavorite}) => {
-  const dryCleanFavorite = products.filter((item) => item.isFavourite === true);
+import {
+  getProductsFavorite,
+  getWashFavorite,
+  deleteFavorite,
+} from '../../redux/actions/Favorite';
+import { useFocusEffect } from '@react-navigation/native';
+const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
+  useFocusEffect(
+    useCallback(() => {
+      if (washFav.length === 0) {
+        getWashFavorite();
+      }
+    }, []),
+  );
   const _renderFavoriteItem = ({item}) => {
     return (
       <View>
@@ -20,7 +36,11 @@ const Wash = ({products, loading, getProducts, deleteFavorite}) => {
             {item.arName}
           </AppText>
 
-          <TouchableOpacity onPress={()=>{deleteFavorite(item.id); getProducts(true)}}>
+          <TouchableOpacity
+            onPress={() => {
+              deleteFavorite(item.id);
+              getWashFavorite(true);
+            }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
         </View>
@@ -39,13 +59,13 @@ const Wash = ({products, loading, getProducts, deleteFavorite}) => {
         />
       ) : (
         <FlatList
-          data={dryCleanFavorite}
+          data={washFav}
           renderItem={_renderFavoriteItem}
           contentContainerStyle={{
             marginVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${Math.random()*100}`}
+          keyExtractor={(item, index) => `${Math.random() * 100}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد مفضله</AppText>
           }
@@ -56,15 +76,14 @@ const Wash = ({products, loading, getProducts, deleteFavorite}) => {
 };
 function mapStateToProps(state) {
   return {
-    products: state.products.dryClean,
-    error: state.products.error,
-    loading: state.products.loading,
+    washFav: state.favorite.wash,
+    loading: state.favorite.loading,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getProducts, deleteFavorite}, dispatch),
+    ...bindActionCreators({getWashFavorite, deleteFavorite}, dispatch),
   };
 }
 

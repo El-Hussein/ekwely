@@ -1,60 +1,128 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import Button from '../../components/atoms/Button';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, TouchableOpacity, ToastAndroid} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
+import DropDownModal from '../../components/atoms/DrobDownModal';
 import DropDown from '../../components/atoms/DropDown';
-import {useNavigation} from '@react-navigation/native';
-
+import Button from '../../components/atoms/Button';
 import CheckBox from '../../components/atoms/CheckBox';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getProducts} from '../../redux/actions/Products';
+import {setCart, deleteCart} from '../../redux/actions/Cart';
+import Toast from 'react-native-simple-toast';
+import {getProductsFavorite} from '../../redux/actions/Favorite';
 
-const Product = () => {
+const Product = ({
+  products,
+  productsFav,
+  loading,
+  setCart,
+  getProductsFavorite,
+}) => {
   const navigation = useNavigation();
-  const [favorite, setFavorite] = useState(true);
-  const [pieces, setPieces] = useState(false);
+  const [favorite, setFavorite] = useState(productsFav.length > 0);
+  const [pieces, setPieces] = useState(productsFav.length === 0);
   const [counter, setCounter] = useState(1);
+  const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
+  const [selectedPiece, setSelectedPiece] = useState(null);
+  const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
 
+  useFocusEffect(
+    useCallback(() => {
+      if (products.length === 0) {
+        getProducts();
+      }
+      if (productsFav.length === 0) {
+        getProductsFavorite();
+      }
+    }, []),
+  );
+  useEffect(() => {
+    setFavorite(productsFav.length > 0);
+    setPieces(productsFav.length === 0);
+  }, [productsFav]);
+  console.log('pr fav', productsFav);
   const toggleFavorite = () => {
-    if (favorite == false) {
+    if (favorite === false) {
       setFavorite(!favorite);
       setPieces(!pieces);
     }
   };
   const togglePieces = () => {
-    if (pieces == false) {
+    if (pieces === false) {
       setFavorite(!favorite);
       setPieces(!pieces);
     }
   };
   const changeCounter = (type) => {
-    if (type == 'increase') {
+    if (type === 'increase') {
       setCounter(counter + 1);
     } else {
       setCounter(counter - 1);
     }
   };
 
+  const closeFavoriteModal = () => {
+    setFavoriteDropDownVisible(false);
+  };
+
+  const closePieceModal = () => {
+    setPieceDropDownVisible(false);
+  };
+
+  const handlePieceSelect = (item) => {
+    setSelectedPiece(item);
+  };
+
+  const addToCart = () => {
+    if (selectedPiece) {
+      setCart(selectedPiece.id, counter, null, true);
+      Toast.show('تم الاضافه الي السله');
+      setCounter(1);
+      setSelectedPiece(null);
+    } else {
+      Toast.show('من فضلك اختر المنتج');
+    }
+  };
   return (
     <View style={styles.container}>
-      <View style={styles.orderTime}>
-        <TouchableOpacity onPress={toggleFavorite}>
-          <CheckBox selected={favorite} />
-        </TouchableOpacity>
-        <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
-      </View>
-      <DropDown placeholder="اختر من المفضلة" />
+      {productsFav.length > 0 && (
+        <>
+          <View style={styles.orderTime}>
+            <TouchableOpacity onPress={toggleFavorite}>
+              <CheckBox selected={favorite} />
+            </TouchableOpacity>
+            <AppText style={styles.orderTimeText}>اختر من المفضلة</AppText>
+          </View>
+          <DropDown
+            onPress={() => {
+              setFavoriteDropDownVisible(true);
+            }}
+            disabled={!favorite}
+            placeholder={selectedPiece ? selectedPiece.name : 'اختر من المفضلة'}
+          />
+        </>
+      )}
       <View style={styles.orderTime}>
         <TouchableOpacity onPress={togglePieces}>
           <CheckBox selected={pieces} />
         </TouchableOpacity>
         <AppText style={styles.orderTimeText}>اختر المنتج</AppText>
       </View>
-      <DropDown placeholder="اختر المنتج" />
+      <DropDown
+        onPress={() => {
+          setPieceDropDownVisible(true);
+        }}
+        disabled={!pieces}
+        placeholder={selectedPiece ? selectedPiece.name : 'اختر المنتج'}
+      />
 
       <View style={styles.addToCart}>
         <Button
           title={'اضف الى السلة'}
-          onPress={() => console.log('pressed')}
+          onPress={() => addToCart()}
           titleStyle={styles.addToCartText}
           style={styles.addToCartButton}
         />
@@ -88,8 +156,54 @@ const Product = () => {
           style={styles.button}
         />
       </View>
+      {/* dropdown */}
+      <DropDownModal
+        data={productsFav.map((fav) => {
+          return {
+            id: fav.id,
+            name: fav.arName,
+            value: fav.id,
+          };
+        })}
+        visible={favoriteDropDownVisible}
+        onPress={(item) => handlePieceSelect(item)}
+        closeModal={closeFavoriteModal}
+        onPressConfirm={(item) => handlePieceSelect(item)}
+        onSelectItem={(item) => handlePieceSelect(item)}
+        selected={selectedPiece}
+        title="اختر من المفضلة"
+      />
+      <DropDownModal
+        data={products.map((fav) => {
+          return {
+            id: fav.id,
+            name: fav.arName,
+            value: fav.id,
+          };
+        })}
+        visible={pieceDropDownVisible}
+        onPress={(item) => handlePieceSelect(item)}
+        closeModal={closePieceModal}
+        onPressConfirm={(item) => handlePieceSelect(item)}
+        onSelectItem={(item) => handlePieceSelect(item)}
+        selected={selectedPiece}
+        title="اختر المنتج"
+      />
     </View>
   );
 };
 
-export default Product;
+function mapStateToProps(state) {
+  return {
+    products: state.products.products,
+    productsFav: state.favorite.products,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({setCart, getProductsFavorite}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

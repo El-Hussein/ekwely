@@ -14,7 +14,7 @@ import CurrentRequests from './CurrentRequests';
 const initialLayout = {width: Dimensions.get('window').width};
 
 const MyOrder = () => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
   const [routes] = useState([
     {key: 'first', title: 'الطلبات السابقة'},
     {key: 'second', title: 'الطلبات الحالية'},
@@ -52,7 +52,6 @@ const MyOrder = () => {
         navigationState={{index, routes}}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={initialLayout}
       />
     </View>
   );

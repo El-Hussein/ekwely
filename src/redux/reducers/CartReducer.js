@@ -12,6 +12,7 @@ const initialState = {
   message: '',
   cart:[],
   totalPrice:'',
+  totalPromoCodeDiscount:'',
 };
 
 export default function CartReducer(state = initialState, action) {
@@ -49,6 +50,7 @@ export default function CartReducer(state = initialState, action) {
         ...state,
         cart: action.payload.cart,
         totalPrice: action.payload.totalPrice,
+        totalPromoCodeDiscount:action.payload.totalPromoCodeDiscount,
         loading: false,
         error: '',
       };

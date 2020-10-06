@@ -1,5 +1,4 @@
-import React, {useCallback} from 'react';
-
+import React, {useCallback, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -16,24 +15,31 @@ import {Line} from '../../components/atoms/Line';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {getCart, deleteCart, setCart} from '../../redux/actions/Cart';
+import Loader from '../../components/atoms/Loader';
 
 const serviceTypeMap = {
-
   0: 'غسيل',
   1: 'مكوي',
   2: 'غسيل ومكوي',
   3: 'تصليح',
 };
 
-const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
-
+const PlaceOrder = ({
+  getCart,
+  cart,
+  loading,
+  totalPrice,
+  deleteCart,
+  setCart,
+}) => {
   useFocusEffect(
     useCallback(() => {
-      getCart();
+      if (cart.length === 0) getCart();
     }, []),
   );
   const navigation = useNavigation();
-
+  const [localeLoading, setLocaleLoading] = useState(false);
 
   const _renderCartItem = ({item}) => {
     return (
@@ -52,14 +58,40 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
           <View style={styles.counter}>
             <Button
               title={'+'}
-              // onPress={() => setCart(item.itemId, item.quantity+1)}
+              onPress={() => {
+                setLocaleLoading(true);
+                setCart(
+                  item.itemId,
+                  item.quantity + 1,
+                  item.serviceType,
+                  item.isProduct,
+                  item.id,
+                );
+                setTimeout(() => {
+                  getCart(true);
+                  setLocaleLoading(false);
+                }, 1000);
+              }}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
             />
             <AppText style={styles.counterText}>{item.quantity}</AppText>
             <Button
               title={'-'}
-              // onPress={() => setCart(item.itemId, item.quantity-1)}
+              onPress={() => {
+                setLocaleLoading(true);
+                setCart(
+                  item.itemId,
+                  item.quantity - 1,
+                  item.serviceType,
+                  item.isProduct,
+                  item.id,
+                );
+                setTimeout(() => {
+                  getCart(true);
+                  setLocaleLoading(false);
+                }, 1000);
+              }}
               titleStyle={styles.counterButtonText}
               style={styles.counterButton}
               disabled={item.quantity < 2}
@@ -68,10 +100,12 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
           <AppText style={styles.price}>{item.price} ج</AppText>
           <TouchableOpacity
             onPress={() => {
-              console.log('item', item.id);
-              deleteCart(item.id);
-              getCart();
-
+              setLocaleLoading(true);
+              deleteCart(item.id, false);
+              setTimeout(() => {
+                getCart(true);
+                setLocaleLoading(false);
+              }, 1000);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(25)} />
           </TouchableOpacity>
@@ -82,6 +116,7 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
   };
   return (
     <View style={{backgroundColor: COLORS.white, flex: 1}}>
+      <Loader visible={localeLoading} />
       <View style={styles.container}>
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>السلة</AppText>
@@ -104,18 +139,25 @@ const PlaceOrder = ({getCart, cart, loading, totalPrice, deleteCart}) => {
               <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
             }
             ListFooterComponent={
-              <>
+              cart.length > 0 && (
+                <>
+                  <View style={styles.total}>
+                    <AppText style={styles.totalPriceText}>
+                      اجمالي القيمه
+                    </AppText>
+                    <AppText style={styles.priceText}>{totalPrice} ج</AppText>
+                  </View>
 
-
-                <View style={styles.orderButton}>
-                  <Button
-                    title={'أستكمال الطلب'}
-                    onPress={() => navigation.navigate('PlaceOrder')}
-                    titleStyle={styles.completeOrder}
-                    style={styles.button}
-                  />
-                </View>
-              </>
+                  <View style={styles.orderButton}>
+                    <Button
+                      title={'أستكمال الطلب'}
+                      onPress={() => navigation.navigate('PlaceOrder')}
+                      titleStyle={styles.completeOrder}
+                      style={styles.button}
+                    />
+                  </View>
+                </>
+              )
             }
           />
         )}
@@ -135,8 +177,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getCart, deleteCart}, dispatch),
-
+    ...bindActionCreators({getCart, deleteCart, setCart}, dispatch),
   };
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {View, FlatList, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import Order from './Order';
@@ -10,12 +10,14 @@ import {connect} from 'react-redux';
 import {getHistoryOrder} from '../../redux/actions/Order';
 
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Product = ({getHistoryOrder, order, loading}) => {
-  useEffect(() => {
-    getHistoryOrder();
-  }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      getHistoryOrder();
+    }, []),
+  );
   const _renderOrderItem = ({item}) => {
     return <Order item={item} type="تم التسليم" />;
   };

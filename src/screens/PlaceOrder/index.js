@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Image,
@@ -6,7 +6,9 @@ import {
   TextInput,
   ScrollView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
+import dayjs from 'dayjs';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -20,16 +22,50 @@ import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
 import {useNavigation} from '@react-navigation/native';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {setOrder} from '../../redux/actions/Order';
+import {makePostRequest} from '../../utils/api.helpers';
+import Toast from 'react-native-simple-toast';
 
-const PlaceOrder = () => {
+const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
   const navigation = useNavigation();
- 
-  const [value, onChangeText] = useState('');
-  const [morning, setMorning] = useState(true);
-  const [evening, setEvening] = useState(false);
-  const [morningDelivery, setMorningDelivery] = useState(true);
-  const [eveningDelivery, setEveningDelivery] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const {user} = useSelector((state) => {
+    return {
+      user: state.auth.user,
+    };
+  });
 
+  const [value, onChangeText] = useState('');
+  const [morning, setMorning] = useState(false);
+  const [evening, setEvening] = useState(true);
+  const [morningDelivery, setMorningDelivery] = useState(false);
+  const [eveningDelivery, setEveningDelivery] = useState(true);
+  const [isOriginalAddress, setIsOriginalAddress] = useState(true);
+  const [sendAddress, setSendAddress] = useState({
+    address: user.address,
+    lat: user.lat,
+    lang: user.lang,
+  });
+  const [deliveredAddress, setDeliveredAddress] = useState({
+    address: user.address,
+    lat: user.lat,
+    lang: user.lang,
+  });
+  useEffect(() => {
+    setSendAddress({
+      address: user.address,
+      lat: user.lat,
+      lang: user.lang,
+    });
+    setDeliveredAddress({
+      address: user.address,
+      lat: user.lat,
+      lang: user.lang,
+    });
+  }, [user.address]);
   const Morning = () => {
     if (morning == false) {
       setMorning(!morning);
@@ -55,10 +91,10 @@ const PlaceOrder = () => {
     }
   };
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(Date.now() + 24 * 60 * 60 * 1000);
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-
+  console.log('date', date);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -69,19 +105,60 @@ const PlaceOrder = () => {
     setShow(true);
     setMode(currentMode);
   };
-  const [quickCleaning, setQuickCleaning] = useState(true);
-  const [cashPayment, setCashPayment] = useState(false);
+  const showDatepicker = () => {
+    showMode('date');
+  };
+  const [quickCleaning, setQuickCleaning] = useState(false);
+  const [usePromoCode, setUsePromoCode] = useState(false);
 
   const toggleQuickCleaning = () => {
     setQuickCleaning(!quickCleaning);
   };
-  const toggleCashPayment = () => {
-    setCashPayment(!cashPayment);
+  const toggleUsePromoCode = () => {
+    setUsePromoCode(!usePromoCode);
   };
-  const showDatepicker = () => {
-    showMode('date');
+  const setOrder = () => {
+    setLoading(true);
+    try {
+      makePostRequest({
+        url: 'api/Order/auth_AddBulkOrder',
+        data: {
+          Data: {
+            IsOrignalAddress: isOriginalAddress,
+            NewDeliverAddress: deliveredAddress.address,
+            NewDeliverLat: deliveredAddress.lat,
+            NewDeliverLang: deliveredAddress.lang,
+            NewSendAddress: sendAddress.address,
+            NewSendLat: sendAddress.lat,
+            NewSendLang: sendAddress.lang,
+            SendDate: dayjs(date).locale('SA').format('DD MMM YYYY'),
+            DeliverDate: dayjs(date).add(quickCleaning ? 1 : 2, 'day'),
+            SendTime: evening ? 0 : 1,
+            DeliverTime: eveningDelivery ? 0 : 1,
+            IsFastClean: quickCleaning,
+          },
+        },
+      })
+        .then((response) => {
+          if (response?.data?.status !== '200') {
+            Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+            setLoading(false);
+          } else if (response?.data?.data) {
+            Toast.show(response.data.message);
+            navigation.popToTop();
+            navigation.navigate('Home');
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+          setLoading(false);
+        });
+    } catch (error) {
+      Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+      setLoading(false);
+    }
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.newOrder}>
@@ -100,8 +177,10 @@ const PlaceOrder = () => {
               color: COLORS.lightTextGray,
               fontSize: calcFont(16),
               fontWeight: 'bold',
-            }}>
-            اختر التاريخ
+              width: '80%',
+            }}
+            numberOfLines={1}>
+            {dayjs(date).locale('SA').format('DD MMM YYYY')}
           </AppText>
           <IconFeather
             name="calendar"
@@ -124,12 +203,23 @@ const PlaceOrder = () => {
 
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-          <AppText style={styles.changeAddressText}>
-            شارع محمد فوزى متفرع من عباس العقاد
+          <AppText numberOfLines={1} style={styles.changeAddressText}>
+            {sendAddress.address}
           </AppText>
           <Button
             title={'تغيير'}
-            onPress={() => console.log('pressed')}
+            onPress={() => {
+              navigation.navigate('SelectLocation', {
+                onGoBack: (address) => {
+                  setSendAddress({
+                    lat: address.coordinates.latitude,
+                    lang: address.coordinates.longitude,
+                    address: address.formattedAddress,
+                  });
+                },
+              });
+              setIsOriginalAddress(false);
+            }}
             titleStyle={styles.pressText}
             style={styles.press}
           />
@@ -164,136 +254,105 @@ const PlaceOrder = () => {
 
         <View style={styles.changeAddress}>
           <Image source={IMAGES.map} style={styles.mapImage} />
-          <AppText style={styles.changeAddressText}>
-            شارع محمد فوزى متفرع من عباس العقاد
+          <AppText numberOfLines={1} style={styles.changeAddressText}>
+            {deliveredAddress.address}
           </AppText>
           <Button
             title={'تغيير'}
-            onPress={() => console.log('pressed')}
+            onPress={() => {
+              navigation.navigate('SelectLocation', {
+                onGoBack: (address) => {
+                  setDeliveredAddress({
+                    lat: address.coordinates.latitude,
+                    lang: address.coordinates.longitude,
+                    address: address.formattedAddress,
+                  });
+                },
+              });
+              setIsOriginalAddress(false);
+            }}
             titleStyle={styles.pressText}
             style={styles.press}
           />
         </View>
 
-        <View style={styles.promoCode}>
-          <TextInput
-            style={styles.promoCodeInput}
-            onChangeText={(text) => onChangeText(text)}
-            placeholder="ادخل كود الخصم"
-            placeholderTextColor={COLORS.lightTextGray}
-            value={value}
+        <Line width={calcWidth(345)} color={COLORS.lightGray} />
+
+        <TouchableOpacity style={styles.checkBox}>
+          <AppText style={styles.checkboxText}>الدفع نقدي</AppText>
+          <IconIonicons
+            name={'md-checkbox'}
+            size={calcFont(25)}
+            color={COLORS.main}
           />
-          <Image source={IMAGES.promoIcon} style={styles.promoImage} />
-        </View>
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
+        </TouchableOpacity>
+        {!!totalPromoCodeDiscount && (
+          <TouchableOpacity
+            onPress={toggleUsePromoCode}
+            style={styles.checkBox}>
+            <AppText style={styles.checkboxText}>استخدام كود الخصم</AppText>
+            <IconIonicons
+              name={usePromoCode ? 'md-checkbox' : 'square-outline'}
+              size={calcFont(25)}
+              color={usePromoCode ? COLORS.main : COLORS.midLightGray}
+            />
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity onPress={toggleQuickCleaning} style={styles.checkBox}>
           <AppText style={styles.checkboxText}>
             خدمة التنظيف السريع (تسليم خلال 24 ساعه)
           </AppText>
           <IconIonicons
             name={quickCleaning ? 'md-checkbox' : 'square-outline'}
             size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
+            color={quickCleaning ? COLORS.main : COLORS.midLightGray}
           />
         </TouchableOpacity>
+
         <View style={styles.total}>
           <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
           <AppText style={styles.priceText}>{totalPrice} ج</AppText>
         </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-          </AppText>
-          <IconIonicons
-            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={toggleQuickCleaning}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
-          </AppText>
-          <IconIonicons
-            name={quickCleaning ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={quickCleaning ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>اجمالي القيمه</AppText>
-          <AppText style={styles.priceText}>{totalPrice} ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
-          <AppText style={styles.PromoCode}>40 ج</AppText>
-        </View>
-        <View style={styles.total}>
-          <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
-          <AppText style={styles.priceText}>160 ج</AppText>
-        </View>
-        <TouchableOpacity
-          // onPress={toggleCashPayment}
-          style={styles.checkBoxContainer}>
-          <AppText style={styles.checkboxText}>الدفع نقدى</AppText>
-          <IconIonicons
-            name={cashPayment ? 'md-checkbox' : 'square-outline'}
-            size={calcFont(25)}
-            color={cashPayment ? COLORS.darkMain : COLORS.midLightGray}
-          />
-        </TouchableOpacity>
+        {!!quickCleaning && (
+          <View style={styles.total}>
+            <AppText style={styles.totalPromoCode}>
+              تكاليف التنظيف السريع
+            </AppText>
+            <AppText style={styles.PromoCode}>20 ج</AppText>
+          </View>
+        )}
+        {!!usePromoCode && (
+          <View style={styles.total}>
+            <AppText style={styles.totalPromoCode}>خصم البروموكود</AppText>
+            <AppText style={styles.PromoCode}>
+              {totalPromoCodeDiscount} ج
+            </AppText>
+          </View>
+        )}
+        {!!usePromoCode && (
+          <View style={styles.total}>
+            <AppText style={styles.totalPriceText}>القيمة بعد الخصم</AppText>
+            <AppText style={styles.priceText}>
+              {totalPrice - totalPromoCodeDiscount}ج
+            </AppText>
+          </View>
+        )}
+
         <View style={styles.orderButton}>
-          <Button
-            title={'استكمال الطلب'}
-            onPress={() => navigation.navigate('Home')}
-            titleStyle={styles.completeOrder}
-            style={styles.button}
-          />
+          {loading ? (
+            <ActivityIndicator
+              color={COLORS.main}
+              style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+              size={calcFont(30)}
+            />
+          ) : (
+            <Button
+              title={'تنفيذ الطلب'}
+              onPress={() => setOrder()}
+              titleStyle={styles.completeOrder}
+              style={styles.button}
+            />
+          )}
         </View>
         {show && (
           <DateTimePicker
@@ -303,6 +362,7 @@ const PlaceOrder = () => {
             is24Hour={true}
             display="default"
             onChange={onChange}
+            minimumDate={Date.now() + 24 * 60 * 60 * 1000}
           />
         )}
       </ScrollView>
@@ -310,4 +370,13 @@ const PlaceOrder = () => {
   );
 };
 
-export default PlaceOrder;
+function mapStateToProps(state) {
+  return {
+    cart: state.cart.cart,
+    totalPrice: state.cart.totalPrice,
+    totalPromoCodeDiscount: state.cart.totalPromoCodeDiscount,
+    error: state.cart.error,
+  };
+}
+
+export default connect(mapStateToProps)(PlaceOrder);

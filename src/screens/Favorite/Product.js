@@ -14,13 +14,23 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getProducts} from '../../redux/actions/Products';
 import COLORS from '../../common/colors';
-import {deleteFavorite} from '../../redux/actions/Favorite';
 import {Line} from '../../components/atoms/Line';
-const Product = ({getProducts, products, loading, deleteFavorite}) => {
-  const productsFavorite = products.filter((item) => item.isFavourite === true);
+import {
+  getProductsFavorite,
+  getWashFavorite,
+  deleteFavorite,
+} from '../../redux/actions/Favorite';
+const Product = ({
+  productsFav,
+  loading,
+  getProductsFavorite,
+  deleteFavorite,
+}) => {
   useFocusEffect(
     useCallback(() => {
-      getProducts();
+      if (productsFav.length === 0) {
+        getProductsFavorite();
+      }
     }, []),
   );
 
@@ -35,7 +45,7 @@ const Product = ({getProducts, products, loading, deleteFavorite}) => {
           <TouchableOpacity
             onPress={() => {
               deleteFavorite(item.id);
-              getProducts(true);
+              getProductsFavorite(true);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
@@ -55,13 +65,13 @@ const Product = ({getProducts, products, loading, deleteFavorite}) => {
         />
       ) : (
         <FlatList
-          data={productsFavorite}
+          data={productsFav}
           renderItem={_renderFavoriteItem}
           contentContainerStyle={{
             marginVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${Math.random()*100}`}
+          keyExtractor={(item, index) => `${Math.random() * 100}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد مفضله</AppText>
           }
@@ -73,15 +83,17 @@ const Product = ({getProducts, products, loading, deleteFavorite}) => {
 
 function mapStateToProps(state) {
   return {
-    products: state.products.products,
-    error: state.products.error,
-    loading: state.products.loading,
+    productsFav: state.favorite.products,
+    loading: state.favorite.loading,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getProducts, deleteFavorite}, dispatch),
+    ...bindActionCreators(
+      {getProductsFavorite, getWashFavorite, deleteFavorite},
+      dispatch,
+    ),
   };
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Image, ScrollView} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
@@ -7,8 +7,11 @@ import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-const Home = () => {
+import {connect, useSelector} from 'react-redux';
+import {getCurrentOrder, getHistoryOrder} from '../../redux/actions/Order';
+import { bindActionCreators } from 'redux';
+
+const Home = ({getCurrentOrder}) => {
   const navigation = useNavigation();
   const data = [
     {id: '1', image_path: IMAGES.slider},
@@ -21,7 +24,9 @@ const Home = () => {
       user: state.auth.user,
     };
   });
-
+  useEffect(() => {
+    getCurrentOrder();
+  }, []);
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -57,4 +62,10 @@ const Home = () => {
   );
 };
 
-export default Home;
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getCurrentOrder}, dispatch),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Home);
