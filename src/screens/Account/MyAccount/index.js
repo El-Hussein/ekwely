@@ -38,7 +38,10 @@ const MyAccount = () => {
     });
   };
   useEffect(() => {
-    if (addressData.streetAddress) {
+    if (
+      addressData.streetAddress &&
+      addressData.streetAddress !== user.address
+    ) {
       saveAddress();
     }
   }, [addressData.streetAddress]);

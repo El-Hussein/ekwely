@@ -19,7 +19,7 @@ const Raw = ({title, onPress}) => {
     </TouchableOpacity>
   );
 };
-const Drawer = () => {
+const Drawer = ({toggleDrawer}) => {
   const {user} = useSelector((state) => {
     return {
       user: state.auth.user,
@@ -30,7 +30,7 @@ const Drawer = () => {
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={toggleDrawer}>
           <Image source={IMAGES.back} style={styles.backImage} />
         </TouchableOpacity>
         <View style={styles.userOut}>
