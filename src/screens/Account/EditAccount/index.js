@@ -18,16 +18,19 @@ import IMAGES from '../../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 import {Line} from '../../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
-import {makePostRequest} from '../../../utils/api.helpers';
-import {useSelector} from 'react-redux';
+import {makePostRequest, API_BASE_URL} from '../../../utils/api.helpers';
+import {useDispatch, useSelector} from 'react-redux';
 import Toast from 'react-native-simple-toast';
 import AppInput from '../../../components/atoms/AppInput';
+import {IMAGE_BASE_URL, USER_DATA} from '../../../common/constants';
 
 import {
   validateUserName,
   validateEmail,
   validatePhone,
 } from '../../../common/Validation';
+import AsyncStorage from '@react-native-community/async-storage';
+import {SIGN_IN} from '../../../redux/actions/types';
 const EditAccount = () => {
   const {user} = useSelector((state) => {
     return {
@@ -35,16 +38,21 @@ const EditAccount = () => {
     };
   });
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [editData, setEditData] = useState({
     userName: user.userName,
     email: user.email,
     phone: user.phone,
+    Image: user.image,
   });
   const [emailError, setEmailError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
+  const [userImage, setUserImage] = useState(
+    user.image ? {uri: IMAGE_BASE_URL + user.image} : IMAGES.userImage,
+  );
 
   const _validate = () => {
     let nameErr = validateUserName(editData.userName);
@@ -57,20 +65,16 @@ const EditAccount = () => {
 
     return nameErr || emailErr || phoneErr;
   };
-  const register = () => {
+
+  const saveData = () => {
     if (_validate()) return;
-    console.log(editData);
     setServerError('');
     setLoading(true);
     try {
       makePostRequest({
         url: 'Users/EditUserProfile',
         data: {
-          Data: {
-            userName: editData.userName,
-            email: editData.email,
-            phone: editData.phone,
-          },
+          Data: editData,
         },
       })
         .then((response) => {
@@ -78,8 +82,27 @@ const EditAccount = () => {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
+            console.log(response);
             Toast.show(response.data.message);
-            // navigation.navigate('Drawer');
+            AsyncStorage.setItem(
+              USER_DATA,
+              JSON.stringify({
+                ...user,
+                userName: response.data.data.userName,
+                phone: response.data.data.phone,
+                image: response.data.data.image,
+              }),
+            );
+            dispatch({
+              type: SIGN_IN,
+              payload: {
+                ...user,
+                userName: response.data.data.userName,
+                phone: response.data.data.phone,
+                image: response.data.data.image,
+              },
+            });
+            navigation.goBack();
           }
           setLoading(false);
         })
@@ -95,9 +118,9 @@ const EditAccount = () => {
   const imagePickerOptions = {
     title: 'Select Avatar',
   };
+
   const openGallery = () => {
     ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-      console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -106,41 +129,48 @@ const EditAccount = () => {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.uri};
-        const formData = new FormData();
-        // formData.append('userType', 1);
-        formData.append('file', {
-          ...response,
-          uri:Platform.OS === 'android' ? response.uri : 'file://' + response.uri,
-          name: 'file',
-          type: 'image/jpeg', // or your mime type what you want
+        upload(response).then((response) => {
+          console.log(response);
+          if (response.status === '200') {
+            setEditData({...editData, Image: response.data});
+            setUserImage({uri: IMAGE_BASE_URL + response.data});
+          } else Toast.show('حدث خطأ ما من فضلك حاول مرة اخري');
         });
-        makePostRequest({
-          url: 'UploadDownload/upload',
-          data: formData,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-          .then((response) => {
-            console.log('response');
-            console.log(response);
-            console.log('response');
-          })
-          .catch((error) => {
-            console.log('error.response');
-            console.log(error);
-            console.log('error.response');
-          });
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-        // this.setState({
-        //   avatarSource: source,
-        // });
       }
     });
   };
+
+  const upload = async (imageObj) => {
+    try {
+      var ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+        body: createFormData(imageObj),
+      });
+
+      var obj = await ret.json();
+      return obj;
+    } catch (error) {
+      console.log('Catch', error);
+    }
+  };
+
+  const createFormData = (photo) => {
+    const data = new FormData();
+    data.append('file', {
+      name: photo.fileName ? photo.fileName : `photo-${new Date().getTime()}`,
+      type: photo.type,
+      uri:
+        Platform.OS === 'android'
+          ? photo.uri
+          : photo.uri.replace('file://', ''),
+    });
+    return data;
+  };
+
 
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
@@ -148,16 +178,12 @@ const EditAccount = () => {
         <View style={styles.newOrder}>
           <AppText style={styles.newOrderText}>حسابي</AppText>
           {loading ? (
-            <ActivityIndicator
-              color={COLORS.main}
-              style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
-              size={calcFont(20)}
-            />
+            <ActivityIndicator color={COLORS.main} size={calcFont(20)} />
           ) : (
             <Button
               title={'حفظ'}
               onPress={() => {
-                register();
+                saveData();
               }}
               titleStyle={styles.saveText}
               style={styles.saveButton}
@@ -166,7 +192,10 @@ const EditAccount = () => {
         </View>
 
         <View style={styles.userOut}>
-          <Image source={IMAGES.userImage} style={styles.userImage} />
+          <Image
+            source={userImage}
+            style={userImage?.uri ? styles.userImage : styles.defaultImage}
+          />
           <Button
             title={'حمل الصوره'}
             onPress={openGallery}
@@ -174,6 +203,24 @@ const EditAccount = () => {
             style={styles.addToCartButton}
           />
         </View>
+
+        {/* <View style={styles.data}>
+          <AppText style={styles.titleText}>البريد الالكترونى</AppText>
+          <AppInput
+            error={emailError}
+            inputStyle={styles.promoCodeInput}
+            value={editData.email}
+            keyboardType="email-address"
+            onChangeText={(email) => {
+              setEditData({...editData, email});
+            }}
+            onEndEditing={() => {
+              setEmailError(validateEmail(editData.email));
+            }}
+            placeholder={editData.email}
+            disabled
+          />
+        </View> */}
 
         <View style={styles.data}>
           <AppText style={styles.titleText}>اسم المستخدم</AppText>
@@ -188,23 +235,6 @@ const EditAccount = () => {
               setUserNameError(validateUserName(editData.userName));
             }}
             placeholder={editData.userName}
-          />
-        </View>
-
-        <View style={styles.data}>
-          <AppText style={styles.titleText}>البريد الالكترونى</AppText>
-          <AppInput
-            error={emailError}
-            inputStyle={styles.promoCodeInput}
-            value={editData.email}
-            keyboardType="email-address"
-            onChangeText={(email) => {
-              setEditData({...editData, email});
-            }}
-            onEndEditing={() => {
-              setEmailError(validateEmail(editData.email));
-            }}
-            placeholder={editData.email}
           />
         </View>
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 const CONNECTION_ERROR = 'حدث خطأ في الاتصال';
-const API_BASE_URL = 'http://app.key-frame.cf/';
+export const API_BASE_URL = 'http://app.key-frame.cf/';
 import Store from '../redux/store';
 
 export const makePostRequest = async ({

@@ -1,13 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Image, ScrollView, ActivityIndicator} from 'react-native';
 import Toast from 'react-native-simple-toast';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
 import COLORS from '../../../common/colors';
 import AppText from '../../../components/atoms/AppText';
@@ -16,10 +9,15 @@ import IMAGES from '../../../common/images';
 import {calcFont, calcHeight, calcWidth} from '../../../common/styles';
 import {Line} from '../../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {makePostRequest} from '../../../utils/api.helpers';
+import {IMAGE_BASE_URL, USER_DATA} from '../../../common/constants';
+import AsyncStorage from '@react-native-community/async-storage';
+import {SIGN_IN} from '../../../redux/actions/types';
+
 const MyAccount = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
   const [addressData, setAddressData] = useState({});
@@ -39,16 +37,13 @@ const MyAccount = () => {
       },
     });
   };
-  console.log(addressData);
   useEffect(() => {
-    console.log('entered effect');
     if (addressData.streetAddress) {
       saveAddress();
     }
   }, [addressData.streetAddress]);
 
   const saveAddress = () => {
-    console.log('entered save address');
     setServerError('');
     setLoading(true);
     try {
@@ -63,25 +58,39 @@ const MyAccount = () => {
         },
       })
         .then((response) => {
-          console.log('entered success addresss', response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
-            // 'تم تغييير العن,ان بن[اح'
+            AsyncStorage.setItem(
+              USER_DATA,
+              JSON.stringify({
+                ...user,
+                address: response.data.data.address,
+                lat: response.data.data.lat,
+                lang: response.data.data.lang,
+              }),
+            );
+            dispatch({
+              type: SIGN_IN,
+              payload: {
+                ...user,
+                address: response.data.data.address,
+                lat: response.data.data.lat,
+                lang: response.data.data.lang,
+              },
+            });
             Toast.show('تم تغيير العنوان بنجاح');
           }
           setLoading(false);
           setAddressData({});
         })
         .catch((error) => {
-          console.log('entered failed addresss', error.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
           setAddressData({});
         });
     } catch (error) {
-      console.log('entered error addresss', error);
       setAddressData({});
       setLoading(false);
     }
@@ -100,7 +109,14 @@ const MyAccount = () => {
         </View>
 
         <View style={styles.userOut}>
-          <Image source={IMAGES.userImage} style={styles.userImage} />
+          <Image
+            source={
+              user?.image
+                ? {uri: IMAGE_BASE_URL + user.image}
+                : IMAGES.userImage
+            }
+            style={user?.image ? styles.userImage : styles.defaultImage}
+          />
         </View>
 
         <View style={styles.data}>

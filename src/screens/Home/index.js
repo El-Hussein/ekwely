@@ -21,7 +21,7 @@ const Home = () => {
       user: state.auth.user,
     };
   });
-  console.log('fffff',user)
+
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -38,12 +38,18 @@ const Home = () => {
           <Image source={IMAGES.promo} style={styles.promoImage} />
           <View style={styles.promoCode}>
             <AppText style={styles.promoCodeText}>كود الخصم</AppText>
-            <AppText style={styles.promoCodeNum}>{user.userPromoCode}</AppText>
+            <AppText style={styles.promoCodeNum}>
+              {user.userPromoCode || 'لا يوجد'}
+            </AppText>
           </View>
 
           <View style={styles.promoDiscount}>
             <AppText style={styles.promoDiscountText}>خصم</AppText>
-            <AppText style={styles.promoDiscountNum}>{user.isPercent?user.promoCodePercent+'%':user.promoCodeValue}</AppText>
+            <AppText style={styles.promoDiscountNum}>
+              {user.isPercent
+                ? user.promoCodePercent + '%'
+                : user.promoCodeValue}
+            </AppText>
           </View>
         </View>
       </View>
