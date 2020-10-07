@@ -82,8 +82,8 @@ export default StyleSheet.create({
     color: COLORS.mainText,
     fontSize: calcFont(18),
     // fontWeight: 'bold',
-    lineHeight: calcHeight(27),
-    width:'85%',
+    lineHeight: calcHeight(35),
+    width: '85%',
   },
   close: {
     width: calcWidth(22),
