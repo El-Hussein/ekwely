@@ -73,7 +73,7 @@ const EditAccount = () => {
         url: 'Users/auth_ChangePassword',
         data: {
           Data: {
-            UserName: user.userName,
+            UserName: user?.userName,
             StrPaassword: passwordData.oldPassword,
             NewPassword: passwordData.newPassword,
             UserType: 1,

@@ -51,27 +51,27 @@ const PlaceOrder = ({
   const [eveningDelivery, setEveningDelivery] = useState(false);
   const [isOriginalAddress, setIsOriginalAddress] = useState(true);
   const [sendAddress, setSendAddress] = useState({
-    address: user.address,
-    lat: user.lat,
-    lang: user.lang,
+    address: user?.address,
+    lat: user?.lat,
+    lang: user?.lang,
   });
   const [deliveredAddress, setDeliveredAddress] = useState({
-    address: user.address,
-    lat: user.lat,
-    lang: user.lang,
+    address: user?.address,
+    lat: user?.lat,
+    lang: user?.lang,
   });
   useEffect(() => {
     setSendAddress({
-      address: user.address,
-      lat: user.lat,
-      lang: user.lang,
+      address: user?.address,
+      lat: user?.lat,
+      lang: user?.lang,
     });
     setDeliveredAddress({
-      address: user.address,
-      lat: user.lat,
-      lang: user.lang,
+      address: user?.address,
+      lat: user?.lat,
+      lang: user?.lang,
     });
-  }, [user.address]);
+  }, [user?.address]);
   const Morning = () => {
     if (morning == false) {
       setMorning(!morning);

@@ -10,6 +10,7 @@ import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
 import {IMAGE_BASE_URL, USER_DATA} from '../../common/constants';
 import {useSelector} from 'react-redux';
+import {useBackButton} from '../../utils/customHooks';
 
 const Raw = ({title, onPress}) => {
   return (
@@ -37,7 +38,7 @@ const Drawer = ({toggleDrawer}) => {
           <Image
             source={
               user?.image
-                ? {uri: IMAGE_BASE_URL + user.image}
+                ? {uri: IMAGE_BASE_URL + user?.image}
                 : IMAGES.userImage
             }
             style={user?.image ? styles.userImage : styles.defaultImage}
