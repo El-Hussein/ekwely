@@ -38,15 +38,15 @@ const ContactUs = () => {
           title="العنوان"
           text="9 عمارات مصر للتعمير - زهراء المعادي - القاهرة"
         />
-        <Raw title="الهاتف" text="01112563214" />
-        <Raw title="البريد الالكترونى" text="info@ekwely.com" />
+        <Raw title="الهاتف" text="01060077186" />
+        <Raw title="البريد الالكترونى" text="ekwelyekwely@gmail.com" />
         <Line width={calcWidth(345)} color={COLORS.midGray} />
       </View>
       <View>
         <AppText style={styles.branch}>فرع مدينة 6 اكتوبر</AppText>
         <Line width={calcWidth(345)} color={COLORS.midGray} />
         <Raw title="العنوان" text="مجمع علي الدين بعد ميدان ڤوداڤون" />
-        <Raw title="الهاتف" text="01112563214" />
+        <Raw title="الهاتف" text="01060077186" />
         <Line width={calcWidth(345)} color={COLORS.midGray} />
         <Raw title="تابعونا على" />
       </View>

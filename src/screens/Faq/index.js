@@ -8,13 +8,11 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getFaq} from '../../redux/actions/Faq';
 import COLORS from '../../common/colors';
-import { calcHeight , calcFont} from '../../common/styles';
+import {calcHeight, calcFont} from '../../common/styles';
 
 const Faq = ({getFaq, faq, loading}) => {
   useEffect(() => {
-    console.log('start');
     getFaq();
-    console.log('responce', faq);
   }, []);
   const _renderQuestionsItem = ({item}) => {
     return (

@@ -29,7 +29,6 @@ const Login = () => {
     let passwordErr = validatePassword(loginData.password);
     setEmailError(emailErr);
     setPasswordError(passwordErr);
-    console.log('hhhhhhhh', {emailError, passwordError});
     return emailErr || passwordErr;
   };
   const login = () => {
@@ -37,7 +36,6 @@ const Login = () => {
     setServerError('');
     setLoading(true);
     try {
-      console.log('what?');
       makePostRequest({
         url: 'Users/login',
         data: {
@@ -49,8 +47,6 @@ const Login = () => {
           },
         },
       }).then((response) => {
-        console.log('kkkkkkkkeeeeeeeeee', response);
-
         if (response?.data?.status !== '200') {
           setServerError('اسم المستخدم او كلمة المرور خاطئة');
         } else if (response?.data?.data) {
@@ -70,7 +66,6 @@ const Login = () => {
       });
     } catch (error) {
       setLoading(false);
-      console.log('error saving user in storage -> ', error);
     }
   };
 

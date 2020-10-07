@@ -26,7 +26,7 @@ const Drawer = ({toggleDrawer}) => {
     };
   });
   const navigation = useNavigation();
-  console.log(IMAGE_BASE_URL + user.image);
+
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>

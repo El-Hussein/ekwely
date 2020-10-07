@@ -16,9 +16,8 @@ const Support = ({setSupport, loading}) => {
   const [address, setAddress] = useState('');
   const [comment, setComment] = useState('');
   const send = () => {
-    if(address&&comment){
-      console.log('kkkk' ,[address,comment]);
-      setSupport(address,comment);
+    if (address && comment) {
+      setSupport(address, comment);
       setAddress('');
       setComment('');
     }

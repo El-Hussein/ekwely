@@ -1,28 +1,24 @@
-import {
-  SUPPORT_PENDING,
-  SUPPORT_SUCCESS,
-  SUPPORT_FAILED,
-} from './types';
+import {SUPPORT_PENDING, SUPPORT_SUCCESS, SUPPORT_FAILED} from './types';
 import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
-// get set Action    
-export const setSupport = (title ,description) => {
+// get set Action
+export const setSupport = (title, description) => {
   return (dispatch) => {
     dispatch({type: SUPPORT_PENDING});
     try {
       makePostRequest({
         url: 'Suggestion/auth_CreateSuggestion',
         data: {
-          Data: {Id: 0 ,Description:description},
+          Data: {Id: 0, Description: description, Title: title},
         },
       })
         .then((response) => {
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
-            Toast.show(response.data.message);
-            dispatch({type: SUPPORT_SUCCESS, payload: response.data.message});
+            Toast.show('لقد تم ارسال سؤالك');
+            dispatch({type: SUPPORT_SUCCESS, payload: 'لقد تم ارسال سؤالك'});
           }
         })
         .catch((error) => {
@@ -42,7 +38,7 @@ export const setSupport = (title ,description) => {
   };
 };
 
-// get delete Action    
+// get delete Action
 export const deleteFavorite = (id) => {
   return (dispatch) => {
     try {

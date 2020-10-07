@@ -4,7 +4,7 @@ import {
   CURRENT_ORDER_FAILED,
   HISTORY_ORDER_PENDING,
   HISTORY_ORDER_SUCCESS,
-  HISTORY_ORDER_FAILED, 
+  HISTORY_ORDER_FAILED,
 } from './types';
 import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
@@ -18,7 +18,6 @@ export const getCurrentOrder = () => {
         url: 'api/Order/auth_GetCurrentOrders',
       })
         .then((response) => {
-          console.log(response);
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
@@ -44,7 +43,6 @@ export const getCurrentOrder = () => {
     }
   };
 };
-
 
 // get HISTORY_ORDER Action
 export const getHistoryOrder = () => {

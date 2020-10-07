@@ -14,7 +14,6 @@ const DrawerNavigator = createDrawerNavigator();
 const DrawerNavigation = (props) => {
   const toggleDrawer = () => {
     //Props to open/close the drawer
-    console.log(props);
     props.navigation.goBack();
   };
   return (

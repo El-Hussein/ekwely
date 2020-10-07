@@ -86,6 +86,15 @@ export default StyleSheet.create({
     width: '45%',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    paddingVertical: calcHeight(5),
+    paddingHorizontal: calcWidth(5),
+  },
+  arrowDown: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: calcWidth(150),
   },
   orderNumText: {
     color: COLORS.mainText,

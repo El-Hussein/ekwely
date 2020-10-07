@@ -13,6 +13,7 @@ import {getProducts} from '../../redux/actions/Products';
 import {setCart, deleteCart} from '../../redux/actions/Cart';
 import Toast from 'react-native-simple-toast';
 import {getProductsFavorite} from '../../redux/actions/Favorite';
+import COLORS from '../../common/colors';
 
 const Product = ({
   products,
@@ -28,6 +29,8 @@ const Product = ({
   const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -43,7 +46,7 @@ const Product = ({
     setFavorite(productsFav.length > 0);
     setPieces(productsFav.length === 0);
   }, [productsFav]);
-  console.log('pr fav', productsFav);
+
   const toggleFavorite = () => {
     if (favorite === false) {
       setFavorite(!favorite);
@@ -74,6 +77,7 @@ const Product = ({
 
   const handlePieceSelect = (item) => {
     setSelectedPiece(item);
+    setDisabled(false);
   };
 
   const addToCart = () => {
@@ -81,8 +85,10 @@ const Product = ({
       setCart(selectedPiece.id, counter, null, true);
       Toast.show('تم الاضافه الي السله');
       setCounter(1);
+      setAddedToCart(true);
+      setDisabled(false);
       setSelectedPiece(null);
-    } else {
+    } else if (!addedToCart) {
       Toast.show('من فضلك اختر المنتج');
     }
   };
@@ -150,10 +156,18 @@ const Product = ({
           title={'تأكيد الطلب'}
           onPress={() => {
             navigation.popToTop();
+            addToCart();
             navigation.navigate('Cart');
           }}
-          titleStyle={styles.confirmOrder}
-          style={styles.button}
+          titleStyle={{
+            ...styles.confirmOrder,
+            color: disabled ? COLORS.lightTextGray : COLORS.white,
+          }}
+          style={{
+            ...styles.button,
+            backgroundColor: disabled ? COLORS.lightGray : COLORS.main,
+          }}
+          disabled={disabled}
         />
       </View>
       {/* dropdown */}

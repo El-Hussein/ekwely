@@ -52,7 +52,6 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
 };
 
 export const deleteCart = (id, isItem) => {
-  console.log('delete', isItem, id);
   return (dispatch) => {
     try {
       makePostRequest({
@@ -111,7 +110,8 @@ export const getCart = (hideLoading) => {
               payload: {
                 cart: c,
                 totalPrice: response.data.data.totalPrice,
-                totalPromoCodeDiscount: response.data.data.totalPromoCodeDiscount,
+                totalPromoCodeDiscount:
+                  response.data.data.totalPromoCodeDiscount,
               },
             });
           }

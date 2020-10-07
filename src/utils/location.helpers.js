@@ -122,7 +122,6 @@ export const getLocationFromLatLng = async (latLngObject) => {
       const finalLocation = formAddress(locationApiResponse, latLngObject);
       resolve(finalLocation);
     } catch (error) {
-      console.log(error);
       reject(error);
     }
   });

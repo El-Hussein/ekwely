@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import {getHistoryOrder} from '../../redux/actions/Order';
 
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Product = ({getHistoryOrder, order, loading}) => {
   useFocusEffect(
@@ -35,7 +35,7 @@ const Product = ({getHistoryOrder, order, loading}) => {
           data={order}
           renderItem={_renderOrderItem}
           contentContainerStyle={{
-            marginVertical: calcHeight(10),
+            paddingVertical: calcHeight(10),
             width: calcWidth(375),
           }}
           keyExtractor={(item, index) => `${Math.random() * 100}`}

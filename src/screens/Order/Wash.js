@@ -17,6 +17,7 @@ import {
   getProductsFavorite,
   getWashFavorite,
 } from '../../redux/actions/Favorite';
+import COLORS from '../../common/colors';
 const services = [
   {id: 1, name: 'مكوي', value: 0},
   {id: 2, name: 'غسيل', value: 1},
@@ -33,7 +34,6 @@ const Wash = ({
   getProducts,
   setCart,
 }) => {
-
   useFocusEffect(
     useCallback(() => {
       if (wash.length === 0) {
@@ -41,7 +41,8 @@ const Wash = ({
       }
       if (washFav.length === 0) {
         getWashFavorite();
-      }    }, []),
+      }
+    }, []),
   );
   const navigation = useNavigation();
   const [favorite, setFavorite] = useState(washFav.length > 0);
@@ -51,6 +52,8 @@ const Wash = ({
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [serviceDropDownVisible, setServiceDropDownVisible] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [disabled, setDisabled] = useState(true);
+  const [addedToCart, setAddedToCart] = useState(false);
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
 
   useEffect(() => {
@@ -89,6 +92,7 @@ const Wash = ({
   const handlePieceSelect = (item) => {
     setSelectedPiece(item);
     setSelectedService(null);
+    setDisabled(true);
   };
 
   const closeServiceModal = () => {
@@ -97,19 +101,23 @@ const Wash = ({
 
   const handleServiceSelect = (item) => {
     setSelectedService(item);
+    setDisabled(!selectedPiece);
   };
 
   const addToCart = () => {
     if (selectedPiece && selectedService) {
       setCart(selectedPiece.id, counter, selectedService.value, false);
       Toast.show('تم الاضافه الي السله');
+      setDisabled(false);
+      setAddedToCart(true);
       setCounter(1);
       setSelectedPiece(null);
       setSelectedService(null);
-    } else {
+    } else if (!addedToCart) {
       Toast.show('من فضلك اختر القطعه او الخدمه');
     }
   };
+
   return (
     <View style={styles.container}>
       {washFav.length > 0 && (
@@ -184,10 +192,18 @@ const Wash = ({
           title={'تأكيد الطلب'}
           onPress={() => {
             navigation.popToTop();
+            addToCart();
             navigation.navigate('Cart');
           }}
-          titleStyle={styles.confirmOrder}
-          style={styles.button}
+          titleStyle={{
+            ...styles.confirmOrder,
+            color: disabled ? COLORS.lightTextGray : COLORS.white,
+          }}
+          style={{
+            ...styles.button,
+            backgroundColor: disabled ? COLORS.lightGray : COLORS.main,
+          }}
+          disabled={disabled}
         />
       </View>
       {/* dropdown */}
