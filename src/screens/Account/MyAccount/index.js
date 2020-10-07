@@ -40,7 +40,7 @@ const MyAccount = () => {
   useEffect(() => {
     if (
       addressData.streetAddress &&
-      addressData.streetAddress !== user.address
+      addressData.streetAddress !== user?.address
     ) {
       saveAddress();
     }
@@ -115,7 +115,7 @@ const MyAccount = () => {
           <Image
             source={
               user?.image
-                ? {uri: IMAGE_BASE_URL + user.image}
+                ? {uri: IMAGE_BASE_URL + user?.image}
                 : IMAGES.userImage
             }
             style={user?.image ? styles.userImage : styles.defaultImage}

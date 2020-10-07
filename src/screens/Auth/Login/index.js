@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Alert, BackHandler} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useDispatch} from 'react-redux';
@@ -12,7 +12,23 @@ import {USER_DATA} from '../../../common/constants';
 import {validateEmail, validatePassword} from '../../../common/Validation';
 import {SIGN_IN} from '../../../redux/actions/types';
 import Toast from 'react-native-simple-toast';
+import {useBackButton} from '../../../utils/customHooks';
+
 const Login = () => {
+  useBackButton(() => {
+    if (navigation.isFocused()) {
+      Alert.alert('انتظر!', 'هل تريد الخروج من التطبيق؟', [
+        {
+          text: 'الغاء',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'خروج', onPress: BackHandler.exitApp},
+      ]);
+      return true;
+    }
+    return false;
+  });
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);

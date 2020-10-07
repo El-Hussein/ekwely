@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, Image, ScrollView} from 'react-native';
+import {View, Image, ScrollView, BackHandler, Alert} from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
@@ -9,7 +9,8 @@ import COLORS from '../../common/colors';
 import {useNavigation} from '@react-navigation/native';
 import {connect, useSelector} from 'react-redux';
 import {getCurrentOrder, getHistoryOrder} from '../../redux/actions/Order';
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
+import {useBackButton} from '../../utils/customHooks';
 
 const Home = ({getCurrentOrder}) => {
   const navigation = useNavigation();
@@ -27,6 +28,22 @@ const Home = ({getCurrentOrder}) => {
   useEffect(() => {
     getCurrentOrder();
   }, []);
+
+  useBackButton(() => {
+    if (navigation.isFocused()) {
+      Alert.alert('انتظر!', 'هل تريد الخروج من التطبيق؟', [
+        {
+          text: 'الغاء',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'خروج', onPress: BackHandler.exitApp},
+      ]);
+      return true;
+    }
+    return false;
+  });
+
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
@@ -44,16 +61,16 @@ const Home = ({getCurrentOrder}) => {
           <View style={styles.promoCode}>
             <AppText style={styles.promoCodeText}>كود الخصم</AppText>
             <AppText style={styles.promoCodeNum}>
-              {user.userPromoCode || 'لا يوجد'}
+              {user?.userPromoCode || 'لا يوجد'}
             </AppText>
           </View>
 
           <View style={styles.promoDiscount}>
             <AppText style={styles.promoDiscountText}>خصم</AppText>
             <AppText style={styles.promoDiscountNum}>
-              {user.isPercent
-                ? user.promoCodePercent + '%'
-                : user.promoCodeValue}
+              {user?.isPercent
+                ? user?.promoCodePercent + '%'
+                : user?.promoCodeValue}
             </AppText>
           </View>
         </View>

@@ -42,16 +42,16 @@ const EditAccount = () => {
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [editData, setEditData] = useState({
-    userName: user.userName,
-    email: user.email,
-    phone: user.phone,
-    Image: user.image,
+    userName: user?.userName,
+    email: user?.email,
+    phone: user?.phone,
+    Image: user?.image,
   });
   const [emailError, setEmailError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [userImage, setUserImage] = useState(
-    user.image ? {uri: IMAGE_BASE_URL + user.image} : IMAGES.userImage,
+    user?.image ? {uri: IMAGE_BASE_URL + user?.image} : IMAGES.userImage,
   );
 
   const _validate = () => {

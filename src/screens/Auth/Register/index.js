@@ -9,7 +9,10 @@ import AppText from '../../../components/atoms/AppText';
 import IMAGES from '../../../common/images';
 import {makePostRequest} from '../../../utils/api.helpers';
 import {USER_DATA} from '../../../common/constants';
-import {calcFont} from '../../../common/styles';
+import {useDispatch} from 'react-redux';
+import {SIGN_IN} from '../../../redux/actions/types';
+import Toast from 'react-native-simple-toast';
+
 import {
   validateUserName,
   validateEmail,
@@ -18,9 +21,10 @@ import {
   validatePasswordAndConfirm,
   validatePasswordConfirm,
 } from '../../../common/Validation';
-import COLORS from '../../../common/colors';
+
 const Register = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [addressData, setAddressData] = useState(false);
@@ -94,20 +98,23 @@ const Register = () => {
         },
       })
         .then((response) => {
+          console.log('resss', response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
             // save user data in AsyncStorage
-            AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
+            Toast.show('تم التسجيل بنجاح من فضلك قم بتسجيل الدخول');
+            // AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
             // save user data in the redux
-
+            // dispatch({type: SIGN_IN, payload: response.data.data});
             // navigate to home screen
-            navigation.navigate('Drawer');
+            navigation.navigate('Login');
           }
           setLoading(false);
         })
         .catch((error) => {
+          console.log('erroo', error, error?.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
         });

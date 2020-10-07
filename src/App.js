@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import {I18nManager, SafeAreaView, StatusBar} from 'react-native';
 // import SplashScreen from 'react-native-splash-screen';
 import AppNavigation from './navigation';
 // import {NetStatus} from './components/molecules/NetStatus';
@@ -18,6 +18,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    I18nManager.forceRTL(false);
     setLoading(true);
     AsyncStorage.getItem(USER_DATA)
       .then((response) => {
