@@ -1,20 +1,12 @@
-import React, {useState, useRef} from 'react';
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  Platform,
-  Dimensions,
-} from 'react-native';
+import React from 'react';
+import {View, Image, TouchableOpacity, Linking} from 'react-native';
 
 import styles from './styles';
 import COLORS from '../../common/colors';
 import IMAGES from '../../common/images';
 import AppText from '../../components/atoms/AppText';
 import {Line} from '../../components/atoms/Line';
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {calcWidth} from '../../common/styles';
 import Header from '../../components/atoms/Header';
 const Raw = ({title, text}) => {
   return (
@@ -51,8 +43,20 @@ const ContactUs = () => {
         <Raw title="تابعونا على" />
       </View>
       <View style={styles.media}>
-        <Image source={IMAGES.facebook} style={styles.mediaImage} />
-        <Image source={IMAGES.instagram} style={styles.mediaImage} />
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL('http://facebook.com/Ekwely');
+          }}>
+          <Image source={IMAGES.facebook} style={styles.mediaImage} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL('instagram://user?username=ekwely').catch(() => {
+              Linking.openURL('https://www.instagram.com/ekwely');
+            });
+          }}>
+          <Image source={IMAGES.instagram} style={styles.mediaImage} />
+        </TouchableOpacity>
       </View>
     </View>
   );
