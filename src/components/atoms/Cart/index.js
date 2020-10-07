@@ -22,7 +22,6 @@ const Cart = ({
 }) => {
   const [cart, toggleCart] = useState(isCart);
   const toggle = () => {
-    console.log('isCart', isCart);
     toggleCart(!cart);
     if (isCart) {
       deleteCart(id, true);

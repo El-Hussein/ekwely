@@ -10,7 +10,7 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     paddingTop: calcHeight(10),
   },
-  newOrder: { 
+  newOrder: {
     width: '100%',
     backgroundColor: COLORS.lightGray,
     paddingHorizontal: calcWidth(15),
@@ -111,7 +111,6 @@ export default StyleSheet.create({
     marginHorizontal: calcWidth(10),
     flexDirection: 'row',
     width: calcWidth(344),
-    
   },
   addToCartText: {
     width: '100%',
@@ -162,9 +161,7 @@ export default StyleSheet.create({
   button: {
     width: calcWidth(204),
     borderRadius: calcFont(5),
-    backgroundColor: COLORS.main,
     paddingVertical: calcHeight(15),
-
   },
   confirmOrder: {
     color: COLORS.white,

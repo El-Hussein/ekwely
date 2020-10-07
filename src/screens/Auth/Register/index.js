@@ -63,8 +63,6 @@ const Register = () => {
       addressErr = true;
     }
 
-    console.log(addressData);
-
     return (
       nameErr ||
       emailErr ||

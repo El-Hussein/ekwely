@@ -28,8 +28,14 @@ import {useSelector} from 'react-redux';
 import {setOrder} from '../../redux/actions/Order';
 import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
+import {getProducts} from '../../redux/actions/Products';
 
-const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
+const PlaceOrder = ({
+  cart,
+  totalPrice,
+  totalPromoCodeDiscount,
+  getProducts,
+}) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const {user} = useSelector((state) => {
@@ -39,10 +45,10 @@ const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
   });
 
   const [value, onChangeText] = useState('');
-  const [morning, setMorning] = useState(false);
-  const [evening, setEvening] = useState(true);
-  const [morningDelivery, setMorningDelivery] = useState(false);
-  const [eveningDelivery, setEveningDelivery] = useState(true);
+  const [morning, setMorning] = useState(true);
+  const [evening, setEvening] = useState(false);
+  const [morningDelivery, setMorningDelivery] = useState(true);
+  const [eveningDelivery, setEveningDelivery] = useState(false);
   const [isOriginalAddress, setIsOriginalAddress] = useState(true);
   const [sendAddress, setSendAddress] = useState({
     address: user.address,
@@ -91,10 +97,9 @@ const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
     }
   };
 
-  const [date, setDate] = useState(Date.now() + 24 * 60 * 60 * 1000);
+  const [date, setDate] = useState(Date.now());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  console.log('date', date);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -144,7 +149,8 @@ const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
-            Toast.show(response.data.message);
+            Toast.show('لقد تم تنفيذ طلبك بنجاح');
+            getProducts();
             navigation.popToTop();
             navigation.navigate('Home');
           }
@@ -190,14 +196,13 @@ const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
         </TouchableOpacity>
 
         <View style={styles.checkBoxContainer}>
-          <TouchableOpacity onPress={Morning} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}> 9ص : 3م </AppText>
-            <CheckBox selected={morning} />
-          </TouchableOpacity>
-
           <TouchableOpacity onPress={Evening} style={styles.checkbox1}>
             <AppText style={{color: COLORS.textGray}}> 3م : 9م </AppText>
             <CheckBox selected={evening} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={Morning} style={styles.checkbox1}>
+            <AppText style={{color: COLORS.textGray}}> 9ص : 3م </AppText>
+            <CheckBox selected={morning} />
           </TouchableOpacity>
         </View>
 
@@ -241,14 +246,13 @@ const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
         </View>
 
         <View style={styles.checkBoxContainer}>
-          <TouchableOpacity onPress={MorningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}> 9ص - 3م </AppText>
-            <CheckBox selected={morningDelivery} />
-          </TouchableOpacity>
-
           <TouchableOpacity onPress={EveningDelivery} style={styles.checkbox1}>
             <AppText style={{color: COLORS.textGray}}> 3م - 9م </AppText>
             <CheckBox selected={eveningDelivery} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={MorningDelivery} style={styles.checkbox1}>
+            <AppText style={{color: COLORS.textGray}}> 9ص - 3م </AppText>
+            <CheckBox selected={morningDelivery} />
           </TouchableOpacity>
         </View>
 
@@ -362,7 +366,7 @@ const PlaceOrder = ({cart, totalPrice, totalPromoCodeDiscount}) => {
             is24Hour={true}
             display="default"
             onChange={onChange}
-            minimumDate={Date.now() + 24 * 60 * 60 * 1000}
+            minimumDate={Date.now()}
           />
         )}
       </ScrollView>
@@ -379,4 +383,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(PlaceOrder);
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getProducts}, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder);

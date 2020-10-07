@@ -27,7 +27,6 @@ export const setFavorite = (id) => {
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
-            console.log('add', response);
             dispatch({type: ADD_SUCCESS, payload: response.data.message});
           }
         })

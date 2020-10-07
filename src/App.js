@@ -16,9 +16,6 @@ const App = () => {
   const [initialRoute, setInitialRoute] = useState('Auth');
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   SplashScreen.hide();
-  // }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +36,6 @@ const App = () => {
   }, []);
 
   if (loading) return <></>;
-  console.log(initialRoute);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.secondary}}>

@@ -1,14 +1,9 @@
-import {
-  FAQ_SUCCESS,
-  FAQ_FAILED,
-  FAQ_PENDING
-} from './types';
+import {FAQ_SUCCESS, FAQ_FAILED, FAQ_PENDING} from './types';
 import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get faq Action
 export const getFaq = () => {
-  console.log('jiii');
   return (dispatch) => {
     dispatch({type: FAQ_PENDING});
     try {
@@ -21,11 +16,10 @@ export const getFaq = () => {
         .then((response) => {
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
-            
           } else if (response?.data?.data) {
             dispatch({
               type: FAQ_SUCCESS,
-              payload: response.data.data
+              payload: response.data.data,
             });
           }
         })

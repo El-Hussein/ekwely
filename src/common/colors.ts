@@ -16,6 +16,7 @@ const COLORS = {
   midGrayo:'#cccccc',
   textGray:'#666666',
   lightTextGray:'#999999',
+  blue: 'blue',
   
 };
 

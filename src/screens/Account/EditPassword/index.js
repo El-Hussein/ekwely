@@ -81,17 +81,18 @@ const EditAccount = () => {
         },
       })
         .then((response) => {
-          console.log('bebbebe', response.data);
           if (response?.data?.status !== '200') {
             setServerError(response.data.message);
             setLoading(false);
-            console.log('حدث خطأ ما من فضلك حاول مره أخري')
           } else if (response?.data?.data) {
             Toast.show(response.data.message);
-            console.log('succsess',response.data.message);
             navigation.popToTop();
             navigation.navigate('Home');
-            setPasswordData({oldPassword: '' ,newPassword:'' ,confirmNewPassword:''})
+            setPasswordData({
+              oldPassword: '',
+              newPassword: '',
+              confirmNewPassword: '',
+            });
             navigation.navigate('Auth');
           }
           setLoading(false);
@@ -99,11 +100,8 @@ const EditAccount = () => {
         .catch((error) => {
           setServerError(error?.response?.data?.message);
           setLoading(false);
-          console.log('serverError', error.response.data.message)
-
         });
     } catch (error) {
-      console.log('error')
       setLoading(false);
     }
   };

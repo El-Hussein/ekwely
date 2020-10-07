@@ -82,7 +82,6 @@ const EditAccount = () => {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
           } else if (response?.data?.data) {
-            console.log(response);
             Toast.show(response.data.message);
             AsyncStorage.setItem(
               USER_DATA,
@@ -121,16 +120,11 @@ const EditAccount = () => {
 
   const openGallery = () => {
     ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-
       if (response.didCancel) {
-        console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
         upload(response).then((response) => {
-          console.log(response);
           if (response.status === '200') {
             setEditData({...editData, Image: response.data});
             setUserImage({uri: IMAGE_BASE_URL + response.data});
@@ -153,9 +147,7 @@ const EditAccount = () => {
 
       var obj = await ret.json();
       return obj;
-    } catch (error) {
-      console.log('Catch', error);
-    }
+    } catch (error) {}
   };
 
   const createFormData = (photo) => {
@@ -170,7 +162,6 @@ const EditAccount = () => {
     });
     return data;
   };
-
 
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
