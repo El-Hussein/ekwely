@@ -98,7 +98,6 @@ const Register = () => {
         },
       })
         .then((response) => {
-          console.log('resss', response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
@@ -114,7 +113,6 @@ const Register = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.log('erroo', error, error?.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
         });
