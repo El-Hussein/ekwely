@@ -31,8 +31,7 @@ export default StyleSheet.create({
     fontSize: calcFont(15),
   },
   addToCartButton: {
-    width: calcWidth(75),
-    height: calcHeight(30),
+    paddingHorizontal: calcWidth(15),
     borderRadius: calcFont(15),
     backgroundColor: COLORS.yellow,
   },

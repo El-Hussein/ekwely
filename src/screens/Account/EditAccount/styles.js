@@ -27,13 +27,11 @@ export default StyleSheet.create({
     color: COLORS.gray,
   },
   saveText: {
-    width: '100%',
     color: COLORS.mainText,
     fontSize: calcFont(15),
   },
   saveButton: {
-    width: calcWidth(75),
-    height: calcHeight(30),
+    paddingHorizontal: calcWidth(15),
     borderRadius: calcFont(15),
     backgroundColor: COLORS.yellow,
   },
