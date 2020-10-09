@@ -59,7 +59,7 @@ const Drawer = ({toggleDrawer}) => {
         />
         <Raw
           title="سياسة الاستخدام"
-          onPress={() => navigation.navigate('Support')}
+          onPress={() => navigation.navigate('Terms')}
         />
         <Raw
           title="للتواصل معنا"
