@@ -2,6 +2,7 @@ import {StyleSheet, CheckBox} from 'react-native';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {color} from 'react-native-reanimated';
+import FONTS from '../../common/fonts';
 
 export default StyleSheet.create({
   container: {
@@ -42,11 +43,11 @@ export default StyleSheet.create({
     padding: 0,
   },
   labelStyle: {
+    ...FONTS.dinMedium,
     fontSize: calcFont(18),
     fontWeight: 'normal',
     textAlignVertical: 'top',
     lineHeight: calcHeight(28),
-    fontFamily: 'din-next-lt-w23-medium',
     width: calcWidth(160),
     textAlign: 'center',
     margin: 0,

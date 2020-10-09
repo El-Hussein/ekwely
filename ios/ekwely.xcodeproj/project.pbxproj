@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ekwelyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ekwelyTests.m */; };
+		033F14FE2530C25700EEC055 /* din-next-lt-w23-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 033F14FD2530C25700EEC055 /* din-next-lt-w23-medium.ttf */; };
 		13713250163FF18FED3C2121 /* libPods-ekwely-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 215968076129A9F0A7ED657B /* libPods-ekwely-tvOS.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -51,6 +52,7 @@
 		00E356EE1AD99517003FC87E /* ekwelyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ekwelyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ekwelyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ekwelyTests.m; sourceTree = "<group>"; };
+		033F14FD2530C25700EEC055 /* din-next-lt-w23-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "din-next-lt-w23-medium.ttf"; path = "../src/assets/fonts/cairo/din-next-lt-w23-medium.ttf"; sourceTree = "<group>"; };
 		056C53CB6ED14F19AFD1B703 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ekwely.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ekwely.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ekwely/AppDelegate.h; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				033F14FD2530C25700EEC055 /* din-next-lt-w23-medium.ttf */,
 				13B07FAE1A68108700A75B9A /* ekwely */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ekwelyTests */,
@@ -412,6 +415,7 @@
 				704F58ECD737430296C80F26 /* Cairo-Bold.ttf in Resources */,
 				15B7B3CBC89A4F6FB5E257CB /* Cairo-ExtraLight.ttf in Resources */,
 				6E090FC1F77D4F29868A09F8 /* Cairo-Light.ttf in Resources */,
+				033F14FE2530C25700EEC055 /* din-next-lt-w23-medium.ttf in Resources */,
 				645BD234A3524280B82FDB91 /* Cairo-Regular.ttf in Resources */,
 				CCF621EEA2934C16ACF9E6CC /* Cairo-SemiBold.ttf in Resources */,
 			);

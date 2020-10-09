@@ -2,6 +2,7 @@ import {StyleSheet, CheckBox} from 'react-native';
 import COLORS from '../../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 import {color} from 'react-native-reanimated';
+import FONTS from '../../../common/fonts';
 
 export default StyleSheet.create({
   container: {
@@ -72,6 +73,7 @@ export default StyleSheet.create({
     marginVertical: calcHeight(5),
   },
   promoCodeInput: {
+    ...FONTS.dinMedium,
     width: calcWidth(345),
     height: calcHeight(46),
     borderRadius: calcFont(3),
@@ -84,7 +86,6 @@ export default StyleSheet.create({
     lineHeight: calcHeight(30),
     fontWeight: 'normal',
     textAlignVertical: 'center',
-    fontFamily: 'din-next-lt-w23-medium',
   },
   
   //////////////////////////////////////////

@@ -31,9 +31,9 @@ const Drawer = ({toggleDrawer}) => {
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>
-        <TouchableOpacity onPress={toggleDrawer}>
+        {/* <TouchableOpacity onPress={toggleDrawer}>
           <Image source={IMAGES.back} style={styles.backImage} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.userOut}>
           <Image
             source={
