@@ -38,6 +38,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'flex-end',
     width: calcWidth(110),
+    lineHeight: calcHeight(35),
   },
   type: {
     color: COLORS.lightTextGray,
@@ -138,7 +139,7 @@ export default StyleSheet.create({
     paddingVertical: calcHeight(10),
     paddingHorizontal: calcWidth(15),
     justifyContent: 'flex-start',
-    marginVertical:calcHeight(30)
+    marginVertical: calcHeight(30),
   },
   /////////////////////////////////
   orderButton: {

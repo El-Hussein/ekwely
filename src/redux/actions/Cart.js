@@ -21,13 +21,14 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
             Id: cartId,
             Quantity: quantity,
             ItemId: id,
-            ServiceType: serviceType,
+            ServiceType: serviceType || [],
             IsProduct: isProduct,
             IsFastClean: false,
           },
         },
       })
         .then((response) => {
+          console.log(response);
           if (response?.data?.status !== '200') {
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           } else if (response?.data?.data) {
@@ -35,6 +36,7 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
           }
         })
         .catch((error) => {
+          console.log(error.response);
           Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
           dispatch({
             type: ADD_FAILED,
@@ -42,6 +44,7 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
           });
         });
     } catch (error) {
+      console.log(error.response);
       Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
       dispatch({
         type: ADD_FAILED,

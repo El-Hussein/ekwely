@@ -72,6 +72,7 @@ const Login = () => {
             email: '',
             password: '',
           });
+          console.log(response);
           AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
           // save user data in the redux
           dispatch({type: SIGN_IN, payload: response.data.data});

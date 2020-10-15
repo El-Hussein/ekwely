@@ -78,6 +78,7 @@ const EditAccount = () => {
         },
       })
         .then((response) => {
+          console.log(response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
@@ -106,10 +107,12 @@ const EditAccount = () => {
           setLoading(false);
         })
         .catch((error) => {
+          console.log(error.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
         });
     } catch (error) {
+      console.log(error.response);
       setLoading(false);
     }
   };
