@@ -127,6 +127,8 @@ const EditAccount = () => {
       } else if (response.error) {
       } else if (response.customButton) {
       } else {
+        console.log(response);
+        setUserImage({uri: response.uri});
         upload(response).then((response) => {
           if (response.status === '200') {
             setEditData({...editData, Image: response.data});
