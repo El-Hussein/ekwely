@@ -25,15 +25,7 @@ const services = [
   {id: 4, name: 'تصليح', value: 3},
 ];
 
-const Wash = ({
-  getProductsFavorite,
-  wash,
-  washFav,
-  loading,
-  getWashFavorite,
-  getProducts,
-  setCart,
-}) => {
+const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
   useFocusEffect(
     useCallback(() => {
       if (wash.length === 0) {
@@ -48,6 +40,7 @@ const Wash = ({
   const [favorite, setFavorite] = useState(washFav.length > 0);
   const [pieces, setPieces] = useState(washFav.length === 0);
   const [counter, setCounter] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [serviceDropDownVisible, setServiceDropDownVisible] = useState(false);
@@ -189,11 +182,16 @@ const Wash = ({
 
       <View style={styles.confirmOrderButton}>
         <Button
+          loading={loading}
           title={'تأكيد الطلب'}
           onPress={() => {
-            navigation.popToTop();
+            setLoading(true);
             addToCart();
-            navigation.navigate('Cart');
+            setTimeout(() => {
+              setLoading(false);
+              navigation.popToTop();
+              navigation.navigate('Cart');
+            }, 1000);
           }}
           titleStyle={{
             ...styles.confirmOrder,
