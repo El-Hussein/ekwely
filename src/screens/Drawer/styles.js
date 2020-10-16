@@ -1,6 +1,6 @@
-import {Platform, StyleSheet} from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import COLORS from '../../common/colors';
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import { calcHeight, calcWidth, calcFont } from '../../common/styles';
 
 export default StyleSheet.create({
   container: {
@@ -38,6 +38,7 @@ export default StyleSheet.create({
     borderRadius: calcWidth(Platform.OS === 'ios' ? 134 : 72),
     borderColor: '#525e70',
     borderWidth: calcHeight(6),
+    marginTop: calcFont(20),
   },
   menu: {
     paddingTop: calcHeight(20),
@@ -54,7 +55,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     paddingVertical: calcHeight(15),
     paddingBottom: calcHeight(20),
-    textAlign:'center'
+    textAlign: 'center'
   },
   row: {
     alignItems: 'flex-end',

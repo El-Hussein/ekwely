@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {calcHeight} from '../../../common/styles';
-import {styles} from './styles';
-const AppText = ({children, style, ...props}) => {
+import { Text } from 'react-native';
+import FONTS from '../../../common/fonts';
+import { calcFont, calcHeight } from '../../../common/styles';
+import { styles } from './styles';
+const AppText = ({ children, style, ...props }) => {
   return (
     <Text
       style={[
@@ -12,7 +13,8 @@ const AppText = ({children, style, ...props}) => {
           ...style,
           fontWeight: 'normal',
           textAlignVertical: 'bottom',
-          fontFamily: 'din-next-lt-w23-medium',
+          ...FONTS.dinMedium,
+          marginTop:calcFont(-5)
         },
       ]}
       {...props}>
