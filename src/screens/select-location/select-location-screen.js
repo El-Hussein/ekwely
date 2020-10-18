@@ -1,5 +1,5 @@
 /* eslint-disable react/sort-comp */
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -8,13 +8,13 @@ import {
   I18nManager,
   BackHandler,
 } from 'react-native';
-import MapView, {PROVIDER_DEFAULT, Marker} from 'react-native-maps';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './select-location-styles';
 import COLORS from '../../common/colors';
-import {calcFont} from '../../common/styles';
+import { calcFont } from '../../common/styles';
 
 import {
   LATITUDE_DELTA,
@@ -42,7 +42,7 @@ class SelectLocationScreen extends Component {
 
   async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-    const {latitude, longitude} = await getMyLocation();
+    const { latitude, longitude } = await getMyLocation();
     const data = await getLocationFromLatLng({
       latitude,
       longitude,
@@ -59,12 +59,12 @@ class SelectLocationScreen extends Component {
   }
 
   handleBackButton = () => {
-    const {address} = this.state;
+    const { address } = this.state;
     this.props.route.params.onGoBack(address);
   };
 
   async onRegionChange(region) {
-    const {latitude, longitude, latitudeDelta, longitudeDelta} = this.state;
+    const { latitude, longitude, latitudeDelta, longitudeDelta } = this.state;
     this.map.animateToRegion({
       latitudeDelta,
       longitudeDelta,
@@ -98,8 +98,8 @@ class SelectLocationScreen extends Component {
   }
 
   getCurrentLocation = async () => {
-    const {latitude, longitude} = await getMyLocation();
-    const data = await getLocationFromLatLng({latitude, longitude});
+    const { latitude, longitude } = await getMyLocation();
+    const data = await getLocationFromLatLng({ latitude, longitude });
     this.setState({
       latitude,
       longitude,
@@ -109,7 +109,7 @@ class SelectLocationScreen extends Component {
   };
 
   handleMapGoBack = () => {
-    const {address} = this.state;
+    const { address } = this.state;
     this.props.route.params.onGoBack(address);
     this.props.navigation.goBack(null);
   };
@@ -129,7 +129,7 @@ class SelectLocationScreen extends Component {
 
   render() {
     const iconPlatform = Platform.OS === 'ios' ? 'ios' : 'md';
-    const {latitude, longitude, longitudeDelta, latitudeDelta} = this.state;
+    const { latitude, longitude, longitudeDelta, latitudeDelta } = this.state;
 
     return (
       <View style={styles.containerView}>
@@ -156,7 +156,7 @@ class SelectLocationScreen extends Component {
             <MapView
               userLocationAnnotationTitle="عنواني"
               showsUserLocation
-              provider={PROVIDER_DEFAULT}
+              provider={PROVIDER_GOOGLE}
               followsUserLocation
               region={{
                 latitude: latitude || 30.044414342924416,

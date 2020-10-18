@@ -1,5 +1,6 @@
 import {StyleSheet, Platform} from 'react-native';
 import COLORS from '../../../common/colors';
+import FONTS from '../../../common/fonts';
 import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
 
 export default StyleSheet.create({
@@ -52,6 +53,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   input: {
+    ...FONTS.dinMedium,
     width: calcWidth(293),
     height: calcHeight(60),
     borderRadius: calcFont(30),
@@ -64,7 +66,6 @@ export default StyleSheet.create({
     lineHeight: calcHeight(30),
     fontWeight: 'normal',
     textAlignVertical: 'bottom',
-    fontFamily: 'din-next-lt-w23-medium',
   },
 
   addressVeiw: {
