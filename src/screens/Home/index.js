@@ -61,7 +61,7 @@ const Home = ({getCurrentOrder}) => {
           <View style={styles.promoCode}>
             <AppText style={styles.promoCodeText}>كود الخصم</AppText>
             <AppText style={styles.promoCodeNum}>
-              {user?.userPromoCode || 'لا يوجد'}
+              {user?.userPromoCode || 'لا يوجدaa'}
             </AppText>
           </View>
 

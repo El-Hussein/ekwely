@@ -40,6 +40,7 @@ const EditAccount = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [editData, setEditData] = useState({
     userName: user?.userName,
@@ -122,6 +123,7 @@ const EditAccount = () => {
   };
 
   const openGallery = () => {
+    setImageLoading(true);
     ImagePicker.showImagePicker(imagePickerOptions, (response) => {
       if (response.didCancel) {
       } else if (response.error) {
@@ -130,12 +132,14 @@ const EditAccount = () => {
         console.log(response);
         setUserImage({uri: response.uri});
         upload(response).then((response) => {
+          setImageLoading(false);
           if (response.status === '200') {
             setEditData({...editData, Image: response.data});
             setUserImage({uri: IMAGE_BASE_URL + response.data});
           } else Toast.show('حدث خطأ ما من فضلك حاول مرة اخري');
         });
       }
+      setImageLoading(false);
     });
   };
 
@@ -192,12 +196,23 @@ const EditAccount = () => {
             source={userImage}
             style={userImage?.uri ? styles.userImage : styles.defaultImage}
           />
-          <Button
-            title={'حمل الصوره'}
-            onPress={openGallery}
-            titleStyle={styles.addToCartText}
-            style={styles.addToCartButton}
-          />
+          {imageLoading ? (
+            <ActivityIndicator
+              color={COLORS.main}
+              style={{
+                ...styles.addToCartButton,
+                padding: calcWidth(10),
+                backgroundColor: '#00000088',
+              }}
+            />
+          ) : (
+            <Button
+              title={'حمل الصوره'}
+              onPress={openGallery}
+              titleStyle={styles.addToCartText}
+              style={styles.addToCartButton}
+            />
+          )}
         </View>
 
         {/* <View style={styles.data}>
