@@ -15,17 +15,12 @@ import Toast from 'react-native-simple-toast';
 import {getProductsFavorite} from '../../redux/actions/Favorite';
 import COLORS from '../../common/colors';
 
-const Product = ({
-  products,
-  productsFav,
-  loading,
-  setCart,
-  getProductsFavorite,
-}) => {
+const Product = ({products, productsFav, setCart, getProductsFavorite}) => {
   const navigation = useNavigation();
   const [favorite, setFavorite] = useState(productsFav.length > 0);
   const [pieces, setPieces] = useState(productsFav.length === 0);
   const [counter, setCounter] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [favoriteDropDownVisible, setFavoriteDropDownVisible] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
@@ -153,11 +148,16 @@ const Product = ({
 
       <View style={styles.confirmOrderButton}>
         <Button
+          loading={loading}
           title={'تأكيد الطلب'}
           onPress={() => {
-            navigation.popToTop();
+            setLoading(true);
             addToCart();
-            navigation.navigate('Cart');
+            setTimeout(() => {
+              setLoading(false);
+              navigation.popToTop();
+              navigation.navigate('Cart');
+            }, 1000);
           }}
           titleStyle={{
             ...styles.confirmOrder,

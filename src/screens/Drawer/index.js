@@ -9,8 +9,9 @@ import {calcHeight, calcWidth} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import {useNavigation} from '@react-navigation/native';
 import {IMAGE_BASE_URL, USER_DATA} from '../../common/constants';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useBackButton} from '../../utils/customHooks';
+import { SIGN_OUT } from '../../redux/actions/types';
 
 const Raw = ({title, onPress}) => {
   return (
@@ -21,6 +22,7 @@ const Raw = ({title, onPress}) => {
   );
 };
 const Drawer = ({toggleDrawer}) => {
+  const dispatch = useDispatch();
   const {user} = useSelector((state) => {
     return {
       user: state.auth.user,
@@ -71,6 +73,7 @@ const Drawer = ({toggleDrawer}) => {
             AsyncStorage.removeItem(USER_DATA)
               .then((response) => {
                 // remove user from redux
+                dispatch({type: SIGN_OUT});
 
                 navigation.navigate('Auth');
               })

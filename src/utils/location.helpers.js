@@ -4,7 +4,7 @@ import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 import Geocoder from 'react-native-geocoding';
 
 // const GEOCODING_API_KEY = 'AIzaSyBLXAD0ETj7jqhla5t8JqaTqvV0lB3q-K4'; // mongy one
-const GEOCODING_API_KEY = 'AIzaSyCQYfGTLVC7vvH5xmp9la265ky4f2zPnwg'; // magneto one
+const GEOCODING_API_KEY = 'AIzaSyAbz-RVyfy_QR5W2Nc_WAqzrbcELkK5mH8'; // magneto one
 // const GEOCODING_API_KEY = 'AIzaSyDC2hgjvjaEMeKOnt-hAz67yG0NBNfkCr0';
 
 /**

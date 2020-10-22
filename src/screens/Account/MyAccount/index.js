@@ -54,6 +54,7 @@ const MyAccount = () => {
         url: 'Users/EditUserProfile',
         data: {
           Data: {
+            ...user,
             Address: addressData.streetAddress,
             Lang: addressData.longitude,
             Lat: addressData.latitude,
@@ -61,6 +62,7 @@ const MyAccount = () => {
         },
       })
         .then((response) => {
+          console.log(response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
@@ -89,11 +91,13 @@ const MyAccount = () => {
           setAddressData({});
         })
         .catch((error) => {
+          console.log(error.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
           setAddressData({});
         });
     } catch (error) {
+      console.log(error.response);
       setAddressData({});
       setLoading(false);
     }

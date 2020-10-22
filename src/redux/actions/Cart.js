@@ -14,34 +14,69 @@ import Toast from 'react-native-simple-toast';
 export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
   return (dispatch) => {
     try {
-      makePostRequest({
-        url: 'ItemBasket/auth_SetItemBasket',
-        data: {
-          Data: {
-            Id: cartId,
-            Quantity: quantity,
-            ItemId: id,
-            ServiceType: serviceType,
-            IsProduct: isProduct,
-            IsFastClean: false,
+      if (isProduct) {
+        makePostRequest({
+          url: 'ItemBasket/auth_SetItemBasket',
+          data: {
+            Data: {
+              Id: cartId,
+              Quantity: quantity,
+              ItemId: id,
+              IsProduct: isProduct,
+              IsFastClean: false,
+            },
           },
-        },
-      })
-        .then((response) => {
-          if (response?.data?.status !== '200') {
-            Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
-          } else if (response?.data?.data) {
-            dispatch({type: ADD_SUCCESS, payload: response.data.message});
-          }
         })
-        .catch((error) => {
-          Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
-          dispatch({
-            type: ADD_FAILED,
-            payload: 'حدث خطأ ما من فضلك حاول مره أخري',
+          .then((response) => {
+            console.log(response);
+            if (response?.data?.status !== '200') {
+              Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+            } else if (response?.data?.data) {
+              dispatch({type: ADD_SUCCESS, payload: response.data.message});
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+            dispatch({
+              type: ADD_FAILED,
+              payload: 'حدث خطأ ما من فضلك حاول مره أخري',
+            });
           });
-        });
+      } else {
+        makePostRequest({
+          url: 'ItemBasket/auth_SetItemBasket',
+          data: {
+            Data: {
+              Id: cartId,
+              Quantity: quantity,
+              ItemId: id,
+              ServiceType: serviceType || [],
+              IsProduct: isProduct,
+              IsFastClean: false,
+            },
+          },
+        })
+          .then((response) => {
+            console.log(response);
+            if (response?.data?.status !== '200') {
+              Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+            } else if (response?.data?.data) {
+              dispatch({type: ADD_SUCCESS, payload: response.data.message});
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+            dispatch({
+              type: ADD_FAILED,
+              payload: 'حدث خطأ ما من فضلك حاول مره أخري',
+            });
+          });
+      }
+      
     } catch (error) {
+      console.log(error.response);
       Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
       dispatch({
         type: ADD_FAILED,
