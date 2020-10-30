@@ -11,7 +11,7 @@ if (__DEV__) {
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 }
 // MiddleWare for redux
-let middleware = applyMiddleware(thunk, Logger);
+let middleware = applyMiddleware(thunk);
 /* Config for Redux Presist */
 
 const config = {

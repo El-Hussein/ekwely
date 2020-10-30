@@ -83,7 +83,7 @@ const Register = () => {
     setLoading(true);
     try {
       makePostRequest({
-        url: '/Users/customerregister',
+        url: 'Users/customerregister',
         data: {
           Data: {
             UserName: registerData.userName,

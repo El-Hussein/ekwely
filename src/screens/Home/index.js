@@ -1,32 +1,34 @@
-import React, {useEffect} from 'react';
-import {View, Image, ScrollView, BackHandler, Alert} from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Image, ScrollView, BackHandler, Alert } from 'react-native';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
 import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
-import {useNavigation} from '@react-navigation/native';
-import {connect, useSelector} from 'react-redux';
-import {getCurrentOrder, getHistoryOrder} from '../../redux/actions/Order';
-import {bindActionCreators} from 'redux';
-import {useBackButton} from '../../utils/customHooks';
+import { useNavigation } from '@react-navigation/native';
+import { connect, useSelector } from 'react-redux';
+import { getCurrentOrder, getHistoryOrder } from '../../redux/actions/Order';
+import { bindActionCreators } from 'redux';
+import { useBackButton } from '../../utils/customHooks';
 
-const Home = ({getCurrentOrder}) => {
+const Home = ({ getCurrentOrder }) => {
   const navigation = useNavigation();
   const data = [
-    {id: '1', image_path: IMAGES.slider},
-    {id: '2', image_path: IMAGES.slider1},
-    {id: '3', image_path: IMAGES.slider2},
-    {id: '4', image_path: IMAGES.slider3},
+    { id: '1', image_path: IMAGES.slider },
+    { id: '2', image_path: IMAGES.slider1 },
+    { id: '3', image_path: IMAGES.slider2 },
+    { id: '4', image_path: IMAGES.slider3 },
   ];
-  const {user} = useSelector((state) => {
+  const { user } = useSelector((state) => {
     return {
       user: state.auth.user,
     };
   });
   useEffect(() => {
-    getCurrentOrder();
+    if (user) {
+      getCurrentOrder();
+    }
   }, []);
 
   useBackButton(() => {
@@ -37,12 +39,20 @@ const Home = ({getCurrentOrder}) => {
           onPress: () => null,
           style: 'cancel',
         },
-        {text: 'خروج', onPress: BackHandler.exitApp},
+        { text: 'خروج', onPress: BackHandler.exitApp },
       ]);
       return true;
     }
     return false;
   });
+
+  const orderNow = () => {
+    if (user) {
+      navigation.navigate('Order');
+    } else {
+      navigation.navigate('Auth');
+    }
+  };
 
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
@@ -50,7 +60,7 @@ const Home = ({getCurrentOrder}) => {
         <View style={styles.orderButton}>
           <Button
             title={'اطلب الان'}
-            onPress={() => navigation.navigate('Order')}
+            onPress={orderNow}
             titleStyle={styles.orderTitle}
             style={styles.button}
           />
@@ -81,7 +91,7 @@ const Home = ({getCurrentOrder}) => {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getCurrentOrder}, dispatch),
+    ...bindActionCreators({ getCurrentOrder }, dispatch),
   };
 }
 

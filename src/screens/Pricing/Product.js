@@ -17,18 +17,24 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {getProducts} from '../../redux/actions/Products';
+import {getProducts, getProductsNoUser} from '../../redux/actions/Products';
 import {IMAGE_BASE_URL} from '../../common/constants';
 import Favorite from '../../components/atoms/Favorite';
 import Cart from '../../components/atoms/Cart';
 
-const Product = ({getProducts, products, loading}) => {
+const Product = ({getProducts, getProductsNoUser, products, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
+  const user = useSelector((state) => state.auth.user);
+
   useFocusEffect(
     useCallback(() => {
-      if (products.length === 0) {
-        getProducts();
+      if (user) {
+        if (products.length === 0) {
+          getProducts();
+        }
+      } else {
+        getProductsNoUser();
       }
     }, []),
   );
@@ -85,12 +91,13 @@ const Product = ({getProducts, products, loading}) => {
                 setFilteredData(null);
                 return;
               }
-              if (text.length > 2)
+              if (text.length > 2) {
                 setFilteredData(
                   products.filter((item) =>
                     item.arName.includes(searchTerm, 0),
                   ),
                 );
+              }
             }}
             placeholder="ابحث عن ..."
             placeholderTextColor={COLORS.mainText}
@@ -131,7 +138,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getProducts}, dispatch),
+    ...bindActionCreators({getProducts, getProductsNoUser}, dispatch),
   };
 }
 
