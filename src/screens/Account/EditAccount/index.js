@@ -198,7 +198,7 @@ const EditAccount = () => {
           />
           {imageLoading ? (
             <ActivityIndicator
-              color={COLORS.main}
+              color={COLORS.white}
               style={{
                 ...styles.addToCartButton,
                 padding: calcWidth(10),

@@ -133,5 +133,5 @@ export const LONGITUDE_DELTA = 0.002;
 export const QUERY_KEY = {
   key: 'AIzaSyBwIGw_YL5JPBJfEdPizPQR9jsg4wJh12E',
   language: 'en',
-  types: '(regions)',
+  // types: '(regions)',
 };
