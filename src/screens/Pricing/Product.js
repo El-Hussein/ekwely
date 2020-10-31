@@ -69,7 +69,7 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
                   {item.price}ج
                 </AppText>
               </View>
-              <AppText numberOfLines={1} style={styles.productName}>
+              <AppText numberOfLines={2} style={styles.productName}>
                 {item.arName}
               </AppText>
             </View>

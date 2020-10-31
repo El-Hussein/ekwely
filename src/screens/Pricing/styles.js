@@ -1,7 +1,7 @@
-import {StyleSheet, CheckBox} from 'react-native';
+import { StyleSheet, CheckBox } from 'react-native';
 import COLORS from '../../common/colors';
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {color} from 'react-native-reanimated';
+import { calcHeight, calcWidth, calcFont } from '../../common/styles';
+import { color } from 'react-native-reanimated';
 import FONTS from '../../common/fonts';
 
 export default StyleSheet.create({
@@ -143,7 +143,7 @@ export default StyleSheet.create({
   },
   namePrice: {
     width: calcWidth(160),
-    height: calcWidth(42),
+    height: calcWidth(50),
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 5,
@@ -152,22 +152,23 @@ export default StyleSheet.create({
   },
   productName: {
     color: COLORS.white,
-    fontSize: calcFont(13),
+    fontSize: calcFont(12),
     fontWeight: 'bold',
-    marginTop: calcHeight(15),
-    maxWidth: '90%',
+    marginTop: calcHeight(12.5),
+    maxWidth: '95%',
+    lineHeight: 15
   },
   price: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: calcHeight(15),
-    maxWidth: calcWidth(100),
+    width: calcWidth(60),
     height: calcHeight(24),
     paddingHorizontal: calcWidth(10),
     borderRadius: calcFont(5),
     backgroundColor: COLORS.yellow,
     position: 'absolute',
-    top: calcHeight(-12),
+    top: calcHeight(-15),
   },
   priceText: {
     color: COLORS.mainText,
@@ -206,7 +207,6 @@ export default StyleSheet.create({
     color: COLORS.mainText,
     fontSize: calcFont(18),
     fontWeight: 'bold',
-    width: '30%',
     textAlign: 'center',
   },
   washItem: {
@@ -223,7 +223,7 @@ export default StyleSheet.create({
     flexDirection: 'row-reverse',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '50%',
+    width: '35%',
   },
   col1: {
     color: COLORS.mainText,
