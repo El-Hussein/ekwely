@@ -2,9 +2,7 @@ import {
   PRODUCTS_PENDING,
   PRODUCTS_SUCCESS,
   PRODUCTS_FAILED,
-  PRODUCTS_FAVORITE_SUCCESS,
   DRY_CLEAN_SUCCESS,
-  DRY_CLEAN_FAVORITE_SUCCESS,
   DRY_CLEAN_SUCCESS_NO_USER,
 } from './types';
 import {makePostRequest} from '../../utils/api.helpers';

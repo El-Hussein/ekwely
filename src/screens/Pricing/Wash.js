@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
-  TouchableOpacity,
   Image,
   TextInput,
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import Toast from 'react-native-simple-toast';
 import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
-import { calcHeight, calcWidth, calcFont } from '../../common/styles';
-import { Line } from '../../components/atoms/Line';
-import { connect, useSelector } from 'react-redux';
+import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {Line} from '../../components/atoms/Line';
+import {connect, useSelector} from 'react-redux';
 import Favorite from '../../components/atoms/Favorite';
-import { bindActionCreators } from 'redux';
-import { getServicesNoUser } from '../../redux/actions/Products';
+import {bindActionCreators} from 'redux';
+import {getServicesNoUser, getProducts} from '../../redux/actions/Products';
 
-const Wash = ({ getServicesNoUser, products, servicesDataNoUser, loading }) => {
+const Wash = ({
+  getServicesNoUser,
+  products,
+  servicesDataNoUser,
+  getProducts,
+  loading,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
-  const _renderProductItem = ({ item }) => {
+  const _renderProductItem = ({item}) => {
     return (
       <View>
         <View style={styles.washItem}>
@@ -44,6 +48,8 @@ const Wash = ({ getServicesNoUser, products, servicesDataNoUser, loading }) => {
   useEffect(() => {
     if (!user) {
       getServicesNoUser();
+    } else {
+      getProducts();
     }
   }, []);
 
@@ -75,15 +81,14 @@ const Wash = ({ getServicesNoUser, products, servicesDataNoUser, loading }) => {
         </View>
         <View style={styles.titles}>
           <View style={styles.pieces}>
-            <View
-              style={[styles.favoriteOut, { backgroundColor: COLORS.main }]}>
+            <View style={[styles.favoriteOut, {backgroundColor: COLORS.main}]}>
               <Image
                 source={IMAGES.favorite}
-                style={[styles.favoriteImage, { tintColor: COLORS.yellow }]}
+                style={[styles.favoriteImage, {tintColor: COLORS.yellow}]}
               />
             </View>
 
-          <AppText style={styles.col1Title}>القطع</AppText>
+            <AppText style={styles.col1Title}>القطع</AppText>
           </View>
           <AppText style={styles.col2Title}>مكوى</AppText>
           <AppText style={styles.col3Title}>غسيل ومكوى</AppText>
@@ -92,23 +97,23 @@ const Wash = ({ getServicesNoUser, products, servicesDataNoUser, loading }) => {
       {loading ? (
         <ActivityIndicator
           color={COLORS.main}
-          style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
+          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
           size={calcFont(30)}
         />
       ) : (
-          <FlatList
-            contentContainerStyle={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            data={servicesDataNoUser || filteredData || products || []}
-            renderItem={_renderProductItem}
-            keyExtractor={(item, index) => `${item.id}`}
-            ListEmptyComponent={
-              <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-            }
-          />
-        )}
+        <FlatList
+          contentContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          data={servicesDataNoUser || filteredData || products || []}
+          renderItem={_renderProductItem}
+          keyExtractor={(item, index) => `${item.id}`}
+          ListEmptyComponent={
+            <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+          }
+        />
+      )}
     </>
   );
 };
@@ -122,7 +127,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ getServicesNoUser }, dispatch),
+    ...bindActionCreators({getProducts, getServicesNoUser}, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Wash);

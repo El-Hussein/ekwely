@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import FavoriteScreen from '../../screens/Favorite';
-import { headerOptions } from '../headerOptions';
+import {headerOptions} from '../headerOptions';
 
 const Favorite = createStackNavigator();
 

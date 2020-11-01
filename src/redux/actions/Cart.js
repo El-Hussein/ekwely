@@ -28,7 +28,6 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
           },
         })
           .then((response) => {
-            console.log(response);
             if (response?.data?.status !== '200') {
               Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
             } else if (response?.data?.data) {
@@ -36,7 +35,6 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
             }
           })
           .catch((error) => {
-            console.log(error.response);
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
             dispatch({
               type: ADD_FAILED,
@@ -58,7 +56,6 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
           },
         })
           .then((response) => {
-            console.log(response);
             if (response?.data?.status !== '200') {
               Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
             } else if (response?.data?.data) {
@@ -66,7 +63,6 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
             }
           })
           .catch((error) => {
-            console.log(error.response);
             Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
             dispatch({
               type: ADD_FAILED,
@@ -74,9 +70,7 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
             });
           });
       }
-      
     } catch (error) {
-      console.log(error.response);
       Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
       dispatch({
         type: ADD_FAILED,
@@ -124,7 +118,9 @@ export const deleteCart = (id, isItem) => {
 // get cart Action
 export const getCart = (hideLoading) => {
   return (dispatch) => {
-    if (!hideLoading) dispatch({type: CART_PENDING});
+    if (!hideLoading) {
+      dispatch({type: CART_PENDING});
+    }
     try {
       makePostRequest({
         url: 'ItemBasket/auth_GetBasket',

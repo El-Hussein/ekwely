@@ -17,7 +17,6 @@ const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 const AppTabs = () => {
   const user = useSelector((state) => state.auth.user);
-  console.log('yser', user);
   return (
     <Tabs.Navigator
       initialRouteName="Home"
@@ -25,7 +24,6 @@ const AppTabs = () => {
         activeTintColor: COLORS.white,
         inactiveTintColor: COLORS.main,
         style: {
-          // paddingTop: calcFont(5),
           backgroundColor: COLORS.backgroundColor,
           elevation: 0,
           height: calcHeight(70),
