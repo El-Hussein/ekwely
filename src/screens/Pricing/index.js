@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, Dimensions} from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import styles from './styles';
@@ -6,15 +6,20 @@ import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
 import Wash from './Wash';
 import Product from './Product';
+import {connect, useSelector} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getProducts, getProductsNoUser} from '../../redux/actions/Products';
+import {useFocusEffect} from '@react-navigation/native';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
-const Pricing = () => {
+const Pricing = ({getProducts, getProductsNoUser}) => {
   const [index, setIndex] = useState(1);
   const [routes] = useState([
     {key: 'first', title: 'المنتجات'},
     {key: 'second', title: 'غسيل ومكوى'},
   ]);
+  const user = useSelector((state) => state.auth.user);
 
   const renderScene = SceneMap({
     first: Product,
@@ -35,6 +40,14 @@ const Pricing = () => {
       />
     );
   };
+  useEffect(() => {
+    if (user) {
+      getProducts();
+    } else {
+      getProductsNoUser();
+    }
+  }, []);
+
   return (
     <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <View style={styles.newOrder}>
@@ -52,5 +65,10 @@ const Pricing = () => {
     </View>
   );
 };
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({getProducts, getProductsNoUser}, dispatch),
+  };
+}
 
-export default Pricing;
+export default connect(null, mapDispatchToProps)(Pricing);

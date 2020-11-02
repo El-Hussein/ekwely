@@ -26,18 +26,15 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
+console.log('user',user)
 
-  useFocusEffect(
-    useCallback(() => {
-      if (user) {
-        if (products.length === 0) {
-          getProducts();
-        }
-      } else {
-        getProductsNoUser();
-      }
-    }, []),
-  );
+  useEffect(() => {
+    if (user) {
+      getProducts();
+    } else {
+    }
+    getProductsNoUser();
+  }, []);
 
   const _renderProductItem = ({item}) => {
     return (
@@ -78,7 +75,7 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
       </View>
     );
   };
-
+console.log('productsproducts',products)
   return (
     <>
       <View style={styles.container}>

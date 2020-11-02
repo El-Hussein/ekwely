@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { View, Image, Alert, BackHandler } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {View, Image, Alert, BackHandler} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import AppInput from '../../../components/atoms/AppInput';
 import styles from './styles';
 import Button from '../../../components/atoms/Button';
 import IMAGES from '../../../common/images';
-import { makePostRequest } from '../../../utils/api.helpers';
-import { USER_DATA } from '../../../common/constants';
-import { validateEmail, validatePassword } from '../../../common/Validation';
-import { SIGN_IN } from '../../../redux/actions/types';
+import {makePostRequest} from '../../../utils/api.helpers';
+import {USER_DATA} from '../../../common/constants';
+import {validateEmail, validatePassword} from '../../../common/Validation';
+import {SIGN_IN} from '../../../redux/actions/types';
 import Toast from 'react-native-simple-toast';
-import { useBackButton } from '../../../utils/customHooks';
+import {useBackButton} from '../../../utils/customHooks';
 
 const Login = () => {
   useBackButton(() => {
@@ -23,7 +23,7 @@ const Login = () => {
           onPress: () => null,
           style: 'cancel',
         },
-        { text: 'خروج', onPress: BackHandler.exitApp },
+        {text: 'خروج', onPress: BackHandler.exitApp},
       ]);
       return true;
     }
@@ -48,7 +48,9 @@ const Login = () => {
     return emailErr || passwordErr;
   };
   const login = () => {
-    if (_validate()) return;
+    if (_validate()) {
+      return;
+    }
     setServerError('');
     setLoading(true);
     try {
@@ -72,17 +74,17 @@ const Login = () => {
             email: '',
             password: '',
           });
-          
+
           AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
           // save user data in the redux
-          dispatch({ type: SIGN_IN, payload: response.data.data });
+          dispatch({type: SIGN_IN, payload: response.data.data});
           // navigate to home screen
           navigation.navigate('Drawer');
         }
         setLoading(false);
       });
     } catch (error) {
-       setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -95,7 +97,7 @@ const Login = () => {
           value={loginData.email}
           inputStyle={styles.input}
           onChangeText={(email) => {
-            setLoginData({ ...loginData, email });
+            setLoginData({...loginData, email});
           }}
           onEndEditing={() => {
             setEmailError(validateEmail(loginData.email));
@@ -107,7 +109,7 @@ const Login = () => {
           value={loginData.password}
           inputStyle={styles.input}
           onChangeText={(password) => {
-            setLoginData({ ...loginData, password });
+            setLoginData({...loginData, password});
           }}
           onEndEditing={() => {
             setPasswordError(validatePassword(loginData.password));
