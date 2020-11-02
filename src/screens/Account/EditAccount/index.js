@@ -70,12 +70,13 @@ const EditAccount = () => {
     setServerError('');
     setLoading(true);
     try {
-      makePostRequest({
+     const res=  makePostRequest({
         url: 'Users/EditUserProfile',
         data: {
           Data: editData,
         },
       })
+      console.log('ressss',res)
         .then((response) => {
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');

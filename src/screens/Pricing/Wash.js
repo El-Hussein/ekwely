@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, } from 'react';
 import {
   View,
   Image,
@@ -15,9 +15,25 @@ import { Line } from '../../components/atoms/Line';
 import { connect, useSelector } from 'react-redux';
 import Favorite from '../../components/atoms/Favorite';
 import { bindActionCreators } from 'redux';
-import { getServicesNoUser } from '../../redux/actions/Products';
+import { getServicesNoUser, getProducts } from '../../redux/actions/Products';
+import { useFocusEffect } from '@react-navigation/native';
 
-const Wash = ({ getServicesNoUser, servicesDataNoUser, services, loading }) => {
+const Wash = ({
+  getServicesNoUser,
+  servicesDataNoUser,
+  services,
+  loading,
+  getProducts,
+}) => {
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        if (services.length === 0) {
+          getProducts();
+        }
+      }
+    }, []),
+  );
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
@@ -40,8 +56,13 @@ const Wash = ({ getServicesNoUser, servicesDataNoUser, services, loading }) => {
   useEffect(() => {
     if (!user) {
       getServicesNoUser();
+    } else {
+      getProducts();
     }
   }, []);
+
+
+
   console.log('services', services);
   return (
     <>
@@ -90,40 +111,44 @@ const Wash = ({ getServicesNoUser, servicesDataNoUser, services, loading }) => {
           style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
           size={calcFont(30)}
         />
-      ) : !user && (
-        <FlatList
-          contentContainerStyle={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          data={servicesDataNoUser || []}
-          renderItem={_renderProductItem}
-          keyExtractor={(item, index) => `${item.id}`}
-          ListEmptyComponent={
-            <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-          }
-        />
-      )}
+      ) : (
+          !user && (
+            <FlatList
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              data={servicesDataNoUser || []}
+              renderItem={_renderProductItem}
+              keyExtractor={(item, index) => `${item.id}`}
+              ListEmptyComponent={
+                <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+              }
+            />
+          )
+        )}
       {user && loading ? (
         <ActivityIndicator
           color={COLORS.main}
           style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
           size={calcFont(30)}
         />
-      ) : user && (
-        <FlatList
-          contentContainerStyle={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          data={services || filteredData || []}
-          renderItem={_renderProductItem}
-          keyExtractor={(item, index) => `${item.id}`}
-          ListEmptyComponent={
-            <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-          }
-        />
-      )}
+      ) : (
+          user && (
+            <FlatList
+              contentContainerStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              data={services || filteredData || []}
+              renderItem={_renderProductItem}
+              keyExtractor={(item, index) => `${item.id}`}
+              ListEmptyComponent={
+                <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+              }
+            />
+          )
+        )}
     </>
   );
 };
@@ -137,7 +162,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ getServicesNoUser }, dispatch),
+    ...bindActionCreators(
+      {
+        getServicesNoUser,
+        getProducts,
+      },
+      dispatch,
+    ),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Wash);
