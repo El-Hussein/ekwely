@@ -11,7 +11,13 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get set Action
-export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
+export const setCart = (
+  id,
+  quantity,
+  serviceType = 5,
+  isProduct,
+  cartId = 0,
+) => {
   return (dispatch) => {
     try {
       if (isProduct) {
@@ -49,7 +55,7 @@ export const setCart = (id, quantity, serviceType, isProduct, cartId = 0) => {
               Id: cartId,
               Quantity: quantity,
               ItemId: id,
-              ServiceType: serviceType || [],
+              ServiceType: serviceType === 5 ? [] : serviceType,
               IsProduct: isProduct,
               IsFastClean: false,
             },

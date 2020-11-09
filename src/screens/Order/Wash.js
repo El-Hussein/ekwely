@@ -99,6 +99,9 @@ const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
 
   const addToCart = () => {
     if (selectedPiece && selectedService) {
+      console.log('selectedService');
+      console.log(selectedService);
+      console.log('selectedService');
       setCart(selectedPiece.id, counter, selectedService.value, false);
       Toast.show('تم الاضافه الي السله');
       setDisabled(false);
