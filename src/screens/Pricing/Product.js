@@ -26,15 +26,17 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
-console.log('user',user)
 
+  // useFocusEffect(
   useEffect(() => {
     if (user) {
-      getProducts();
+      getProducts(false);
+      return;
     } else {
+      getProductsNoUser(false);
     }
-    getProductsNoUser();
-  }, []);
+  }, [user]);
+  // );
 
   const _renderProductItem = ({item}) => {
     return (
@@ -75,7 +77,7 @@ console.log('user',user)
       </View>
     );
   };
-console.log('productsproducts',products)
+
   return (
     <>
       <View style={styles.container}>
@@ -89,6 +91,7 @@ console.log('productsproducts',products)
                 return;
               }
               if (text.length > 2) {
+                console.log('loooooooolllyyyyyy');
                 setFilteredData(
                   products.filter((item) =>
                     item.arName.includes(searchTerm, 0),

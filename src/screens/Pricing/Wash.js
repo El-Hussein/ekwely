@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Image,
@@ -10,35 +10,20 @@ import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
-import { calcHeight, calcWidth, calcFont } from '../../common/styles';
-import { Line } from '../../components/atoms/Line';
-import { connect, useSelector } from 'react-redux';
+import {getProducts, getServicesNoUser} from '../../redux/actions/Products';
+import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {Line} from '../../components/atoms/Line';
+import {connect, useSelector} from 'react-redux';
 import Favorite from '../../components/atoms/Favorite';
-import { bindActionCreators } from 'redux';
-import { getServicesNoUser, getProducts } from '../../redux/actions/Products';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
+import {bindActionCreators} from 'redux';
 
-const Wash = ({
-  getServicesNoUser,
-  servicesDataNoUser,
-  services,
-  loading,
-  getProducts,
-}) => {
-  useFocusEffect(
-    useCallback(() => {
-      if (user) {
-        if (services.length === 0) {
-          getProducts();
-        }
-      }
-    }, []),
-  );
+const Wash = ({getProducts, getServicesNoUser, services, loading}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
-  const _renderProductItem = ({ item }) => {
+  const _renderProductItem = ({item}) => {
     return (
       <View>
         <View style={styles.washItem}>
@@ -53,17 +38,18 @@ const Wash = ({
       </View>
     );
   };
+
+  // useFocusEffect(
   useEffect(() => {
-    if (!user) {
-      getServicesNoUser();
+    if (user) {
+      getProducts(false);
+      return;
     } else {
-      getProducts();
+      getServicesNoUser(false);
     }
-  }, []);
+  }, [user]);
+  // );
 
-
-
-  console.log('services', services);
   return (
     <>
       <View style={styles.container}>
@@ -78,9 +64,7 @@ const Wash = ({
               }
               if (text.length > 1) {
                 setFilteredData(
-                  services.filter((item) =>
-                    item.arName.includes(searchTerm, 0),
-                  ),
+                  services.filter((item) => item.arName.includes(text, 0)),
                 );
               }
             }}
@@ -92,10 +76,10 @@ const Wash = ({
         </View>
         <View style={styles.titles}>
           <View style={styles.pieces}>
-            <View style={[styles.favoriteOut, { backgroundColor: COLORS.main }]}>
+            <View style={[styles.favoriteOut, {backgroundColor: COLORS.main}]}>
               <Image
                 source={IMAGES.favorite}
-                style={[styles.favoriteImage, { tintColor: COLORS.yellow }]}
+                style={[styles.favoriteImage, {tintColor: COLORS.yellow}]}
               />
             </View>
 
@@ -108,47 +92,47 @@ const Wash = ({
       {!user && loading ? (
         <ActivityIndicator
           color={COLORS.main}
-          style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
+          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
           size={calcFont(30)}
         />
       ) : (
-          !user && (
-            <FlatList
-              contentContainerStyle={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              data={servicesDataNoUser || []}
-              renderItem={_renderProductItem}
-              keyExtractor={(item, index) => `${item.id}`}
-              ListEmptyComponent={
-                <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-              }
-            />
-          )
-        )}
+        !user && (
+          <FlatList
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            data={filteredData || services || []}
+            renderItem={_renderProductItem}
+            keyExtractor={(item, index) => `${item.id}`}
+            ListEmptyComponent={
+              <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+            }
+          />
+        )
+      )}
       {user && loading ? (
         <ActivityIndicator
           color={COLORS.main}
-          style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
+          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
           size={calcFont(30)}
         />
       ) : (
-          user && (
-            <FlatList
-              contentContainerStyle={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              data={services || filteredData || []}
-              renderItem={_renderProductItem}
-              keyExtractor={(item, index) => `${item.id}`}
-              ListEmptyComponent={
-                <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-              }
-            />
-          )
-        )}
+        user && (
+          <FlatList
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            data={filteredData || services || []}
+            renderItem={_renderProductItem}
+            keyExtractor={(item, index) => `${item.id}`}
+            ListEmptyComponent={
+              <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+            }
+          />
+        )
+      )}
     </>
   );
 };
@@ -162,13 +146,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators(
-      {
-        getServicesNoUser,
-        getProducts,
-      },
-      dispatch,
-    ),
+    ...bindActionCreators({getProducts, getServicesNoUser}, dispatch),
   };
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Wash);
