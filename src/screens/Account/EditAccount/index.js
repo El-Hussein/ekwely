@@ -6,6 +6,7 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
 import COLORS from '../../../common/colors';
@@ -141,16 +142,35 @@ const EditAccount = () => {
 
   const upload = async (imageObj) => {
     try {
-      var ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
+      // var ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
+      //   method: 'POST',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      //   body: createFormData(imageObj),
+      // });
+      var ret = await RNFetchBlob.fetch(
+        'POST',
+        API_BASE_URL + 'UploadDownload/upload',
+        {
           'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
         },
-        body: createFormData(imageObj),
-      });
+        [
+          {
+            name: 'file',
+            filename: 'vid.mp4',
+            data: RNFetchBlob.wrap(imageObj.uri),
+          },
+          // custom content type
+        ],
+      );
 
       var obj = await ret.json();
+      console.log('obj');
+      console.log(obj);
+      console.log('obj');
       return obj;
     } catch (error) {}
   };
