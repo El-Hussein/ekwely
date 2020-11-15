@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Image, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles';
@@ -28,8 +28,18 @@ const Drawer = ({toggleDrawer}) => {
       user: state.auth.user,
     };
   });
+  const [userImage, setUserImage] = useState(
+    user?.image ? {uri: IMAGE_BASE_URL + user.image} : IMAGES.userImage,
+  );
+  useEffect(() => {
+    setUserImage(
+      user?.image ? {uri: IMAGE_BASE_URL + user.image} : IMAGES.userImage,
+    );
+  }, [user]);
   const navigation = useNavigation();
-
+  console.log('userImage');
+  console.log(userImage);
+  console.log('userImage');
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>
@@ -38,12 +48,12 @@ const Drawer = ({toggleDrawer}) => {
         </TouchableOpacity> */}
         <View style={styles.userOut}>
           <Image
-            source={
-              user?.image
-                ? {uri: IMAGE_BASE_URL + user?.image}
-                : IMAGES.userImage
+            source={userImage}
+            style={
+              userImage !== IMAGES.userImage
+                ? styles.userImage
+                : styles.defaultImage
             }
-            style={user?.image ? styles.userImage : styles.defaultImage}
           />
         </View>
       </View>

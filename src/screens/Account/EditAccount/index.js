@@ -40,6 +40,7 @@ const EditAccount = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [editData, setEditData] = useState({
+    ...user,
     userName: user?.userName,
     email: user?.email,
     phone: user?.phone,
@@ -136,7 +137,7 @@ const EditAccount = () => {
           }
         });
       }
-      setImageLoading(false);
+      // setImageLoading(false);
     });
   };
 
@@ -160,7 +161,7 @@ const EditAccount = () => {
         [
           {
             name: 'file',
-            filename: 'vid.mp4',
+            filename: imageObj.fileName,
             data: RNFetchBlob.wrap(imageObj.uri),
           },
           // custom content type
@@ -201,6 +202,7 @@ const EditAccount = () => {
               onPress={() => saveData()}
               titleStyle={styles.saveText}
               style={styles.saveButton}
+              disabled={imageLoading}
             />
           )}
         </View>
@@ -247,7 +249,7 @@ const EditAccount = () => {
           />
         </View> */}
 
-        <View style={styles.data}>
+        {/* <View style={styles.data}>
           <AppText style={styles.titleText}>اسم المستخدم</AppText>
           <AppInput
             inputStyle={styles.promoCodeInput}
@@ -261,7 +263,7 @@ const EditAccount = () => {
             }}
             placeholder={editData.userName}
           />
-        </View>
+        </View> */}
 
         <View style={styles.data}>
           <AppText style={styles.titleText}>الهاتف</AppText>

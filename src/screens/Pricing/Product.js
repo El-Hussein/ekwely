@@ -27,16 +27,16 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
-  // useFocusEffect(
-  useEffect(() => {
-    if (user) {
-      getProducts(false);
-      return;
-    } else {
-      getProductsNoUser(false);
-    }
-  }, [user]);
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        getProducts(false);
+        return;
+      } else {
+        getProductsNoUser(false);
+      }
+    }, [user]),
+  );
 
   const _renderProductItem = ({item}) => {
     return (
