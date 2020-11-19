@@ -9,10 +9,10 @@ const RootStack = createStackNavigator();
 const AppNavigation = ({initialRouteName}) => (
   <NavigationContainer>
     <RootStack.Navigator
-      initialRouteName={initialRouteName}
+      // initialRouteName={initialRouteName}
       headerMode={'none'}>
-      <RootStack.Screen name="Auth" component={AuthStack} />
       <RootStack.Screen name="Drawer" component={DrawerNavigation} />
+      <RootStack.Screen name="Auth" component={AuthStack} />
     </RootStack.Navigator>
   </NavigationContainer>
 );

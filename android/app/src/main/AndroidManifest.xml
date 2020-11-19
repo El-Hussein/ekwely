@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     
     <application
       android:name=".MainApplication"
@@ -18,7 +19,7 @@
       android:usesCleartextTraffic="true">
       <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyBLXAD0ETj7jqhla5t8JqaTqvV0lB3q-K4"/>
+        android:value="AIzaSyAbz-RVyfy_QR5W2Nc_WAqzrbcELkK5mH8"/>
       
       <!-- You will also only need to add this uses-library tag -->
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>

@@ -33,7 +33,7 @@ export default StyleSheet.create({
   },
   saveButton: {
     width: calcWidth(75),
-    height: calcHeight(30),
+    height: calcHeight(35),
     borderRadius: calcFont(15),
     backgroundColor: COLORS.yellow,
   },

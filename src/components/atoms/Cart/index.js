@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {TouchableOpacity, Image} from 'react-native';
 // redux
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {setCart, deleteCart} from '../../../redux/actions/Cart';
 import IMAGES from '../../../common/images';
 import styles from './styles';
@@ -10,6 +10,7 @@ import COLORS from '../../../common/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {calcFont} from '../../../common/styles';
 import {getProducts} from '../../../redux/actions/Products';
+import {useNavigation} from '@react-navigation/native';
 
 const Cart = ({
   id,
@@ -21,14 +22,21 @@ const Cart = ({
   getProducts,
 }) => {
   const [cart, toggleCart] = useState(isCart);
+  const user = useSelector((state) => state.auth.user);
+  const navgation = useNavigation();
+
   const toggle = () => {
-    toggleCart(!cart);
-    if (isCart) {
-      deleteCart(id, true);
-      getProducts(true);
+    if (user) {
+      toggleCart(!cart);
+      if (isCart) {
+        deleteCart(id, true);
+        getProducts(true);
+      } else {
+        setCart(id, 1, serviceType, isProduct);
+        getProducts(true);
+      }
     } else {
-      setCart(id, 1, serviceType, isProduct);
-      getProducts(true);
+      navgation.navigate('Auth');
     }
   };
 

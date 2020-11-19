@@ -2,10 +2,7 @@ import React, {useState, useRef} from 'react';
 import {
   View,
   Image,
-  TouchableOpacity,
   ScrollView,
-  Platform,
-  Dimensions,
 } from 'react-native';
 import Toast from 'react-native-simple-toast';
 import AppInput from '../../../components/atoms/AppInput';

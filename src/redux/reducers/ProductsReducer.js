@@ -3,12 +3,14 @@ import {
   PRODUCTS_SUCCESS,
   PRODUCTS_FAILED,
   DRY_CLEAN_SUCCESS,
- 
+  DRY_CLEAN_SUCCESS_NO_USER,
+
 } from '../actions/types';
 
 const initialState = {
   products: [],
   dryClean: [],
+  dryCleanNoUser: [],
   loading: false,
   error: '',
 };
@@ -41,7 +43,11 @@ export default function ProductsReducer(state = initialState, action) {
         dryClean: action.payload,
       };
 
-    
+    case DRY_CLEAN_SUCCESS_NO_USER:
+      return {
+        ...state,
+        dryCleanNoUser: action.payload,
+      };
     default:
       return state;
   }

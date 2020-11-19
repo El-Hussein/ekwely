@@ -5,10 +5,9 @@ import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
 import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
-import COLORS from '../../common/colors';
 import {useNavigation} from '@react-navigation/native';
 import {connect, useSelector} from 'react-redux';
-import {getCurrentOrder, getHistoryOrder} from '../../redux/actions/Order';
+import {getCurrentOrder} from '../../redux/actions/Order';
 import {bindActionCreators} from 'redux';
 import {useBackButton} from '../../utils/customHooks';
 
@@ -26,7 +25,9 @@ const Home = ({getCurrentOrder}) => {
     };
   });
   useEffect(() => {
-    getCurrentOrder();
+    if (user) {
+      getCurrentOrder();
+    }
   }, []);
 
   useBackButton(() => {
@@ -44,13 +45,21 @@ const Home = ({getCurrentOrder}) => {
     return false;
   });
 
+  const orderNow = () => {
+    if (user) {
+      navigation.navigate('Order');
+    } else {
+      navigation.navigate('Auth');
+    }
+  };
+
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.orderButton}>
           <Button
             title={'اطلب الان'}
-            onPress={() => navigation.navigate('Order')}
+            onPress={orderNow}
             titleStyle={styles.orderTitle}
             style={styles.button}
           />

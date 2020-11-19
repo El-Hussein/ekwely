@@ -83,13 +83,13 @@ const Register = () => {
     setLoading(true);
     try {
       makePostRequest({
-        url: '/Users/customerregister',
+        url: 'Users/customerregister',
         data: {
           Data: {
             UserName: registerData.userName,
             Email: registerData.email,
             Phone: registerData.phone,
-            StrPassword: registerData.password,
+            strPaassword: registerData.password,
             userType: 1,
             Address: addressData.streetAddress,
             Lang: addressData.longitude,
@@ -98,6 +98,9 @@ const Register = () => {
         },
       })
         .then((response) => {
+          console.log('response');
+          console.log(response);
+          console.log('response');
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);

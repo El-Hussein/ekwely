@@ -43,9 +43,8 @@ export default StyleSheet.create({
   },
   promoCodeNum: {
     fontSize: calcFont(38),
-    lineHeight: calcHeight(45),
     fontWeight: 'bold',
-    marginTop: calcHeight(15),
+    marginTop: calcHeight(10),
     letterSpacing: calcWidth(9),
   },
 

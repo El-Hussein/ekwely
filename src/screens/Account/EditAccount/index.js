@@ -1,22 +1,19 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Image,
-  TouchableOpacity,
-  TextInput,
   ScrollView,
   Platform,
-  Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
 import COLORS from '../../../common/colors';
 import AppText from '../../../components/atoms/AppText';
 import Button from '../../../components/atoms/Button';
 import IMAGES from '../../../common/images';
-import {calcHeight, calcWidth, calcFont} from '../../../common/styles';
-import {Line} from '../../../components/atoms/Line';
+import {calcWidth, calcFont} from '../../../common/styles';
 import {useNavigation} from '@react-navigation/native';
 import {makePostRequest, API_BASE_URL} from '../../../utils/api.helpers';
 import {useDispatch, useSelector} from 'react-redux';
@@ -40,8 +37,10 @@ const EditAccount = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [editData, setEditData] = useState({
+    ...user,
     userName: user?.userName,
     email: user?.email,
     phone: user?.phone,
@@ -67,7 +66,9 @@ const EditAccount = () => {
   };
 
   const saveData = () => {
-    if (_validate()) return;
+    if (_validate()) {
+      return;
+    }
     setServerError('');
     setLoading(true);
     try {
@@ -119,33 +120,58 @@ const EditAccount = () => {
   };
 
   const openGallery = () => {
+    setImageLoading(true);
     ImagePicker.showImagePicker(imagePickerOptions, (response) => {
       if (response.didCancel) {
       } else if (response.error) {
       } else if (response.customButton) {
       } else {
+        setUserImage({uri: response.uri});
         upload(response).then((response) => {
+          setImageLoading(false);
           if (response.status === '200') {
             setEditData({...editData, Image: response.data});
             setUserImage({uri: IMAGE_BASE_URL + response.data});
-          } else Toast.show('حدث خطأ ما من فضلك حاول مرة اخري');
+          } else {
+            Toast.show('حدث خطأ ما من فضلك حاول مرة اخري');
+          }
         });
       }
+      // setImageLoading(false);
     });
   };
 
   const upload = async (imageObj) => {
     try {
-      var ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
+      // var ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
+      //   method: 'POST',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      //   body: createFormData(imageObj),
+      // });
+      var ret = await RNFetchBlob.fetch(
+        'POST',
+        API_BASE_URL + 'UploadDownload/upload',
+        {
           'Content-Type': 'multipart/form-data',
+          Accept: 'application/json',
         },
-        body: createFormData(imageObj),
-      });
+        [
+          {
+            name: 'file',
+            filename: imageObj.fileName,
+            data: RNFetchBlob.wrap(imageObj.uri),
+          },
+          // custom content type
+        ],
+      );
 
       var obj = await ret.json();
+      console.log('obj');
+      console.log(obj);
+      console.log('obj');
       return obj;
     } catch (error) {}
   };
@@ -173,11 +199,10 @@ const EditAccount = () => {
           ) : (
             <Button
               title={'حفظ'}
-              onPress={() => {
-                saveData();
-              }}
+              onPress={() => saveData()}
               titleStyle={styles.saveText}
               style={styles.saveButton}
+              disabled={imageLoading}
             />
           )}
         </View>
@@ -187,12 +212,23 @@ const EditAccount = () => {
             source={userImage}
             style={userImage?.uri ? styles.userImage : styles.defaultImage}
           />
-          <Button
-            title={'حمل الصوره'}
-            onPress={openGallery}
-            titleStyle={styles.addToCartText}
-            style={styles.addToCartButton}
-          />
+          {imageLoading ? (
+            <ActivityIndicator
+              color={COLORS.white}
+              style={{
+                ...styles.addToCartButton,
+                padding: calcWidth(10),
+                backgroundColor: '#00000088',
+              }}
+            />
+          ) : (
+            <Button
+              title={'حمل الصوره'}
+              onPress={openGallery}
+              titleStyle={styles.addToCartText}
+              style={styles.addToCartButton}
+            />
+          )}
         </View>
 
         {/* <View style={styles.data}>
@@ -213,7 +249,7 @@ const EditAccount = () => {
           />
         </View> */}
 
-        <View style={styles.data}>
+        {/* <View style={styles.data}>
           <AppText style={styles.titleText}>اسم المستخدم</AppText>
           <AppInput
             inputStyle={styles.promoCodeInput}
@@ -227,7 +263,7 @@ const EditAccount = () => {
             }}
             placeholder={editData.userName}
           />
-        </View>
+        </View> */}
 
         <View style={styles.data}>
           <AppText style={styles.titleText}>الهاتف</AppText>

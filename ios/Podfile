@@ -16,7 +16,9 @@ target 'ekwely' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-  
+  pod 'react-native-fetch-blob',
+    :path => '../node_modules/react-native-fetch-blob'
+
   target 'ekwelyTests' do
     inherit! :complete
     # Pods for testing

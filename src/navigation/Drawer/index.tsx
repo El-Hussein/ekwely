@@ -19,7 +19,7 @@ const DrawerNavigation = (props) => {
   };
   return (
     <DrawerNavigator.Navigator
-      initialRouteName="Home"
+      initialRouteName="Main"
       drawerContent={() => <Drawer toggleDrawer={toggleDrawer} />}
       drawerPosition="right"
       openByDefault={false}

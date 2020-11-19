@@ -48,7 +48,9 @@ const Login = () => {
     return emailErr || passwordErr;
   };
   const login = () => {
-    if (_validate()) return;
+    if (_validate()) {
+      return;
+    }
     setServerError('');
     setLoading(true);
     try {
@@ -72,6 +74,7 @@ const Login = () => {
             email: '',
             password: '',
           });
+
           AsyncStorage.setItem(USER_DATA, JSON.stringify(response.data.data));
           // save user data in the redux
           dispatch({type: SIGN_IN, payload: response.data.data});
