@@ -31,7 +31,6 @@ const App = () => {
       })
       .catch((err) => {
         setLoading(false);
-        console.log('error getting user data from storage -> ', err);
       });
   }, []);
 

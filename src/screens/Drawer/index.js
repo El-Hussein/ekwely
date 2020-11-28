@@ -37,9 +37,6 @@ const Drawer = ({toggleDrawer}) => {
     );
   }, [user]);
   const navigation = useNavigation();
-  console.log('userImage');
-  console.log(userImage);
-  console.log('userImage');
   return (
     <View style={styles.container}>
       <View style={{marginVertical: calcHeight(15), width: calcWidth(220)}}>

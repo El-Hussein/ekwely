@@ -10,7 +10,6 @@ import Toast from 'react-native-simple-toast';
 
 // get products Action
 export const getProducts = (hideLoading) => {
-  console.log('whaaaaaaaaaaaat');
   return (dispatch) => {
     if (!hideLoading) dispatch({type: PRODUCTS_PENDING});
     try {

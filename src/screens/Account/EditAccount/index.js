@@ -78,7 +78,6 @@ const EditAccount = () => {
         },
       })
         .then((response) => {
-          console.log(response);
           if (response?.data?.status !== '200') {
             setServerError('حدث خطأ ما من فضلك حاول مره أخري');
             setLoading(false);
@@ -107,12 +106,10 @@ const EditAccount = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error.response);
           setServerError(error?.response?.data?.message);
           setLoading(false);
         });
     } catch (error) {
-      console.log(error.response);
       setLoading(false);
     }
   };
@@ -138,7 +135,6 @@ const EditAccount = () => {
           setImageLoading(true);
           upload(response)
             .then((res) => {
-              console.log('upload succes', res);
               if (res.status === '200') {
                 setEditData({...editData, Image: res.data});
                 setUserImage({uri: IMAGE_BASE_URL + res.data});
