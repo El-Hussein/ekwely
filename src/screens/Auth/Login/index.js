@@ -48,7 +48,9 @@ const Login = () => {
     return emailErr || passwordErr;
   };
   const login = () => {
-    if (_validate()) return;
+    if (_validate()) {
+      return;
+    }
     setServerError('');
     setLoading(true);
     try {
