@@ -9,15 +9,12 @@ target 'ekwely' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
-  pod 'react-native-fetch-blob',
-    :path => '../node_modules/react-native-fetch-blob'
 
   target 'ekwelyTests' do
     inherit! :complete
