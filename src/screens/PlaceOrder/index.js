@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Image,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   Platform,
   ActivityIndicator,
-  StyleSheet,
 } from 'react-native';
 import dayjs from 'dayjs';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -17,19 +15,17 @@ import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
-import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
-import { calcHeight, calcWidth, calcFont } from '../../common/styles';
-import { Line } from '../../components/atoms/Line';
+import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {Line} from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
-import { useNavigation } from '@react-navigation/native';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { setOrder } from '../../redux/actions/Order';
-import { makePostRequest } from '../../utils/api.helpers';
+import {useNavigation} from '@react-navigation/native';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
-import { getProducts } from '../../redux/actions/Products';
+import {getProducts} from '../../redux/actions/Products';
 
 const PlaceOrder = ({
   cart,
@@ -41,7 +37,6 @@ const PlaceOrder = ({
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.auth.user);
 
-  const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(true);
   const [evening, setEvening] = useState(false);
   const [morningDelivery, setMorningDelivery] = useState(true);
@@ -70,25 +65,25 @@ const PlaceOrder = ({
     });
   }, [user?.address]);
   const Morning = () => {
-    if (morning == false) {
+    if (morning === false) {
       setMorning(!morning);
       setEvening(!evening);
     }
   };
   const Evening = () => {
-    if (evening == false) {
+    if (evening === false) {
       setMorning(!morning);
       setEvening(!evening);
     }
   };
   const MorningDelivery = () => {
-    if (morningDelivery == false) {
+    if (morningDelivery === false) {
       setMorningDelivery(!morningDelivery);
       setEveningDelivery(!eveningDelivery);
     }
   };
   const EveningDelivery = () => {
-    if (eveningDelivery == false) {
+    if (eveningDelivery === false) {
       setMorningDelivery(!morningDelivery);
       setEveningDelivery(!eveningDelivery);
     }
@@ -194,11 +189,11 @@ const PlaceOrder = ({
 
         <View style={styles.checkBoxContainer}>
           <TouchableOpacity onPress={Evening} style={styles.checkbox1}>
-            <AppText style={{ color: COLORS.textGray }}> 3م : 9م </AppText>
+            <AppText style={{color: COLORS.textGray}}> 3م : 9م </AppText>
             <CheckBox selected={evening} />
           </TouchableOpacity>
           <TouchableOpacity onPress={Morning} style={styles.checkbox1}>
-            <AppText style={{ color: COLORS.textGray }}> 9ص : 3م </AppText>
+            <AppText style={{color: COLORS.textGray}}> 9ص : 3م </AppText>
             <CheckBox selected={morning} />
           </TouchableOpacity>
         </View>
@@ -244,11 +239,11 @@ const PlaceOrder = ({
 
         <View style={styles.checkBoxContainer}>
           <TouchableOpacity onPress={EveningDelivery} style={styles.checkbox1}>
-            <AppText style={{ color: COLORS.textGray }}> 3م - 9م </AppText>
+            <AppText style={{color: COLORS.textGray}}> 3م - 9م </AppText>
             <CheckBox selected={eveningDelivery} />
           </TouchableOpacity>
           <TouchableOpacity onPress={MorningDelivery} style={styles.checkbox1}>
-            <AppText style={{ color: COLORS.textGray }}> 9ص - 3م </AppText>
+            <AppText style={{color: COLORS.textGray}}> 9ص - 3م </AppText>
             <CheckBox selected={morningDelivery} />
           </TouchableOpacity>
         </View>
@@ -343,17 +338,17 @@ const PlaceOrder = ({
           {loading ? (
             <ActivityIndicator
               color={COLORS.main}
-              style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
+              style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
               size={calcFont(30)}
             />
           ) : (
-              <Button
-                title={'تنفيذ الطلب'}
-                onPress={() => setOrder()}
-                titleStyle={styles.completeOrder}
-                style={styles.button}
-              />
-            )}
+            <Button
+              title={'تنفيذ الطلب'}
+              onPress={() => setOrder()}
+              titleStyle={styles.completeOrder}
+              style={styles.button}
+            />
+          )}
         </View>
       </ScrollView>
       {show && (
@@ -367,9 +362,9 @@ const PlaceOrder = ({
           }}>
           <Button
             onPress={() => setShow(false)}
-            style={{ alignSelf: 'flex-end' }}
+            style={{alignSelf: 'flex-end'}}
             title={'تاكيد'}
-            titleStyle={{ color: COLORS.main }}
+            titleStyle={{color: COLORS.main}}
           />
           <DateTimePicker
             testID="dateTimePicker"
@@ -380,7 +375,6 @@ const PlaceOrder = ({
             onChange={onChange}
             minimumDate={Date.now()}
             textColor={'#000'}
-            
           />
         </View>
       )}
@@ -399,7 +393,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ getProducts }, dispatch),
+    ...bindActionCreators({getProducts}, dispatch),
   };
 }
 
