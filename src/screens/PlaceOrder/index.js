@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Image,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   Platform,
   ActivityIndicator,
+  StyleSheet,
 } from 'react-native';
 import dayjs from 'dayjs';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -18,17 +19,17 @@ import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
 import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {Line} from '../../components/atoms/Line';
+import { calcHeight, calcWidth, calcFont } from '../../common/styles';
+import { Line } from '../../components/atoms/Line';
 import CheckBox from '../../components/atoms/CheckBox';
-import {useNavigation} from '@react-navigation/native';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {useSelector} from 'react-redux';
-import {setOrder} from '../../redux/actions/Order';
-import {makePostRequest} from '../../utils/api.helpers';
+import { useNavigation } from '@react-navigation/native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { setOrder } from '../../redux/actions/Order';
+import { makePostRequest } from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
-import {getProducts} from '../../redux/actions/Products';
+import { getProducts } from '../../redux/actions/Products';
 
 const PlaceOrder = ({
   cart,
@@ -38,11 +39,7 @@ const PlaceOrder = ({
 }) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const {user} = useSelector((state) => {
-    return {
-      user: state.auth.user,
-    };
-  });
+  const user = useSelector((state) => state.auth.user);
 
   const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(true);
@@ -197,11 +194,11 @@ const PlaceOrder = ({
 
         <View style={styles.checkBoxContainer}>
           <TouchableOpacity onPress={Evening} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}> 3م : 9م </AppText>
+            <AppText style={{ color: COLORS.textGray }}> 3م : 9م </AppText>
             <CheckBox selected={evening} />
           </TouchableOpacity>
           <TouchableOpacity onPress={Morning} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}> 9ص : 3م </AppText>
+            <AppText style={{ color: COLORS.textGray }}> 9ص : 3م </AppText>
             <CheckBox selected={morning} />
           </TouchableOpacity>
         </View>
@@ -217,8 +214,8 @@ const PlaceOrder = ({
               navigation.navigate('SelectLocation', {
                 onGoBack: (address) => {
                   setSendAddress({
-                    lat: address.coordinates.latitude,
-                    lang: address.coordinates.longitude,
+                    lat: address.coordinates.latitude || 30.033333,
+                    lang: address.coordinates.longitude || 31.233334,
                     address: address.formattedAddress,
                   });
                 },
@@ -247,11 +244,11 @@ const PlaceOrder = ({
 
         <View style={styles.checkBoxContainer}>
           <TouchableOpacity onPress={EveningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}> 3م - 9م </AppText>
+            <AppText style={{ color: COLORS.textGray }}> 3م - 9م </AppText>
             <CheckBox selected={eveningDelivery} />
           </TouchableOpacity>
           <TouchableOpacity onPress={MorningDelivery} style={styles.checkbox1}>
-            <AppText style={{color: COLORS.textGray}}> 9ص - 3م </AppText>
+            <AppText style={{ color: COLORS.textGray }}> 9ص - 3م </AppText>
             <CheckBox selected={morningDelivery} />
           </TouchableOpacity>
         </View>
@@ -346,19 +343,34 @@ const PlaceOrder = ({
           {loading ? (
             <ActivityIndicator
               color={COLORS.main}
-              style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
+              style={{ marginVertical: calcHeight(20), alignSelf: 'center' }}
               size={calcFont(30)}
             />
           ) : (
-            <Button
-              title={'تنفيذ الطلب'}
-              onPress={() => setOrder()}
-              titleStyle={styles.completeOrder}
-              style={styles.button}
-            />
-          )}
+              <Button
+                title={'تنفيذ الطلب'}
+                onPress={() => setOrder()}
+                titleStyle={styles.completeOrder}
+                style={styles.button}
+              />
+            )}
         </View>
-        {show && (
+      </ScrollView>
+      {show && (
+        <View
+          style={{
+            position: Platform.OS === 'ios' ? 'absolute' : null,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: COLORS.lightGray,
+          }}>
+          <Button
+            onPress={() => setShow(false)}
+            style={{ alignSelf: 'flex-end' }}
+            title={'تاكيد'}
+            titleStyle={{ color: COLORS.main }}
+          />
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -367,9 +379,11 @@ const PlaceOrder = ({
             display="default"
             onChange={onChange}
             minimumDate={Date.now()}
+            textColor={'#000'}
+            
           />
-        )}
-      </ScrollView>
+        </View>
+      )}
     </View>
   );
 };
@@ -385,7 +399,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getProducts}, dispatch),
+    ...bindActionCreators({ getProducts }, dispatch),
   };
 }
 

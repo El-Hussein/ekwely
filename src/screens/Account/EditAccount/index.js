@@ -126,10 +126,13 @@ const EditAccount = () => {
       (response) => {
         if (response.didCancel) {
           console.log('User cancelled image picker');
+          setImageLoading(false);
         } else if (response.error) {
           console.log('ImagePicker Error: ', response.error);
+          setImageLoading(false);
         } else if (response.customButton) {
           console.log('User tapped custom button: ', response.customButton);
+          setImageLoading(false);
         } else {
           setUserImage({uri: response.uri});
           setImageLoading(true);
