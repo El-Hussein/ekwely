@@ -91,7 +91,6 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
                 return;
               }
               if (text.length > 2) {
-                console.log('loooooooolllyyyyyy');
                 setFilteredData(
                   products.filter((item) =>
                     item.arName.includes(searchTerm, 0),

@@ -3,10 +3,9 @@ import {
   View,
   Image,
   ScrollView,
-  Platform,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
-import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
 import COLORS from '../../../common/colors';
@@ -28,6 +27,7 @@ import {
 } from '../../../common/Validation';
 import AsyncStorage from '@react-native-community/async-storage';
 import {SIGN_IN} from '../../../redux/actions/types';
+
 const EditAccount = () => {
   const {user} = useSelector((state) => {
     return {
@@ -40,7 +40,6 @@ const EditAccount = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [serverError, setServerError] = useState('');
   const [editData, setEditData] = useState({
-    ...user,
     userName: user?.userName,
     email: user?.email,
     phone: user?.phone,
@@ -50,7 +49,7 @@ const EditAccount = () => {
   const [userNameError, setUserNameError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [userImage, setUserImage] = useState(
-    user?.image ? {uri: IMAGE_BASE_URL + user?.image} : IMAGES.userImage,
+    user?.image ? {uri: IMAGE_BASE_URL + user.image} : IMAGES.userImage,
   );
 
   const _validate = () => {
@@ -115,80 +114,82 @@ const EditAccount = () => {
     }
   };
 
-  const imagePickerOptions = {
-    title: 'Select Avatar',
-  };
-
-  const openGallery = () => {
-    setImageLoading(true);
-    ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-      if (response.didCancel) {
-      } else if (response.error) {
-      } else if (response.customButton) {
-      } else {
-        setUserImage({uri: response.uri});
-        upload(response).then((response) => {
+  const handlePicker = () => {
+    ImagePicker.showImagePicker(
+      {
+        mediaType: 'photo',
+        includeBase64: true,
+        maxHeight: 200,
+        maxWidith: 200,
+        quality: 0.9,
+      },
+      (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
           setImageLoading(false);
-          if (response.status === '200') {
-            setEditData({...editData, Image: response.data});
-            setUserImage({uri: IMAGE_BASE_URL + response.data});
-          } else {
-            Toast.show('حدث خطأ ما من فضلك حاول مرة اخري');
-          }
-        });
-      }
-      // setImageLoading(false);
-    });
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+          setImageLoading(false);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+          setImageLoading(false);
+        } else {
+          setUserImage({uri: response.uri});
+          setImageLoading(true);
+          upload(response)
+            .then((res) => {
+              if (res.status === '200') {
+                setEditData({...editData, Image: res.data});
+                setUserImage({uri: IMAGE_BASE_URL + res.data});
+                setImageLoading(false);
+              }
+            })
+            .catch((error) => {
+              setImageLoading(false);
+              console.log('upload error', error);
+            });
+        }
+      },
+    );
   };
 
   const upload = async (imageObj) => {
     try {
-      // var ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
-      //   method: 'POST',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      //   body: createFormData(imageObj),
-      // });
-      var ret = await RNFetchBlob.fetch(
-        'POST',
-        API_BASE_URL + 'UploadDownload/upload',
-        {
-          'Content-Type': 'multipart/form-data',
+      const ret = await fetch(API_BASE_URL + 'UploadDownload/upload', {
+        method: 'POST',
+        headers: {
           Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
-        [
-          {
-            name: 'file',
-            filename: imageObj.fileName,
-            data: RNFetchBlob.wrap(imageObj.uri),
-          },
-          // custom content type
-        ],
-      );
-
-      var obj = await ret.json();
-      console.log('obj');
-      console.log(obj);
-      console.log('obj');
-      return obj;
-    } catch (error) {}
+        body: createFormData(imageObj),
+      });
+      const out = await ret.json();
+      return out;
+    } catch (error) {
+      console.log('CATCH ERROR', error);
+    }
   };
 
   const createFormData = (photo) => {
     const data = new FormData();
-    data.append('file', {
-      name: photo.fileName ? photo.fileName : `photo-${new Date().getTime()}`,
+
+    data.append('photo', {
+      name: photo.fileName
+        ? photo.fileName
+        : `photo-${new Date().getTime()}.jpg`,
       type: photo.type,
       uri:
         Platform.OS === 'android'
           ? photo.uri
           : photo.uri.replace('file://', ''),
     });
+
+    Object.keys(photo).forEach((key) => {
+      data.append(key, photo[key]);
+    });
+
     return data;
   };
-
   return (
     <ScrollView style={{backgroundColor: COLORS.white}}>
       <View style={styles.container}>
@@ -199,10 +200,12 @@ const EditAccount = () => {
           ) : (
             <Button
               title={'حفظ'}
-              onPress={() => saveData()}
+              disabled={imageLoading}
+              onPress={() => {
+                saveData();
+              }}
               titleStyle={styles.saveText}
               style={styles.saveButton}
-              disabled={imageLoading}
             />
           )}
         </View>
@@ -224,46 +227,12 @@ const EditAccount = () => {
           ) : (
             <Button
               title={'حمل الصوره'}
-              onPress={openGallery}
+              onPress={handlePicker}
               titleStyle={styles.addToCartText}
               style={styles.addToCartButton}
             />
           )}
         </View>
-
-        {/* <View style={styles.data}>
-          <AppText style={styles.titleText}>البريد الالكترونى</AppText>
-          <AppInput
-            error={emailError}
-            inputStyle={styles.promoCodeInput}
-            value={editData.email}
-            keyboardType="email-address"
-            onChangeText={(email) => {
-              setEditData({...editData, email});
-            }}
-            onEndEditing={() => {
-              setEmailError(validateEmail(editData.email));
-            }}
-            placeholder={editData.email}
-            disabled
-          />
-        </View> */}
-
-        {/* <View style={styles.data}>
-          <AppText style={styles.titleText}>اسم المستخدم</AppText>
-          <AppInput
-            inputStyle={styles.promoCodeInput}
-            error={userNameError}
-            value={editData.userName}
-            onChangeText={(userName) => {
-              setEditData({...editData, userName});
-            }}
-            onEndEditing={() => {
-              setUserNameError(validateUserName(editData.userName));
-            }}
-            placeholder={editData.userName}
-          />
-        </View> */}
 
         <View style={styles.data}>
           <AppText style={styles.titleText}>الهاتف</AppText>
@@ -285,5 +254,4 @@ const EditAccount = () => {
     </ScrollView>
   );
 };
-
 export default EditAccount;
