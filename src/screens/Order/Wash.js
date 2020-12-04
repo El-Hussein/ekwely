@@ -26,16 +26,16 @@ const services = [
 ];
 
 const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
-  useFocusEffect(
-    useCallback(() => {
-      if (wash.length === 0) {
-        getProducts();
-      }
-      if (washFav.length === 0) {
-        getWashFavorite();
-      }
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (wash.length === 0) {
+  //       getProducts();
+  //     }
+  //     if (washFav.length === 0) {
+  //       getWashFavorite();
+  //     }
+  //   }, []),
+  // );
   const navigation = useNavigation();
   const [favorite, setFavorite] = useState(washFav.length > 0);
   const [pieces, setPieces] = useState(washFav.length === 0);

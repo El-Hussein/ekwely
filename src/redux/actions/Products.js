@@ -15,7 +15,7 @@ export const getProducts = (hideLoading) => {
     if (!hideLoading) dispatch({type: PRODUCTS_PENDING});
     try {
       makePostRequest({
-        url: 'Item/auth_GetAllItems',
+        url: 'Item/auth_GetAllProducts',
         data: {
           Data: {UserType: 1},
         },
@@ -26,15 +26,30 @@ export const getProducts = (hideLoading) => {
           } else if (response?.data?.data) {
             dispatch({
               type: PRODUCTS_SUCCESS,
-              payload: response.data.data.filter(
-                (item) => item.isProduct === true,
-              ),
+              payload: response.data.data,
             });
+          }
+        })
+        .catch((error) => {
+          Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+          dispatch({
+            type: PRODUCTS_FAILED,
+            payload: 'حدث خطأ ما من فضلك حاول مره أخري',
+          });
+        });
+      makePostRequest({
+        url: 'Item/auth_GetAllServices',
+        data: {
+          Data: {UserType: 1},
+        },
+      })
+        .then((response) => {
+          if (response?.data?.status !== '200') {
+            Toast.show('حدث خطأ ما من فضلك حاول مره أخري');
+          } else if (response?.data?.data) {
             dispatch({
               type: DRY_CLEAN_SUCCESS,
-              payload: response.data.data.filter(
-                (item) => item.isProduct === false,
-              ),
+              payload: response.data.data,
             });
           }
         })

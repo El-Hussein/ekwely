@@ -42,7 +42,7 @@ const Wash = ({getProducts, getServicesNoUser, services, loading}) => {
   // useFocusEffect(
   useEffect(() => {
     if (user) {
-      getProducts(false);
+      // getProducts(false);
       return;
     } else {
       getServicesNoUser(false);
