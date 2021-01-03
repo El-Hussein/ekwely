@@ -4,7 +4,6 @@ import {
   PRODUCTS_FAILED,
   DRY_CLEAN_SUCCESS,
   DRY_CLEAN_SUCCESS_NO_USER,
-
 } from '../actions/types';
 
 const initialState = {
@@ -13,6 +12,10 @@ const initialState = {
   dryCleanNoUser: [],
   loading: false,
   error: '',
+  currentPageProducts: 0,
+  currentPageDry: 0,
+  productsLength: 0,
+  servicesLength: 0,
 };
 
 export default function ProductsReducer(state = initialState, action) {
@@ -25,7 +28,12 @@ export default function ProductsReducer(state = initialState, action) {
     case PRODUCTS_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        products:
+          state.currentPageProducts === 0
+            ? action.payload.data
+            : [...state.products, ...action.payload.data],
+        productsLength: action.payload.length,
+        currentPageProducts: state.currentPageProducts + 1,
         loading: false,
         error: '',
       };
@@ -40,7 +48,12 @@ export default function ProductsReducer(state = initialState, action) {
     case DRY_CLEAN_SUCCESS:
       return {
         ...state,
-        dryClean: action.payload,
+        dryClean:
+          state.currentPageDry === 0
+            ? action.payload.data
+            : [...state.dryClean, ...action.payload.data],
+        servicesLength: action.payload.length,
+        currentPageDry: state.currentPageDry + 1,
       };
 
     case DRY_CLEAN_SUCCESS_NO_USER:

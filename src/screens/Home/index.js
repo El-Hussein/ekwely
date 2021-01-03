@@ -26,7 +26,7 @@ const Home = ({getCurrentOrder}) => {
   });
   useEffect(() => {
     if (user) {
-      getCurrentOrder();
+      getCurrentOrder(false, 0);
     }
   }, []);
 

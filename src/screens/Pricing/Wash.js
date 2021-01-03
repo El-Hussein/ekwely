@@ -10,15 +10,23 @@ import styles from './styles';
 import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
-import {getProducts, getServicesNoUser} from '../../redux/actions/Products';
+import {getServices, getServicesNoUser} from '../../redux/actions/Products';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import {connect, useSelector} from 'react-redux';
 import Favorite from '../../components/atoms/Favorite';
 import {useFocusEffect} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
+import Loading from '../../redux/reducers/Loading';
 
-const Wash = ({getProducts, getServicesNoUser, services, loading}) => {
+const Wash = ({
+  getServices,
+  getServicesNoUser,
+  servicesLength,
+  currentPage,
+  services,
+  loading,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
@@ -39,16 +47,16 @@ const Wash = ({getProducts, getServicesNoUser, services, loading}) => {
     );
   };
 
-  // useFocusEffect(
-  useEffect(() => {
-    if (user) {
-      // getProducts(false);
-      return;
-    } else {
-      getServicesNoUser(false);
-    }
-  }, [user]);
-  // );
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        getServices(false, 0);
+        return;
+      } else {
+        getServicesNoUser(false, 0);
+      }
+    }, [user]),
+  );
 
   return (
     <>
@@ -89,49 +97,35 @@ const Wash = ({getProducts, getServicesNoUser, services, loading}) => {
           <AppText style={styles.col3Title}>غسيل ومكوى</AppText>
         </View>
       </View>
-      {!user && loading ? (
+      {loading ? (
         <ActivityIndicator
           color={COLORS.main}
           style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
           size={calcFont(30)}
         />
       ) : (
-        !user && (
-          <FlatList
-            contentContainerStyle={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            data={filteredData || services || []}
-            renderItem={_renderProductItem}
-            keyExtractor={(item, index) => `${item.id}`}
-            ListEmptyComponent={
-              <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+        <FlatList
+          contentContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onEndReached={() => {
+            if (servicesLength === services.length) return;
+            if (user) {
+              getServices(true, currentPage);
+              return;
+            } else {
+              getServicesNoUser(true, currentPage);
             }
-          />
-        )
-      )}
-      {user && loading ? (
-        <ActivityIndicator
-          color={COLORS.main}
-          style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
-          size={calcFont(30)}
+          }}
+          refreshing={loading}
+          data={filteredData || services || []}
+          renderItem={_renderProductItem}
+          keyExtractor={(item, index) => `${item.id}`}
+          ListEmptyComponent={
+            <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
+          }
         />
-      ) : (
-        user && (
-          <FlatList
-            contentContainerStyle={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            data={filteredData || services || []}
-            renderItem={_renderProductItem}
-            keyExtractor={(item, index) => `${item.id}`}
-            ListEmptyComponent={
-              <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
-            }
-          />
-        )
       )}
     </>
   );
@@ -139,14 +133,15 @@ const Wash = ({getProducts, getServicesNoUser, services, loading}) => {
 function mapStateToProps(state) {
   return {
     services: state.products.dryClean,
+    currentPage: state.products.currentPageDry,
+    servicesLength: state.products.servicesLength,
     loading: state.products.loading,
-    servicesDataNoUser: state.products.dryCleanNoUser,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({getProducts, getServicesNoUser}, dispatch),
+    ...bindActionCreators({getServices, getServicesNoUser}, dispatch),
   };
 }
 

@@ -13,7 +13,7 @@ import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -22,7 +22,14 @@ import {IMAGE_BASE_URL} from '../../common/constants';
 import Favorite from '../../components/atoms/Favorite';
 import Cart from '../../components/atoms/Cart';
 
-const Product = ({getProducts, getProductsNoUser, products, loading}) => {
+const Product = ({
+  getProducts,
+  getProductsNoUser,
+  products,
+  productsLength,
+  currentPage,
+  loading,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
@@ -30,10 +37,10 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getProducts(false);
+        getProducts(false, 0);
         return;
       } else {
-        getProductsNoUser(false);
+        getProductsNoUser(false, 0);
       }
     }, [user]),
   );
@@ -113,6 +120,15 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
         />
       ) : (
         <FlatList
+          onEndReached={() => {
+            if (productsLength === products.length) return;
+            if (user) {
+              getProducts(true, currentPage);
+              return;
+            } else {
+              getProductsNoUser(true, currentPage);
+            }
+          }}
           columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
           data={filteredData || products || []}
           renderItem={_renderProductItem}
@@ -130,6 +146,8 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
 function mapStateToProps(state) {
   return {
     products: state.products.products,
+    currentPage: state.products.currentPageProducts,
+    productsLength: state.products.productsLength,
     error: state.products.error,
     loading: state.products.loading,
   };

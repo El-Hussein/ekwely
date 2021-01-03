@@ -82,15 +82,21 @@ export const deleteFavorite = (id) => {
 };
 
 // get products Action
-export const getProductsFavorite = () => {
+export const getProductsFavorite = (hideLoading, page) => {
   return (dispatch) => {
-    dispatch({type: PRODUCTS_FAVORITE_PENDING});
+    if (!hideLoading) dispatch({type: PRODUCTS_FAVORITE_PENDING});
     try {
       makePostRequest({
         url: 'Item/auth_GetUserFavouriteProducts',
         data: {
-          Data: {UserType: 1},
+          Paging: {
+            PageIndex: page,
+            PageSize: 10,
+          },
         },
+        // data: {
+        //   Data: {UserType: 1},
+        // },
       })
         .then((response) => {
           if (response?.data?.status !== '200') {
@@ -98,7 +104,11 @@ export const getProductsFavorite = () => {
           } else if (response?.data?.data) {
             dispatch({
               type: PRODUCTS_FAVORITE_SUCCESS,
-              payload: response.data.data,
+              payload: {
+                data: response.data.data,
+                length: response.data.paging.length,
+              },
+              // payload: response.data.data,
             });
           }
         })
@@ -119,15 +129,21 @@ export const getProductsFavorite = () => {
   };
 };
 
-export const getWashFavorite = () => {
+export const getWashFavorite = (hideLoading, page) => {
   return (dispatch) => {
-    dispatch({type: DRY_CLEAN_FAVORITE_PENDING});
+    if (!hideLoading) dispatch({type: DRY_CLEAN_FAVORITE_PENDING});
     try {
       makePostRequest({
         url: 'Item/auth_GetUserFavouriteServices',
         data: {
-          Data: {UserType: 1},
+          Paging: {
+            PageIndex: page,
+            PageSize: 10,
+          },
         },
+        // data: {
+        //   Data: {UserType: 1},
+        // },
       })
         .then((response) => {
           if (response?.data?.status !== '200') {
@@ -135,7 +151,11 @@ export const getWashFavorite = () => {
           } else if (response?.data?.data) {
             dispatch({
               type: DRY_CLEAN_FAVORITE_SUCCESS,
-              payload: response.data.data,
+              payload: {
+                data: response.data.data,
+                length: response.data.paging.length,
+              },
+              // payload: response.data.data,
             });
           }
         })

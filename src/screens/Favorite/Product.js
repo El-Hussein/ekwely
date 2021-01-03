@@ -25,12 +25,13 @@ const Product = ({
   loading,
   getProductsFavorite,
   deleteFavorite,
+  currentPage,
+  length,
 }) => {
   useFocusEffect(
     useCallback(() => {
-      if (productsFav.length === 0) {
-        getProductsFavorite();
-      }
+      // getProductsFavorite(false);
+      getProductsFavorite(false, 0);
     }, []),
   );
 
@@ -45,7 +46,8 @@ const Product = ({
           <TouchableOpacity
             onPress={() => {
               deleteFavorite(item.id);
-              getProductsFavorite(true);
+              // getProductsFavorite(true);
+              getProductsFavorite(true, 0);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
@@ -65,6 +67,11 @@ const Product = ({
         />
       ) : (
         <FlatList
+          onEndReached={() => {
+            if (productsFav.length >= length) return;
+            getProductsFavorite(true, currentPage);
+          }}
+          refreshing={loading}
           data={productsFav}
           renderItem={_renderFavoriteItem}
           contentContainerStyle={{
@@ -85,6 +92,8 @@ function mapStateToProps(state) {
   return {
     productsFav: state.favorite.products,
     loading: state.favorite.loading,
+    currentPage: state.favorite.currentPageProducts,
+    length: state.favorite.productsLength,
   };
 }
 

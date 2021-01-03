@@ -9,13 +9,12 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {getCurrentOrder} from '../../redux/actions/Order';
 import COLORS from '../../common/colors';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
-const Product = ({getCurrentOrder, order, loading}) => {
-
+const Product = ({getCurrentOrder, currentPage, length, order, loading}) => {
   useFocusEffect(
     useCallback(() => {
-      getCurrentOrder();
+      getCurrentOrder(false, 0);
     }, []),
   );
   const _renderOrderItem = ({item}) => {
@@ -28,15 +27,20 @@ const Product = ({getCurrentOrder, order, loading}) => {
         <ActivityIndicator
           color={COLORS.main}
           style={{marginVertical: calcHeight(20), alignSelf: 'center'}}
-          size={calcFont (30)}
+          size={calcFont(30)}
         />
       ) : (
         <FlatList
+          onEndReached={() => {
+            if (order.length >= length) return;
+            getCurrentOrder(true, currentPage);
+          }}
+          refreshing={loading}
           data={order}
           renderItem={_renderOrderItem}
           contentContainerStyle={{
             width: calcWidth(375),
-            paddingVertical:calcHeight(10),
+            paddingVertical: calcHeight(10),
           }}
           keyExtractor={(item, index) => `${Math.random() * 100}`}
           ListEmptyComponent={
@@ -53,6 +57,8 @@ function mapStateToProps(state) {
     order: state.order.currentOrder,
     error: state.order.error,
     loading: state.order.loading,
+    currentPage: state.order.currentPageCurrent,
+    length: state.order.currentOrderLength,
   };
 }
 

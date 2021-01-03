@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import {
   View,
   FlatList,
@@ -19,12 +19,20 @@ import {
   getWashFavorite,
   deleteFavorite,
 } from '../../redux/actions/Favorite';
-import { useFocusEffect } from '@react-navigation/native';
-const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
+import {useFocusEffect} from '@react-navigation/native';
+const Wash = ({
+  washFav,
+  loading,
+  getWashFavorite,
+  deleteFavorite,
+  currentPage,
+  length,
+}) => {
   useFocusEffect(
     useCallback(() => {
       if (washFav.length === 0) {
-        getWashFavorite();
+        // getWashFavorite(false);
+        getWashFavorite(false, 0);
       }
     }, []),
   );
@@ -39,7 +47,8 @@ const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
           <TouchableOpacity
             onPress={() => {
               deleteFavorite(item.id);
-              getWashFavorite(true);
+              // getWashFavorite(true);
+              getWashFavorite(true, 0);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
@@ -48,6 +57,8 @@ const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
       </View>
     );
   };
+
+  console.log(currentPage)
 
   return (
     <View style={styles.container}>
@@ -59,6 +70,11 @@ const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
         />
       ) : (
         <FlatList
+          onEndReached={() => {
+            if (washFav.length >= length) return;
+            getWashFavorite(true, currentPage);
+          }}
+          refreshing={loading}
           data={washFav}
           renderItem={_renderFavoriteItem}
           contentContainerStyle={{
@@ -78,6 +94,8 @@ function mapStateToProps(state) {
   return {
     washFav: state.favorite.wash,
     loading: state.favorite.loading,
+    currentPage: state.favorite.currentPageServices,
+    length: state.favorite.servicesLength,
   };
 }
 
