@@ -40,7 +40,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(ekwely) would like to use your camera to upload Profile Picture</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>$(ekwely) would like to use your location to add user address</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(ekwely) would like to save photos to your photo gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
