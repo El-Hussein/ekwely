@@ -70,6 +70,7 @@ const Wash = ({
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
           onEndReached={() => {
             if (washFav.length >= length) return;
             getWashFavorite(true, currentPage);

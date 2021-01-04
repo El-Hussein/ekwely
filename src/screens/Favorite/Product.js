@@ -67,6 +67,7 @@ const Product = ({
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
           onEndReached={() => {
             if (productsFav.length >= length) return;
             getProductsFavorite(true, currentPage);

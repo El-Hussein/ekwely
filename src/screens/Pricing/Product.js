@@ -120,6 +120,7 @@ const Product = ({
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
           onEndReached={() => {
             if (productsLength === products.length) return;
             if (user) {

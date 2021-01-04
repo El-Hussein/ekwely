@@ -112,7 +112,7 @@ export const getProductsNoUser = (hideLoading, page) => {
         url: 'Item/auth_GetAllAnonymousProducts',
         data: {
           Paging: {
-            PageIndex: 0,
+            PageIndex: page,
             PageSize: 10,
           },
         },
@@ -160,7 +160,7 @@ export const getServicesNoUser = (hideLoading, page) => {
         url: 'Item/auth_GetAllAnonymousServices',
         data: {
           Paging: {
-            PageIndex: 0,
+            PageIndex: page,
             PageSize: 10,
           },
         },

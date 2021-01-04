@@ -32,6 +32,7 @@ const Product = ({getHistoryOrder, currentPage, length, order, loading}) => {
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
           onEndReached={() => {
             if (order.length >= length) return;
             getHistoryOrder(true, currentPage);

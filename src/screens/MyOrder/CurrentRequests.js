@@ -31,6 +31,7 @@ const Product = ({getCurrentOrder, currentPage, length, order, loading}) => {
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
           onEndReached={() => {
             if (order.length >= length) return;
             getCurrentOrder(true, currentPage);

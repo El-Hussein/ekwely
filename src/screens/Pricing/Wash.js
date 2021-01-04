@@ -109,6 +109,7 @@ const Wash = ({
             justifyContent: 'center',
             alignItems: 'center',
           }}
+          onEndReachedThreshold={0.7}
           onEndReached={() => {
             if (servicesLength === services.length) return;
             if (user) {
@@ -121,7 +122,10 @@ const Wash = ({
           refreshing={loading}
           data={filteredData || services || []}
           renderItem={_renderProductItem}
-          keyExtractor={(item, index) => `${item.id}`}
+          keyExtractor={(item, index) => {
+            console.log(`${item.id}${index}`);
+            return `${item.id}${index}`;
+          }}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
           }
