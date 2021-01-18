@@ -43,7 +43,7 @@ const Product = ({getCurrentOrder, currentPage, length, order, loading}) => {
             width: calcWidth(375),
             paddingVertical: calcHeight(10),
           }}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
           }

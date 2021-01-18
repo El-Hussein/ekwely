@@ -28,7 +28,6 @@ const Wash = ({
   loading,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
   const _renderProductItem = ({item}) => {
@@ -50,10 +49,10 @@ const Wash = ({
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getServices(false, 0);
+        getServices(false, 0, searchTerm);
         return;
       } else {
-        getServicesNoUser(false, 0);
+        getServicesNoUser(false, 0, searchTerm);
       }
     }, [user]),
   );
@@ -66,14 +65,11 @@ const Wash = ({
             style={styles.searchInput}
             onChangeText={(text) => {
               setSearchTerm(text);
-              if (text === '') {
-                setFilteredData(null);
+              if (user) {
+                getServices(false, 0, searchTerm);
                 return;
-              }
-              if (text.length > 1) {
-                setFilteredData(
-                  services.filter((item) => item.arName.includes(text, 0)),
-                );
+              } else {
+                getServicesNoUser(false, 0, searchTerm);
               }
             }}
             placeholder="ابحث عن ..."
@@ -113,19 +109,16 @@ const Wash = ({
           onEndReached={() => {
             if (servicesLength === services.length) return;
             if (user) {
-              getServices(true, currentPage);
+              getServices(true, currentPage, searchTerm);
               return;
             } else {
-              getServicesNoUser(true, currentPage);
+              getServicesNoUser(true, currentPage, searchTerm);
             }
           }}
           refreshing={loading}
-          data={filteredData || services || []}
+          data={services || []}
           renderItem={_renderProductItem}
-          keyExtractor={(item, index) => {
-            console.log(`${item.id}${index}`);
-            return `${item.id}${index}`;
-          }}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد منتجات</AppText>
           }

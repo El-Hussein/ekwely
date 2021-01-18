@@ -30,10 +30,10 @@ const Cart = ({
       toggleCart(!cart);
       if (isCart) {
         deleteCart(id, true);
-        getProducts(true);
+        // getProducts(false, 0);
       } else {
         setCart(id, 1, serviceType, isProduct);
-        getProducts(true);
+        // getProducts(false, 0);
       }
     } else {
       navgation.navigate('Auth');

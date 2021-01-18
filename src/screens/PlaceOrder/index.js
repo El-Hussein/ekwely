@@ -296,7 +296,7 @@ const PlaceOrder = ({
         )}
         <TouchableOpacity onPress={toggleQuickCleaning} style={styles.checkBox}>
           <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+            خدمة الشحن السريع (تسليم خلال 24 ساعه)
           </AppText>
           <IconIonicons
             name={quickCleaning ? 'md-checkbox' : 'square-outline'}
@@ -312,7 +312,7 @@ const PlaceOrder = ({
         {!!quickCleaning && (
           <View style={styles.total}>
             <AppText style={styles.totalPromoCode}>
-              تكاليف التنظيف السريع
+              تكاليف الشحن السريع
             </AppText>
             <AppText style={styles.PromoCode}>20 ج</AppText>
           </View>

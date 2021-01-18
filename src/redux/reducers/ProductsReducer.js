@@ -26,14 +26,17 @@ export default function ProductsReducer(state = initialState, action) {
         loading: true,
       };
     case PRODUCTS_SUCCESS:
+      console.log('action.payload.page');
+      console.log(action.payload.page);
+      console.log('action.payload.page');
       return {
         ...state,
         products:
-          state.currentPageProducts === 0
+          action.payload.page === 0
             ? action.payload.data
             : [...state.products, ...action.payload.data],
         productsLength: action.payload.length,
-        currentPageProducts: state.currentPageProducts + 1,
+        currentPageProducts: action.payload.page + 1,
         loading: false,
         error: '',
       };
@@ -49,11 +52,12 @@ export default function ProductsReducer(state = initialState, action) {
       return {
         ...state,
         dryClean:
-          state.currentPageDry === 0
+          action.payload.page === 0
             ? action.payload.data
             : [...state.dryClean, ...action.payload.data],
         servicesLength: action.payload.length,
-        currentPageDry: state.currentPageDry + 1,
+        currentPageDry: action.payload.page + 1,
+        loading: false,
       };
 
     case DRY_CLEAN_SUCCESS_NO_USER:

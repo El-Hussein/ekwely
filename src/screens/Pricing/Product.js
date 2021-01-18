@@ -31,16 +31,15 @@ const Product = ({
   loading,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getProducts(false, 0);
+        getProducts(false, 0, searchTerm);
         return;
       } else {
-        getProductsNoUser(false, 0);
+        getProductsNoUser(false, 0, searchTerm);
       }
     }, [user]),
   );
@@ -93,16 +92,11 @@ const Product = ({
             style={styles.searchInput}
             onChangeText={(text) => {
               setSearchTerm(text);
-              if (text === '') {
-                setFilteredData(null);
+              if (user) {
+                getProducts(false, 0, text);
                 return;
-              }
-              if (text.length > 2) {
-                setFilteredData(
-                  products.filter((item) =>
-                    item.arName.includes(searchTerm, 0),
-                  ),
-                );
+              } else {
+                getProductsNoUser(false, 0, text);
               }
             }}
             placeholder="ابحث عن ..."
@@ -124,14 +118,14 @@ const Product = ({
           onEndReached={() => {
             if (productsLength === products.length) return;
             if (user) {
-              getProducts(true, currentPage);
+              getProducts(true, currentPage, searchTerm);
               return;
             } else {
-              getProductsNoUser(true, currentPage);
+              getProductsNoUser(true, currentPage, searchTerm);
             }
           }}
           columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
-          data={filteredData || products || []}
+          data={products || []}
           renderItem={_renderProductItem}
           numColumns={2}
           keyExtractor={(item, index) => `${item.id}`}

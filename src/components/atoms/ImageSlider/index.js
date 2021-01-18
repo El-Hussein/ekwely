@@ -22,7 +22,7 @@ const ImagesSlider = ({slides}) => {
         sliderWidth={calcWidth(250)}
         itemWidth={calcWidth(245)}
         onSnapToItem={(index) => setCurrentIndex(index)}
-        keyExtractor={(item, index) => `${index}`}
+        keyExtractor={(item, index) => `${item.id}`}
       />
       <View style={styles.swiperPaginationStyle}>
         {slides.map((item, index) => {

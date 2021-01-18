@@ -32,6 +32,7 @@ export const getCurrentOrder = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
             });
           }
@@ -76,6 +77,7 @@ export const getHistoryOrder = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
             });
           }

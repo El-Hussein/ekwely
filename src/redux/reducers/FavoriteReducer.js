@@ -58,11 +58,11 @@ export default function FavoriteReducer(state = initialState, action) {
         ...state,
         // wash: action.payload,
         wash:
-          state.currentPageDry === 0
+          action.payload.page === 0
             ? action.payload.data
             : [...state.wash, ...action.payload.data],
         servicesLength: action.payload.length,
-        currentPageServices: state.currentPageServices + 1,
+        currentPageServices: action.payload.page + 1,
         loading: false,
       };
 
@@ -82,11 +82,11 @@ export default function FavoriteReducer(state = initialState, action) {
         ...state,
         // products: action.payload,
         products:
-          state.currentPageProducts === 0
+          action.payload.page === 0
             ? action.payload.data
             : [...state.products, ...action.payload.data],
         productsLength: action.payload.length,
-        currentPageProducts: state.currentPageProducts + 1,
+        currentPageProducts: action.payload.page + 1,
         loading: false,
       };
 

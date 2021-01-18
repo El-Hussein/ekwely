@@ -107,6 +107,7 @@ export const getProductsFavorite = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
               // payload: response.data.data,
             });
@@ -154,6 +155,7 @@ export const getWashFavorite = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
               // payload: response.data.data,
             });

@@ -9,8 +9,8 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get products Action
-export const getProducts = (hideLoading, page) => {
-  console.log('whaaaaaaaaaaaat');
+export const getProducts = (hideLoading, page, searchTerm) => {
+  console.log('paggee', page);
   return (dispatch) => {
     if (!hideLoading) dispatch({type: PRODUCTS_PENDING});
     try {
@@ -21,6 +21,7 @@ export const getProducts = (hideLoading, page) => {
             PageIndex: page,
             PageSize: 10,
           },
+          Term: searchTerm,
           IsActive: true,
         },
       })
@@ -36,6 +37,7 @@ export const getProducts = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
             });
           }
@@ -57,7 +59,7 @@ export const getProducts = (hideLoading, page) => {
   };
 };
 
-export const getServices = (hideLoading, page) => {
+export const getServices = (hideLoading, page, searchTerm) => {
   console.log('whaaaaaaaaaaaat');
   return (dispatch) => {
     if (!hideLoading) dispatch({type: PRODUCTS_PENDING});
@@ -70,6 +72,7 @@ export const getServices = (hideLoading, page) => {
             PageSize: 10,
           },
           IsActive: true,
+          Term: searchTerm,
         },
       })
         .then((response) => {
@@ -81,6 +84,7 @@ export const getServices = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
             });
           }
@@ -102,7 +106,7 @@ export const getServices = (hideLoading, page) => {
   };
 };
 
-export const getProductsNoUser = (hideLoading, page) => {
+export const getProductsNoUser = (hideLoading, page, searchTerm) => {
   return (dispatch) => {
     if (!hideLoading) {
       dispatch({type: PRODUCTS_PENDING});
@@ -114,6 +118,7 @@ export const getProductsNoUser = (hideLoading, page) => {
           Paging: {
             PageIndex: page,
             PageSize: 10,
+            Term: searchTerm,
           },
         },
       })
@@ -129,6 +134,7 @@ export const getProductsNoUser = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
             });
           }
@@ -150,7 +156,7 @@ export const getProductsNoUser = (hideLoading, page) => {
   };
 };
 
-export const getServicesNoUser = (hideLoading, page) => {
+export const getServicesNoUser = (hideLoading, page, searchTerm) => {
   return (dispatch) => {
     if (!hideLoading) {
       dispatch({type: PRODUCTS_PENDING});
@@ -162,6 +168,7 @@ export const getServicesNoUser = (hideLoading, page) => {
           Paging: {
             PageIndex: page,
             PageSize: 10,
+            Term: searchTerm,
           },
         },
       })
@@ -174,6 +181,7 @@ export const getServicesNoUser = (hideLoading, page) => {
               payload: {
                 data: response.data.data,
                 length: response.data.paging.length,
+                page,
               },
             });
           }

@@ -42,7 +42,7 @@ const Faq = ({getFaq, faq, loading}) => {
           data={faq}
           scrollEnabled={true}
           renderItem={_renderQuestionsItem}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد أسئله</AppText>
           }

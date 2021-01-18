@@ -47,8 +47,9 @@ const Wash = ({
           <TouchableOpacity
             onPress={() => {
               deleteFavorite(item.id);
-              // getWashFavorite(true);
-              getWashFavorite(true, 0);
+              setTimeout(() => {
+                getWashFavorite(true, 0);
+              }, 1500);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
@@ -57,8 +58,6 @@ const Wash = ({
       </View>
     );
   };
-
-  console.log(currentPage)
 
   return (
     <View style={styles.container}>
@@ -82,7 +81,7 @@ const Wash = ({
             marginVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد مفضله</AppText>
           }

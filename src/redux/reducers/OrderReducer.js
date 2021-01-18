@@ -29,11 +29,11 @@ export default function OrderReducer(state = initialState, action) {
       return {
         ...state,
         currentOrder:
-          state.currentPageCurrent === 0
+          action.payload.page === 0
             ? action.payload.data
             : [...state.currentOrder, ...action.payload.data],
         currentOrderLength: action.payload.length,
-        currentPageCurrent: state.currentPageCurrent + 1,
+        currentPageCurrent: action.payload.page + 1,
         loading: false,
         error: '',
       };
@@ -53,11 +53,11 @@ export default function OrderReducer(state = initialState, action) {
       return {
         ...state,
         historyOrder:
-          state.currentPageHistory === 0
+          action.payload.page === 0
             ? action.payload.data
             : [...state.historyOrder, ...action.payload.data],
         historyOrderLength: action.payload.length,
-        currentPageHistory: state.currentPageHistory + 1,
+        currentPageHistory: action.payload.page + 1,
         loading: false,
         error: '',
       };
