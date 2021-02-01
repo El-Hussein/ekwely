@@ -2,7 +2,7 @@ import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 const CONNECTION_ERROR = 'حدث خطأ في الاتصال';
 // export const API_BASE_URL = 'https://api.ekwely.com/';
-export const API_BASE_URL = 'https://ekwellytest.key-frame.cf/';
+export const API_BASE_URL = 'https://api.ekwely.com/';
 import Store from '../redux/store';
 
 export const makePostRequest = async ({

@@ -9,10 +9,12 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get products Action
-export const getProducts = (hideLoading, page, searchTerm) => {
-  console.log('paggee', page);
+export const getProducts = (hideLoading, page, searchTerm = '') => {
   return (dispatch) => {
+    console.log(dispatch);
+    console.log('paggee', page);
     if (!hideLoading) dispatch({type: PRODUCTS_PENDING});
+    console.log('paggee ooo', page);
     try {
       makePostRequest({
         url: 'Item/auth_GetAllProducts',
@@ -59,7 +61,7 @@ export const getProducts = (hideLoading, page, searchTerm) => {
   };
 };
 
-export const getServices = (hideLoading, page, searchTerm) => {
+export const getServices = (hideLoading, page, searchTerm = '') => {
   console.log('whaaaaaaaaaaaat');
   return (dispatch) => {
     if (!hideLoading) dispatch({type: PRODUCTS_PENDING});
@@ -106,7 +108,7 @@ export const getServices = (hideLoading, page, searchTerm) => {
   };
 };
 
-export const getProductsNoUser = (hideLoading, page, searchTerm) => {
+export const getProductsNoUser = (hideLoading, page, searchTerm = '') => {
   return (dispatch) => {
     if (!hideLoading) {
       dispatch({type: PRODUCTS_PENDING});
@@ -156,7 +158,7 @@ export const getProductsNoUser = (hideLoading, page, searchTerm) => {
   };
 };
 
-export const getServicesNoUser = (hideLoading, page, searchTerm) => {
+export const getServicesNoUser = (hideLoading, page, searchTerm = '') => {
   return (dispatch) => {
     if (!hideLoading) {
       dispatch({type: PRODUCTS_PENDING});

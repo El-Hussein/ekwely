@@ -55,7 +55,7 @@ const Order = ({item, type}) => {
                 </View>
               )}
               ItemSeparatorComponent={() => (
-                <View style={{height: 2, backgroundColor: 'red', margin: 5}} />
+                <View style={{height: 2, backgroundColor: 'gray', margin: 5}} />
               )}
               ListFooterComponent={
                 item.orderDetails.length > 3 && (

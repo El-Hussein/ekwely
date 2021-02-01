@@ -8,8 +8,12 @@ import Button from '../../components/atoms/Button';
 import CheckBox from '../../components/atoms/CheckBox';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {getProducts} from '../../redux/actions/Products';
+import {connect, useSelector} from 'react-redux';
+import {
+  getProducts,
+  getServices,
+  getServicesNoUser,
+} from '../../redux/actions/Products';
 import {setCart, deleteCart} from '../../redux/actions/Cart';
 import Toast from 'react-native-simple-toast';
 
@@ -25,7 +29,15 @@ const services = [
   {id: 4, name: 'تصليح', value: 3},
 ];
 
-const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
+const Wash = ({
+  wash,
+  washFav,
+  getServices,
+  getServicesNoUser,
+  setCart,
+  servicesLength,
+  currentPage,
+}) => {
   // useFocusEffect(
   //   useCallback(() => {
   //     if (wash.length === 0) {
@@ -48,6 +60,7 @@ const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
   const [disabled, setDisabled] = useState(true);
   const [addedToCart, setAddedToCart] = useState(false);
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     setFavorite(washFav.length > 0);
@@ -110,6 +123,18 @@ const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
       Toast.show('من فضلك اختر القطعه او الخدمه');
     }
   };
+
+  console.log('service page called');
+
+  useEffect(() => {
+    console.log('in effect');
+    if (user) {
+      getServices(false, 0);
+      return;
+    } else {
+      getServicesNoUser(false, 0);
+    }
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -231,6 +256,15 @@ const Wash = ({wash, washFav, getWashFavorite, getProducts, setCart}) => {
             serviceType: fav.serviceType,
           };
         })}
+        onEndReached={() => {
+          if (servicesLength === wash.length) return;
+          if (user) {
+            getServices(true, currentPage);
+            return;
+          } else {
+            getServicesNoUser(true, currentPage);
+          }
+        }}
         visible={pieceDropDownVisible}
         onPress={(item) => handlePieceSelect(item)}
         closeModal={closePieceModal}
@@ -264,13 +298,21 @@ function mapStateToProps(state) {
     wash: state.products.dryClean,
     washFav: state.favorite.wash,
     loading: state.favorite.loading,
+    currentPage: state.products.currentPageDry,
+    servicesLength: state.products.servicesLength,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(
-      {getProductsFavorite, getWashFavorite, getProducts, setCart},
+      {
+        getProductsFavorite,
+        getWashFavorite,
+        getServices,
+        getServicesNoUser,
+        setCart,
+      },
       dispatch,
     ),
   };

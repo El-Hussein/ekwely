@@ -8,14 +8,22 @@ import Button from '../../components/atoms/Button';
 import CheckBox from '../../components/atoms/CheckBox';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {getProducts} from '../../redux/actions/Products';
+import {connect, useSelector} from 'react-redux';
+import {getProducts, getProductsNoUser} from '../../redux/actions/Products';
 import {setCart, deleteCart} from '../../redux/actions/Cart';
 import Toast from 'react-native-simple-toast';
 import {getProductsFavorite} from '../../redux/actions/Favorite';
 import COLORS from '../../common/colors';
 
-const Product = ({products, productsFav, setCart, getProductsFavorite}) => {
+const Product = ({
+  products,
+  productsFav,
+  setCart,
+  getProducts,
+  getProductsNoUser,
+  currentPage,
+  productsLength,
+}) => {
   const navigation = useNavigation();
   const [favorite, setFavorite] = useState(productsFav.length > 0);
   const [pieces, setPieces] = useState(productsFav.length === 0);
@@ -26,17 +34,18 @@ const Product = ({products, productsFav, setCart, getProductsFavorite}) => {
   const [pieceDropDownVisible, setPieceDropDownVisible] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [addedToCart, setAddedToCart] = useState(false);
+  const user = useSelector((state) => state.auth.user);
 
-  useFocusEffect(
-    useCallback(() => {
-      if (products.length === 0) {
-        getProducts();
-      }
-      if (productsFav.length === 0) {
-        getProductsFavorite();
-      }
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (products.length === 0) {
+  //       getProducts();
+  //     }
+  //     if (productsFav.length === 0) {
+  //       getProductsFavorite();
+  //     }
+  //   }, []),
+  // );
   useEffect(() => {
     setFavorite(productsFav.length > 0);
     setPieces(productsFav.length === 0);
@@ -74,6 +83,18 @@ const Product = ({products, productsFav, setCart, getProductsFavorite}) => {
     setSelectedPiece(item);
     setDisabled(false);
   };
+
+  useEffect(() => {
+    console.log('in effecttttt');
+    if (user) {
+      getProducts(false, 0);
+      return;
+    } else {
+      getProductsNoUser(false, 0);
+    }
+  }, [user]);
+
+  console.log('product page called');
 
   const addToCart = () => {
     if (selectedPiece) {
@@ -195,6 +216,15 @@ const Product = ({products, productsFav, setCart, getProductsFavorite}) => {
             value: fav.id,
           };
         })}
+        onEndReached={() => {
+          if (productsLength === products.length) return;
+          if (user) {
+            getProducts(true, currentPage);
+            return;
+          } else {
+            getProductsNoUser(true, currentPage);
+          }
+        }}
         visible={pieceDropDownVisible}
         onPress={(item) => handlePieceSelect(item)}
         closeModal={closePieceModal}
@@ -211,12 +241,14 @@ function mapStateToProps(state) {
   return {
     products: state.products.products,
     productsFav: state.favorite.products,
+    currentPage: state.products.currentPageProducts,
+    productsLength: state.products.productsLength,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({setCart, getProductsFavorite}, dispatch),
+    ...bindActionCreators({setCart, getProducts, getProductsNoUser}, dispatch),
   };
 }
 

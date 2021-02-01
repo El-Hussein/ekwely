@@ -221,6 +221,15 @@ const PlaceOrder = ({
             style={styles.press}
           />
         </View>
+        <AppText
+          style={{
+            color: COLORS.lightTextGray,
+            paddingHorizontal: 20,
+            fontSize: 12,
+          }}>
+          برجاء العلم انه سيتم تجاهل تاريخ الاستلام في حالة انه لا يوجد خدمات في
+          الطلب
+        </AppText>
 
         <Line width={calcWidth(345)} color={COLORS.lightGray} />
 
@@ -311,9 +320,7 @@ const PlaceOrder = ({
         </View>
         {!!quickCleaning && (
           <View style={styles.total}>
-            <AppText style={styles.totalPromoCode}>
-              تكاليف الشحن السريع
-            </AppText>
+            <AppText style={styles.totalPromoCode}>تكاليف الشحن السريع</AppText>
             <AppText style={styles.PromoCode}>20 ج</AppText>
           </View>
         )}
