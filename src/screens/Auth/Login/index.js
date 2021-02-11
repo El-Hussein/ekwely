@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, Alert, BackHandler} from 'react-native';
+import {View, Image, Alert, BackHandler, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useDispatch} from 'react-redux';
@@ -90,51 +90,59 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.loginForm}>
-        <Image source={IMAGES.loginBg} style={styles.loginBg} />
-        <AppInput
-          error={emailError}
-          value={loginData.email}
-          inputStyle={styles.input}
-          onChangeText={(email) => {
-            setLoginData({...loginData, email});
-          }}
-          onEndEditing={() => {
-            setEmailError(validateEmail(loginData.email));
-          }}
-          placeholder={'بريد الالكترونى أو أسم المستخدم'}
-        />
-        <AppInput
-          error={passwordError || serverError}
-          value={loginData.password}
-          inputStyle={styles.input}
-          onChangeText={(password) => {
-            setLoginData({...loginData, password});
-          }}
-          onEndEditing={() => {
-            setPasswordError(validatePassword(loginData.password));
-          }}
-          placeholder={'رمز المرور'}
-          secureTextEntry={true}
-        />
-        <View style={styles.loginButton}>
+      <ScrollView>
+        <View style={styles.loginForm}>
+          <Image source={IMAGES.loginBg} style={styles.loginBg} />
+          <AppInput
+            error={emailError}
+            value={loginData.email}
+            inputStyle={styles.input}
+            onChangeText={(email) => {
+              setLoginData({...loginData, email});
+            }}
+            onEndEditing={() => {
+              setEmailError(validateEmail(loginData.email));
+            }}
+            placeholder={'بريد الالكترونى أو أسم المستخدم'}
+          />
+          <AppInput
+            error={passwordError || serverError}
+            value={loginData.password}
+            inputStyle={styles.input}
+            onChangeText={(password) => {
+              setLoginData({...loginData, password});
+            }}
+            onEndEditing={() => {
+              setPasswordError(validatePassword(loginData.password));
+            }}
+            placeholder={'رمز المرور'}
+            secureTextEntry={true}
+          />
+          <View style={styles.loginButton}>
+            <Button
+              title={'دخول'}
+              onPress={login}
+              // onPress={() => navigation.navigate('Drawer')}
+              titleStyle={styles.loginTitle}
+              style={styles.button}
+              loading={loading}
+              disabled={loading}
+            />
+          </View>
+
           <Button
-            title={'دخول'}
-            onPress={login}
-            // onPress={() => navigation.navigate('Drawer')}
-            titleStyle={styles.loginTitle}
-            style={styles.button}
-            loading={loading}
-            disabled={loading}
+            title={'انشاء حساب جديد'}
+            onPress={() => navigation.navigate('Register')}
+            style={styles.rTitle}
+          />
+
+          <Button
+            title={'نسيت كلمة المرور؟'}
+            onPress={() => navigation.navigate('ForgetPassword')}
+            style={styles.rTitle}
           />
         </View>
-
-        <Button
-          title={'انشاء حساب جديد'}
-          onPress={() => navigation.navigate('Register')}
-          style={styles.rTitle}
-        />
-      </View>
+      </ScrollView>
     </View>
   );
 };

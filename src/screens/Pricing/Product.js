@@ -13,7 +13,7 @@ import AppText from '../../components/atoms/AppText';
 import IMAGES from '../../common/images';
 import COLORS from '../../common/colors';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -22,18 +22,24 @@ import {IMAGE_BASE_URL} from '../../common/constants';
 import Favorite from '../../components/atoms/Favorite';
 import Cart from '../../components/atoms/Cart';
 
-const Product = ({getProducts, getProductsNoUser, products, loading}) => {
+const Product = ({
+  getProducts,
+  getProductsNoUser,
+  products,
+  productsLength,
+  currentPage,
+  loading,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredData, setFilteredData] = useState(null);
   const user = useSelector((state) => state.auth.user);
 
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getProducts(false);
+        getProducts(false, 0, searchTerm);
         return;
       } else {
-        getProductsNoUser(false);
+        getProductsNoUser(false, 0, searchTerm);
       }
     }, [user]),
   );
@@ -86,16 +92,11 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
             style={styles.searchInput}
             onChangeText={(text) => {
               setSearchTerm(text);
-              if (text === '') {
-                setFilteredData(null);
+              if (user) {
+                getProducts(false, 0, text);
                 return;
-              }
-              if (text.length > 2) {
-                setFilteredData(
-                  products.filter((item) =>
-                    item.arName.includes(searchTerm, 0),
-                  ),
-                );
+              } else {
+                getProductsNoUser(false, 0, text);
               }
             }}
             placeholder="ابحث عن ..."
@@ -113,8 +114,18 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
+          onEndReached={() => {
+            if (productsLength === products.length) return;
+            if (user) {
+              getProducts(true, currentPage, searchTerm);
+              return;
+            } else {
+              getProductsNoUser(true, currentPage, searchTerm);
+            }
+          }}
           columnWrapperStyle={{justifyContent: 'center', alignItems: 'center'}}
-          data={filteredData || products || []}
+          data={products || []}
           renderItem={_renderProductItem}
           numColumns={2}
           keyExtractor={(item, index) => `${item.id}`}
@@ -130,6 +141,8 @@ const Product = ({getProducts, getProductsNoUser, products, loading}) => {
 function mapStateToProps(state) {
   return {
     products: state.products.products,
+    currentPage: state.products.currentPageProducts,
+    productsLength: state.products.productsLength,
     error: state.products.error,
     loading: state.products.loading,
   };

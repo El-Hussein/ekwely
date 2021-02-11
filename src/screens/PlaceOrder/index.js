@@ -3,7 +3,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   Platform,
   ActivityIndicator,
@@ -16,7 +15,6 @@ import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
 import Button from '../../components/atoms/Button';
-import ImagesSlider from '../../components/atoms/ImageSlider';
 import IMAGES from '../../common/images';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
@@ -25,7 +23,6 @@ import {useNavigation} from '@react-navigation/native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {useSelector} from 'react-redux';
-import {setOrder} from '../../redux/actions/Order';
 import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 import {getProducts} from '../../redux/actions/Products';
@@ -38,13 +35,8 @@ const PlaceOrder = ({
 }) => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const {user} = useSelector((state) => {
-    return {
-      user: state.auth.user,
-    };
-  });
+  const user = useSelector((state) => state.auth.user);
 
-  const [value, onChangeText] = useState('');
   const [morning, setMorning] = useState(true);
   const [evening, setEvening] = useState(false);
   const [morningDelivery, setMorningDelivery] = useState(true);
@@ -73,25 +65,25 @@ const PlaceOrder = ({
     });
   }, [user?.address]);
   const Morning = () => {
-    if (morning == false) {
+    if (morning === false) {
       setMorning(!morning);
       setEvening(!evening);
     }
   };
   const Evening = () => {
-    if (evening == false) {
+    if (evening === false) {
       setMorning(!morning);
       setEvening(!evening);
     }
   };
   const MorningDelivery = () => {
-    if (morningDelivery == false) {
+    if (morningDelivery === false) {
       setMorningDelivery(!morningDelivery);
       setEveningDelivery(!eveningDelivery);
     }
   };
   const EveningDelivery = () => {
-    if (eveningDelivery == false) {
+    if (eveningDelivery === false) {
       setMorningDelivery(!morningDelivery);
       setEveningDelivery(!eveningDelivery);
     }
@@ -217,8 +209,8 @@ const PlaceOrder = ({
               navigation.navigate('SelectLocation', {
                 onGoBack: (address) => {
                   setSendAddress({
-                    lat: address.coordinates.latitude,
-                    lang: address.coordinates.longitude,
+                    lat: address.coordinates.latitude || 30.033333,
+                    lang: address.coordinates.longitude || 31.233334,
                     address: address.formattedAddress,
                   });
                 },
@@ -229,6 +221,15 @@ const PlaceOrder = ({
             style={styles.press}
           />
         </View>
+        <AppText
+          style={{
+            color: COLORS.lightTextGray,
+            paddingHorizontal: 20,
+            fontSize: 12,
+          }}>
+          برجاء العلم انه سيتم تجاهل تاريخ الاستلام في حالة انه لا يوجد خدمات في
+          الطلب
+        </AppText>
 
         <Line width={calcWidth(345)} color={COLORS.lightGray} />
 
@@ -304,7 +305,7 @@ const PlaceOrder = ({
         )}
         <TouchableOpacity onPress={toggleQuickCleaning} style={styles.checkBox}>
           <AppText style={styles.checkboxText}>
-            خدمة التنظيف السريع (تسليم خلال 24 ساعه)
+            خدمة الشحن السريع (تسليم خلال 24 ساعه)
           </AppText>
           <IconIonicons
             name={quickCleaning ? 'md-checkbox' : 'square-outline'}
@@ -319,9 +320,7 @@ const PlaceOrder = ({
         </View>
         {!!quickCleaning && (
           <View style={styles.total}>
-            <AppText style={styles.totalPromoCode}>
-              تكاليف التنظيف السريع
-            </AppText>
+            <AppText style={styles.totalPromoCode}>تكاليف الشحن السريع</AppText>
             <AppText style={styles.PromoCode}>20 ج</AppText>
           </View>
         )}
@@ -358,7 +357,22 @@ const PlaceOrder = ({
             />
           )}
         </View>
-        {show && (
+      </ScrollView>
+      {show && (
+        <View
+          style={{
+            position: Platform.OS === 'ios' ? 'absolute' : null,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: COLORS.lightGray,
+          }}>
+          <Button
+            onPress={() => setShow(false)}
+            style={{alignSelf: 'flex-end'}}
+            title={'تاكيد'}
+            titleStyle={{color: COLORS.main}}
+          />
           <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -367,9 +381,10 @@ const PlaceOrder = ({
             display="default"
             onChange={onChange}
             minimumDate={Date.now()}
+            textColor={'#000'}
           />
-        )}
-      </ScrollView>
+        </View>
+      )}
     </View>
   );
 };

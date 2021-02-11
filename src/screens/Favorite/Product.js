@@ -25,12 +25,13 @@ const Product = ({
   loading,
   getProductsFavorite,
   deleteFavorite,
+  currentPage,
+  length,
 }) => {
   useFocusEffect(
     useCallback(() => {
-      if (productsFav.length === 0) {
-        getProductsFavorite();
-      }
+      // getProductsFavorite(false);
+      getProductsFavorite(false, 0);
     }, []),
   );
 
@@ -45,7 +46,8 @@ const Product = ({
           <TouchableOpacity
             onPress={() => {
               deleteFavorite(item.id);
-              getProductsFavorite(true);
+              // getProductsFavorite(true);
+              getProductsFavorite(true, 0);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
@@ -65,13 +67,19 @@ const Product = ({
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
+          onEndReached={() => {
+            if (productsFav.length >= length) return;
+            getProductsFavorite(true, currentPage);
+          }}
+          refreshing={loading}
           data={productsFav}
           renderItem={_renderFavoriteItem}
           contentContainerStyle={{
             marginVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد مفضله</AppText>
           }
@@ -85,6 +93,8 @@ function mapStateToProps(state) {
   return {
     productsFav: state.favorite.products,
     loading: state.favorite.loading,
+    currentPage: state.favorite.currentPageProducts,
+    length: state.favorite.productsLength,
   };
 }
 

@@ -1,9 +1,9 @@
 import React, {useState, useRef} from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import COLORS from '../../common/colors';
 import AppText from '../../components/atoms/AppText';
-import {calcHeight, calcWidth, calcFont} from '../../common/styles';
+import {calcHeight, calcWidth, calcFont, height} from '../../common/styles';
 import {Line} from '../../components/atoms/Line';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -46,13 +46,16 @@ const Order = ({item, type}) => {
                 <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
                   <AppText
                     style={{...styles.dateText, width: calcWidth(125)}}
-                    numberOfLines={1}>
+                    numberOfLines={2}>
                     {item.itemName}
                   </AppText>
-                  <AppText style={styles.dateText} numberOfLines={1}>
+                  <Text style={styles.numberText} numberOfLines={1}>
                     {' X ' + item.quantity}
-                  </AppText>
+                  </Text>
                 </View>
+              )}
+              ItemSeparatorComponent={() => (
+                <View style={{height: 2, backgroundColor: 'gray', margin: 5}} />
               )}
               ListFooterComponent={
                 item.orderDetails.length > 3 && (

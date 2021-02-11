@@ -12,10 +12,10 @@ import {getHistoryOrder} from '../../redux/actions/Order';
 import {calcHeight, calcWidth, calcFont} from '../../common/styles';
 import {useFocusEffect} from '@react-navigation/native';
 
-const Product = ({getHistoryOrder, order, loading}) => {
+const Product = ({getHistoryOrder, currentPage, length, order, loading}) => {
   useFocusEffect(
     useCallback(() => {
-      getHistoryOrder();
+      getHistoryOrder(false, 0);
     }, []),
   );
   const _renderOrderItem = ({item}) => {
@@ -32,13 +32,18 @@ const Product = ({getHistoryOrder, order, loading}) => {
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
+          onEndReached={() => {
+            if (order.length >= length) return;
+            getHistoryOrder(true, currentPage);
+          }}
           data={order}
           renderItem={_renderOrderItem}
           contentContainerStyle={{
             paddingVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد طلبات</AppText>
           }
@@ -53,6 +58,8 @@ function mapStateToProps(state) {
     order: state.order.historyOrder,
     error: state.order.error,
     loading: state.order.loading,
+    currentPage: state.order.currentPageLength,
+    length: state.order.historyOrderLength,
   };
 }
 

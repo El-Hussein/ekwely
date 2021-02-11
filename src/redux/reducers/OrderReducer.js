@@ -10,6 +10,10 @@ import {
 const initialState = {
   currentOrder: [],
   historyOrder: [],
+  historyOrderLength: 0,
+  currentPageHistory: 0,
+  currentOrderLength: 0,
+  currentPageCurrent: 0,
   loading: false,
   error: '',
 };
@@ -24,7 +28,12 @@ export default function OrderReducer(state = initialState, action) {
     case CURRENT_ORDER_SUCCESS:
       return {
         ...state,
-        currentOrder: action.payload,
+        currentOrder:
+          action.payload.page === 0
+            ? action.payload.data
+            : [...state.currentOrder, ...action.payload.data],
+        currentOrderLength: action.payload.length,
+        currentPageCurrent: action.payload.page + 1,
         loading: false,
         error: '',
       };
@@ -43,7 +52,12 @@ export default function OrderReducer(state = initialState, action) {
     case HISTORY_ORDER_SUCCESS:
       return {
         ...state,
-        historyOrder: action.payload,
+        historyOrder:
+          action.payload.page === 0
+            ? action.payload.data
+            : [...state.historyOrder, ...action.payload.data],
+        historyOrderLength: action.payload.length,
+        currentPageHistory: action.payload.page + 1,
         loading: false,
         error: '',
       };

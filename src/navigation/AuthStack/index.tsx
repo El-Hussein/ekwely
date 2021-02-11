@@ -5,6 +5,7 @@ import RegisterScreen from '../../screens/Auth/Register';
 import COLORS from '../../common/colors';
 import FONTS from '../../common/fonts';
 import SelectLocationScreen from '../../screens/select-location/select-location-screen';
+import ForgetPassword from '../../screens/Auth/ForgetPassword';
 
 const headerCustomStyle = {
   headerTintColor: COLORS.white,
@@ -30,6 +31,13 @@ const AuthNavigator = () => (
       }}
       name="Login"
       component={LoginScreen}
+    />
+    <AuthStack.Screen
+      options={{
+        headerShown: false,
+      }}
+      name="ForgetPassword"
+      component={ForgetPassword}
     />
     <AuthStack.Screen
       options={{

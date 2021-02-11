@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import {
   View,
   FlatList,
@@ -19,12 +19,20 @@ import {
   getWashFavorite,
   deleteFavorite,
 } from '../../redux/actions/Favorite';
-import { useFocusEffect } from '@react-navigation/native';
-const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
+import {useFocusEffect} from '@react-navigation/native';
+const Wash = ({
+  washFav,
+  loading,
+  getWashFavorite,
+  deleteFavorite,
+  currentPage,
+  length,
+}) => {
   useFocusEffect(
     useCallback(() => {
       if (washFav.length === 0) {
-        getWashFavorite();
+        // getWashFavorite(false);
+        getWashFavorite(false, 0);
       }
     }, []),
   );
@@ -39,7 +47,9 @@ const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
           <TouchableOpacity
             onPress={() => {
               deleteFavorite(item.id);
-              getWashFavorite(true);
+              setTimeout(() => {
+                getWashFavorite(true, 0);
+              }, 1500);
             }}>
             <IconIonicons name="close-circle-outline" size={calcWidth(30)} />
           </TouchableOpacity>
@@ -59,13 +69,19 @@ const Wash = ({washFav, loading, getWashFavorite, deleteFavorite}) => {
         />
       ) : (
         <FlatList
+          onEndReachedThreshold={0.7}
+          onEndReached={() => {
+            if (washFav.length >= length) return;
+            getWashFavorite(true, currentPage);
+          }}
+          refreshing={loading}
           data={washFav}
           renderItem={_renderFavoriteItem}
           contentContainerStyle={{
             marginVertical: calcHeight(10),
             width: calcWidth(375),
           }}
-          keyExtractor={(item, index) => `${Math.random() * 100}`}
+          keyExtractor={(item, index) => `${item.id}`}
           ListEmptyComponent={
             <AppText style={styles.EmptyComponent}>لا توجد مفضله</AppText>
           }
@@ -78,6 +94,8 @@ function mapStateToProps(state) {
   return {
     washFav: state.favorite.wash,
     loading: state.favorite.loading,
+    currentPage: state.favorite.currentPageServices,
+    length: state.favorite.servicesLength,
   };
 }
 

@@ -16,6 +16,10 @@ const initialState = {
   wash: [],
   message: '',
   loading: false,
+  productsLength: 0,
+  currentPageProducts: 0,
+  servicesLength: 0,
+  currentPageServices: 0,
 };
 
 export default function FavoriteReducer(state = initialState, action) {
@@ -52,7 +56,13 @@ export default function FavoriteReducer(state = initialState, action) {
     case DRY_CLEAN_FAVORITE_SUCCESS:
       return {
         ...state,
-        wash: action.payload,
+        // wash: action.payload,
+        wash:
+          action.payload.page === 0
+            ? action.payload.data
+            : [...state.wash, ...action.payload.data],
+        servicesLength: action.payload.length,
+        currentPageServices: action.payload.page + 1,
         loading: false,
       };
 
@@ -70,7 +80,13 @@ export default function FavoriteReducer(state = initialState, action) {
     case PRODUCTS_FAVORITE_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        // products: action.payload,
+        products:
+          action.payload.page === 0
+            ? action.payload.data
+            : [...state.products, ...action.payload.data],
+        productsLength: action.payload.length,
+        currentPageProducts: action.payload.page + 1,
         loading: false,
       };
 

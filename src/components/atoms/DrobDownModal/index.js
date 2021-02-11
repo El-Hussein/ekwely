@@ -16,6 +16,7 @@ const DropDown = ({
   title,
   onPress,
   onSelectItem,
+  onEndReached = () => {},
 }) => {
   const [androidSelected, setAndroidSelected] = useState(selected || {});
   return (
@@ -35,6 +36,9 @@ const DropDown = ({
           <View style={styles.container}>
             <FlatList
               data={data}
+              onEndReached={onEndReached}
+              onEndReachedThreshold={0.7}
+              keyExtractor={(item) => item.id.toString()}
               ListHeaderComponent={
                 <View style={styles.header}>
                   <TouchableOpacity activeOpacity={0.7} onPress={closeModal}>
@@ -84,6 +88,9 @@ const DropDown = ({
             <FlatList
               ItemSeparatorComponent={() => <View style={styles.separator} />}
               data={data}
+              onEndReached={onEndReached}
+              onEndReachedThreshold={0.7}
+              keyExtractor={(item) => item.id.toString()}
               renderItem={({item}) => {
                 return (
                   <TouchableOpacity

@@ -42,7 +42,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
   },
   promoCodeNum: {
-    fontSize: calcFont(38),
+    fontSize: calcFont(34),
     fontWeight: 'bold',
     marginTop: calcHeight(10),
     letterSpacing: calcWidth(9),
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     color: COLORS.white,
   },
   promoDiscountNum: {
-    fontSize: calcFont(38),
+    fontSize: calcFont(34),
     lineHeight: calcHeight(45),
     marginTop: calcHeight(15),
     color: COLORS.white,

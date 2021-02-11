@@ -21,9 +21,10 @@ const validateEmail = (email) => {
 };
 
 const validatePhone = (phone) => {
+  var phoneno = /^\d{11}$/;
   if (!phone || phone.length === 0) {
     return 'هذا الحقل مطلوب';
-  } else if (phone.length < 11) {
+  } else if (!phone.match(phoneno)) {
     return 'رقم الهاتف غير صحيح';
   } else {
     return null;

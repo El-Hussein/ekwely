@@ -10,12 +10,18 @@ import {makePostRequest} from '../../utils/api.helpers';
 import Toast from 'react-native-simple-toast';
 
 // get CURRENT_ORDER Action
-export const getCurrentOrder = () => {
+export const getCurrentOrder = (hideLoading, page) => {
   return (dispatch) => {
-    dispatch({type: CURRENT_ORDER_PENDING});
+    if (!hideLoading) dispatch({type: CURRENT_ORDER_PENDING});
     try {
       makePostRequest({
         url: 'api/Order/auth_GetCurrentOrders',
+        data: {
+          Paging: {
+            PageIndex: page,
+            PageSize: 10,
+          },
+        },
       })
         .then((response) => {
           if (response?.data?.status !== '200') {
@@ -23,7 +29,11 @@ export const getCurrentOrder = () => {
           } else if (response?.data?.data) {
             dispatch({
               type: CURRENT_ORDER_SUCCESS,
-              payload: response.data.data,
+              payload: {
+                data: response.data.data,
+                length: response.data.paging.length,
+                page,
+              },
             });
           }
         })
@@ -45,12 +55,18 @@ export const getCurrentOrder = () => {
 };
 
 // get HISTORY_ORDER Action
-export const getHistoryOrder = () => {
+export const getHistoryOrder = (hideLoading, page) => {
   return (dispatch) => {
-    dispatch({type: HISTORY_ORDER_PENDING});
+    if (!hideLoading) dispatch({type: HISTORY_ORDER_PENDING});
     try {
       makePostRequest({
         url: 'api/Order/auth_GetHistoryOrders',
+        data: {
+          Paging: {
+            PageIndex: page,
+            PageSize: 10,
+          },
+        },
       })
         .then((response) => {
           if (response?.data?.status !== '200') {
@@ -58,7 +74,11 @@ export const getHistoryOrder = () => {
           } else if (response?.data?.data) {
             dispatch({
               type: HISTORY_ORDER_SUCCESS,
-              payload: response.data.data,
+              payload: {
+                data: response.data.data,
+                length: response.data.paging.length,
+                page,
+              },
             });
           }
         })

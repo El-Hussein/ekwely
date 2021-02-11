@@ -150,6 +150,15 @@ export default StyleSheet.create({
     color: COLORS.lightTextGray,
     fontSize: calcFont(16),
   },
+  numberText: {
+    fontSize: calcFont(14),
+    color: COLORS.lightTextGray,
+    textAlign: 'right',
+    lineHeight: 30,
+    fontWeight: 'normal',
+    textAlignVertical: 'top',
+    ...FONTS.dinMedium,
+  },
   EmptyComponent: {
     fontSize: calcFont(20),
     color: '#a3a3a3',
